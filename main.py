@@ -3,7 +3,7 @@ from transformers import AutoTokenizer
 import torch.optim as optim
 from model.citation_model import *
 from utils.scheduler import WarmupMultiStepLR
-from train_valid.dataset_train import dataset_train
+from train_valid.dataset_train import dataset_train_contr
 from train_valid.dataset_valid import dataset_valid
 from utils.dataload import *
 from utils.util import *
@@ -28,12 +28,12 @@ def run_optuna(path, dev):
         beta = trial.suggest_float('beta', 0, 1, log=True)
         optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-        best_model_f1, best_epoch = dataset_train(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
+        best_model_f1, best_epoch = dataset_train_contr(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
                                                     scheduler, model_path=path,beta=beta)
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db', load_if_exists=True)
-    study.optimize(objective, n_trials=6)
+    study.optimize(objective, n_trials=10)
     print("Best_Params:{} \t Best_Value:{}".format(study.best_params, study.best_value))
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
     print(history)
@@ -52,7 +52,7 @@ def main_run(path, dev):
 
     optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
+    best_model_f1, best_epoch = dataset_train_contr(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
                                                 scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
 
