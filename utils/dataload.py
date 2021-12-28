@@ -74,7 +74,7 @@ def generate_batch_data(data, batch_size=16):
 def load_data(batch_size=None):
     assert batch_size is not None
     data = {}
-    path = Path('/content/citation_classification') # root path
+    path = Path('citation_intent_classification') # root path
     train_set = pd.read_csv(path / 'dataset/SDP_train.csv', sep=',')
     test = pd.read_csv(path / 'dataset/SDP_test.csv', sep=',').merge(
         pd.read_csv(path / 'dataset/sample_submission.csv'), on='unique_id')

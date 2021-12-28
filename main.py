@@ -25,7 +25,7 @@ def run_optuna(path, dev):
         n_epoch = trial.suggest_int('n_epoch',140, 170, log=True)
         lr = trial.suggest_float('lr', 1e-4, 1e-3, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
-        beta = trial.suggest_float('beta', 0, 1, log=True)
+        beta = trial.suggest_float('beta', 0.1, 1, log=True)
         optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
         best_model_f1, best_epoch = dataset_train_contr(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
@@ -75,7 +75,7 @@ def main_run(path, dev):
 if __name__ == "__main__":
     tst = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
-    run_optuna('/content/citation_classification/citation_mul_rev_model.pth', device)
+    run_optuna('citation_intent_classification/citation_mul_rev_model.pth', device)
     # main_run('/content/citation_classification/citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))

@@ -9,7 +9,7 @@ import torch.nn.functional as F
 
 
 
-def compute_kl_loss(self, p, q,pad_mask = None):
+def compute_kl_loss(p, q,pad_mask = None):
 
     p_loss = F.kl_div(F.log_softmax(p, dim=-1), F.softmax(q, dim=-1), reduction='none')
     q_loss = F.kl_div(F.log_softmax(q, dim=-1), F.softmax(p, dim=-1), reduction='none')
@@ -167,7 +167,7 @@ def dataset_train_contr(model, token, data, criterion, optimize, n_epoch, au_wei
             main_output2, au_output12 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
             # L_o
             ori_ce_loss = 0.5 * (criterion(main_output, train_t_tar.to(device)) + criterion(main_output2, train_t_tar.to(device)))
-            ori_kl_loss = compute_kl_loss(main_output, main_output2)
+            ori_kl_loss = compute_kl_loss(p=main_output, q=main_output2)
             ori_loss = ori_ce_loss + beta * ori_kl_loss
             # L_r
             re_loss = criterion(main_output, train_r_tar.to(device))
