@@ -53,7 +53,7 @@ def main_run(path, dev):
     optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
     best_model_f1, best_epoch = dataset_train_contr(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
-                                                scheduler, model_path=path)
+                                                scheduler, model_path=path, beta=5)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
 
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
@@ -75,7 +75,7 @@ def main_run(path, dev):
 if __name__ == "__main__":
     tst = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
-    run_optuna('citation_mul_rev_model.pth', device)
-    # main_run('/content/citation_classification/citation_mul_rev_model.pth', device)
+    # run_optuna('citation_mul_rev_model.pth', device)
+    main_run('citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
