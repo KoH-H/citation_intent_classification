@@ -41,8 +41,7 @@ def compute_kl_loss(p, q,pad_mask = None):
 # # carefully choose hyper-parameters
 # loss = ce_loss + beta * kl_loss
 
-
-def dataset_train(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None, model_path=None):
+def dataset_train_contr(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None, model_path=None, beta=None):
     model.to(device=device)
     best_val_f1, counts, tmp, best_epoch = 0, 0, 0, 0
     train_sen = data['train']['sen']
@@ -77,8 +76,11 @@ def dataset_train(model, token, data, criterion, optimize, n_epoch, au_weight, d
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
             main_output, au_output1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output2, au_output12 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
             # L_o
-            ori_loss = criterion(main_output, train_t_tar.to(device))
+            ori_ce_loss = 0.5 * (criterion(main_output, train_t_tar.to(device)) + criterion(main_output2, train_t_tar.to(device)))
+            ori_kl_loss = compute_kl_loss(p=main_output, q=main_output2)
+            ori_loss = ori_ce_loss + beta * ori_kl_loss
             # L_r
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
@@ -131,7 +133,7 @@ def dataset_train(model, token, data, criterion, optimize, n_epoch, au_weight, d
     return best_val_f1, best_epoch
 
 
-def dataset_train_contr(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None, model_path=None, beta=None):
+def dataset_train(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None, model_path=None):
     model.to(device=device)
     best_val_f1, counts, tmp, best_epoch = 0, 0, 0, 0
     train_sen = data['train']['sen']
@@ -166,11 +168,8 @@ def dataset_train_contr(model, token, data, criterion, optimize, n_epoch, au_wei
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
             main_output, au_output1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
-            main_output2, au_output12 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
             # L_o
-            ori_ce_loss = 0.5 * (criterion(main_output, train_t_tar.to(device)) + criterion(main_output2, train_t_tar.to(device)))
-            ori_kl_loss = compute_kl_loss(p=main_output, q=main_output2)
-            ori_loss = ori_ce_loss + beta * ori_kl_loss
+            ori_loss = criterion(main_output, train_t_tar.to(device))
             # L_r
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
