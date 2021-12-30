@@ -19,12 +19,12 @@ def setup_seed(seed):
 
 
 def generate_submission(pre_list, filename, test_f1):
-    test_unique = pd.read_csv('/content/citation_classification/dataset/SDP_test.csv')
+    test_unique = pd.read_csv('citation_intent_classification/dataset/SDP_test.csv')
     submission = pd.DataFrame(columns=['unique_id', 'citation_class_label'])
     pre_label = pd.Series(pre_list)
     submission['unique_id'] = test_unique['unique_id']
     submission['citation_class_label'] = pre_label
-    submission.to_csv('/content/citation_classification/{}_F1_{:.4f}_Time_{}.csv'.format(filename, test_f1,
+    submission.to_csv('citation_intent_classification/{}_F1_{:.4f}_Time_{}.csv'.format(filename, test_f1,
                                                                                         time.strftime('%m_%d_%H',
                                                                                               time.localtime(time.time()))),
                       sep=',', index=False, encoding='utf-8')
