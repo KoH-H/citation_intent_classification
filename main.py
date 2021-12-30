@@ -55,7 +55,8 @@ def main_run(path, dev):
     # best_model_f1, best_epoch = dataset_train_contr(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
     #                                             scheduler, model_path=path, beta=5)
     # print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
-
+    best_model_f1 = 1
+    best_epoch = 2
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
                                                                          dataset['test'], device,
                                                                          mode='test', path=path)
