@@ -119,14 +119,14 @@ class Model(nn.Module):
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
 
         if self.training:
-            bert_output_mix = self.drop(bert_output)
+            ori_sen_pre_mix = self.drop(ori_sen_pre)
             # for i-mix
             bert_output_imix = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
-            bert_output_imix = self.drop(bert_output_imix)
-            bert_output_mix, labels_aux, lam = self.imix(bert_output_mix, kwargs['mix_alpha'])
-            tem_ori_pre = torch.cat([bert_output_mix, bert_output_imix], dim=0)
-            attention_mask = torch.cat([attention_mask, attention_mask], dim=0)
-            tem_ori_pre = self.get_sen_att(tem_ori_pre, bert_output, 'ori', attention_mask)
+            ori_sen_pre_imix = self.get_sen_att(x1, bert_output_imix, 'ori', attention_mask)
+            ori_sen_pre_imix = self.drop(ori_sen_pre_imix)
+            # bert_output_imix = self.drop(bert_output_imix)
+            ori_sen_pre_mix, labels_aux, lam = self.imix(ori_sen_pre_mix, kwargs['mix_alpha'])
+            tem_ori_pre = torch.cat([ori_sen_pre_mix, ori_sen_pre_imix], dim=0)
             tem_ori_pre = self.mix_fc(tem_ori_pre)
 
             tem_ori_pre = nn.functional.normalize(tem_ori_pre, dim=1)
