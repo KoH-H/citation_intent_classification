@@ -163,6 +163,8 @@ class Model(nn.Module):
         return mixed_feature
 
     def imix(self, input, alpha, share_lam=False):
+        if not isinstance(alpha, (list, tuple)):
+            alpha = [alpha, alpha]
         beta = torch.distributions.beta.Beta(*alpha)
         randind = torch.randperm(input.shape[0], device=input.device)
         if share_lam:
