@@ -44,7 +44,7 @@ def main_run(path, dev):
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     model = Model('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
-    lr = 0.000184
+    lr = 0.0005
     au_weight = 0.007413
     n_epoch = 151
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
