@@ -180,7 +180,7 @@ def dataset_train_imix(model, token, data, criterion, optimize, n_epoch, au_weig
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
-            loss = alpha * (ori_loss + au_weight * au_loss) + (1 - alpha) * re_loss + mix_loss # 0.05表现较好
+            loss = 0.5 * (alpha * (ori_loss + au_weight * au_loss) + (1 - alpha) * re_loss) + 0.5 * mix_loss # 0.05表现较好
             loss.backward()
             optimize.step()
 
