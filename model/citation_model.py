@@ -77,6 +77,7 @@ class Model(nn.Module):
         sen_pre = torch.bmm(word_mat, att_w).squeeze(2)
         return sen_pre
 
+    # original
     # def forward(self, x1, **kwargs):
     #     input_ids = x1['input_ids']
     #     batch_size = input_ids.shape[0]
@@ -177,3 +178,36 @@ class Model(nn.Module):
             lam_expanded = lam.view([-1] + [1] * (input.dim() - 1))
         output = lam_expanded * input + (1. - lam_expanded) * input[randind]
         return output, randind, lam
+
+    # for feature space aug
+    # def forward(self, x1, **kwargs):
+    #     input_ids = x1['input_ids']
+    #     attention_mask = x1['attention_mask']
+    #     bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+    #     ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
+    #
+    #     if self.training:
+    #         # Obtain the representation vector for the classification learning branch
+    #         r_ids = kwargs['r_sen']['input_ids']
+    #         r_attention_mask = kwargs['r_sen']['attention_mask']
+    #         r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
+    #         re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
+    #         # Get the representation vector for the auxiliary task
+    #         s_ids = kwargs['s_sen']['input_ids']
+    #         s_attention_mask = kwargs['s_sen']['attention_mask']
+    #         s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
+    #         ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
+    #
+    #         ori_sen_pre = self.drop(ori_sen_pre)
+    #         re_sen_pre = self.drop(re_sen_pre)
+    #         # Splice the representation vectors of both branches
+    #         mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
+    #         main_output = self.fc1(self.drop(mixed_feature))
+    #         main_output = self.fc(main_output)
+    #         au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
+    #         return main_output, au_output1
+    #     re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
+    #     mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
+    #     mixed_feature = self.fc1(mixed_feature)
+    #     mixed_feature = self.fc(mixed_feature)
+    #     return mixed_feature
