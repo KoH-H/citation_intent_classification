@@ -3,7 +3,7 @@ from transformers import AutoTokenizer
 import torch.optim as optim
 from model.citation_model import *
 from utils.scheduler import WarmupMultiStepLR
-from train_valid.dataset_train import dataset_train_contr, dataset_train, dataset_train_imix
+from train_valid.dataset_train import dataset_train_contr, dataset_train, dataset_train_imix, dataset_train_space
 from train_valid.dataset_valid import dataset_valid
 from utils.dataload import *
 from utils.util import *
