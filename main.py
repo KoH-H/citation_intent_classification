@@ -52,7 +52,7 @@ def main_run(path, dev):
 
     optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
+    best_model_f1, best_epoch = dataset_train_space(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
                                                 scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     best_model_f1 = 0.05
