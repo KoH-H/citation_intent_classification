@@ -182,12 +182,13 @@ class Model(nn.Module):
     def generate_hidden_mean(self, pre, label):
         unique_label = torch.unique(label)
         mean_dict = dict()
-        for i in unique_label:
+        for i in range(unique_label.shape[0]):
             idx_t2n = label.numpy()
-            index = np.argwhere(idx_t2n == i)
-            select_vector = pre.index_select(0, torch.tensor(index).to(device=label.device))
+            index = np.argwhere(idx_t2n == unique_label[i].item())
+            index = torch.tensor(index).squeeze(1).to(device=pre.device)
+            select_vector = pre.index_select(0, index)
             mean_value = torch.mean(select_vector, 0)
-            mean_dict[i] = mean_value
+            mean_dict[unique_label[i].item()] = mean_value
         return mean_dict
     # for feature space aug
     def forward(self, x1, **kwargs):
@@ -207,8 +208,8 @@ class Model(nn.Module):
             ori_mean = self.generate_hidden_mean(ori_sen_pre, kwargs['ori_label'])
             re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
             re_sen_pre = None
-            for i in ori_sen_pre.shape[0]:
-                gen_example = ori_sen_pre[i] - ori_mean[kwargs['ori_label'][i]] + re_mean[kwargs['re_label'][i]]
+            for i in range(ori_sen_pre.shape[0]):
+                gen_example = ori_sen_pre[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[kwargs['re_label'][i].item()]
                 if re_sen_pre is None:
                     re_sen_pre = gen_example.unsqueeze(0)
                 else:
