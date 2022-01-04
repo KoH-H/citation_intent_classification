@@ -12,7 +12,7 @@ class Model(nn.Module):
         self.model = AutoModel.from_pretrained(name)
         self.temp=temp
         self.fc1 = nn.Linear(768 * 2, 768)
-        self.mix_fc = nn.Linear(768, 192)
+        # self.mix_fc = nn.Linear(768, 192)
         self.fc = nn.Linear(768, 6)
         self.drop = nn.Dropout(0.5)
 
@@ -128,7 +128,7 @@ class Model(nn.Module):
             # bert_output_imix = self.drop(bert_output_imix)
             ori_sen_pre_mix, labels_aux, lam = self.imix(ori_sen_pre_mix, kwargs['mix_alpha'])
             tem_ori_pre = torch.cat([ori_sen_pre_mix, ori_sen_pre_imix], dim=0)
-            tem_ori_pre = self.mix_fc(tem_ori_pre)
+            tem_ori_pre = self.fc(tem_ori_pre)
 
             tem_ori_pre = nn.functional.normalize(tem_ori_pre, dim=1)
             bert_output_mix, bert_output_imix = tem_ori_pre[:batch_size], tem_ori_pre[batch_size:]
