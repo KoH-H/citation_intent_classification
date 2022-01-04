@@ -220,7 +220,6 @@ def dataset_train_contr(model, token, data, criterion, optimize, n_epoch, au_wei
             best_epoch = i
     return best_val_f1, best_epoch
 
-
 def dataset_train_imix(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None,
                        model_path=None, mix_alpha=1.):
     model.to(device=device)
@@ -269,7 +268,7 @@ def dataset_train_imix(model, token, data, criterion, optimize, n_epoch, au_weig
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
             # loss = 0.5 * (alpha * (ori_loss + au_weight * au_loss) + (1 - alpha) * re_loss) + 0.5 * mix_loss # 0.05表现较好
-            loss = alpha * (ori_loss + au_weight * au_loss + 0.05 * mix_loss) + (1 - alpha) * re_loss
+            loss = alpha * (ori_loss + au_weight * au_loss + 0.005 * mix_loss) + (1 - alpha) * re_loss
             loss.backward()
             optimize.step()
 
