@@ -181,17 +181,17 @@ class Model(nn.Module):
 
     # for feature space aug
 
-    # def generate_hidden_mean(self, pre, label):
-    #     unique_label = torch.unique(label)
-    #     mean_dict = dict()
-    #     for i in range(unique_label.shape[0]):
-    #         idx_t2n = label.numpy()
-    #         index = np.argwhere(idx_t2n == unique_label[i].item())
-    #         index = torch.tensor(index).squeeze(1).to(device=pre.device)
-    #         select_vector = pre.index_select(0, index)
-    #         mean_value = torch.mean(select_vector, 0)
-    #         mean_dict[unique_label[i].item()] = mean_value
-    #     return mean_dict
+    def generate_hidden_mean(self, pre, label):
+        unique_label = torch.unique(label)
+        mean_dict = dict()
+        for i in range(unique_label.shape[0]):
+            idx_t2n = label.numpy()
+            index = np.argwhere(idx_t2n == unique_label[i].item())
+            index = torch.tensor(index).squeeze(1).to(device=pre.device)
+            select_vector = pre.index_select(0, index)
+            mean_value = torch.mean(select_vector, 0)
+            mean_dict[unique_label[i].item()] = mean_value
+        return mean_dict
     # def forward(self, x1, **kwargs):
     #
     #     input_ids = x1['input_ids']
@@ -234,3 +234,83 @@ class Model(nn.Module):
     #     mixed_feature = self.fc1(mixed_feature)
     #     mixed_feature = self.fc(mixed_feature)
     #     return mixed_feature
+
+    # for imix and space aug
+    def generate_new_example(self, ori_sen_pre, ori_mean, re_mean, ori_label, re_label):
+        re_sen_pre = None
+        for i in range(ori_sen_pre.shape[0]):
+            gen_example = ori_sen_pre[i] - ori_mean[ori_label[i].item()] + re_mean[
+                re_label['re_label'][i].item()]
+            if re_sen_pre is None:
+                re_sen_pre = gen_example.unsqueeze(0)
+            else:
+                re_sen_pre = torch.cat([re_sen_pre, gen_example.unsqueeze(0)], 0)
+        return re_sen_pre
+
+    def forward(self, x1, **kwargs):
+
+        input_ids = x1['input_ids']
+        attention_mask = x1['attention_mask']
+        batch_size = input_ids.shape[0]
+        bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+        ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
+
+        if self.training:
+            # Get the representation vector for the auxiliary task
+            s_ids = kwargs['s_sen']['input_ids']
+            s_attention_mask = kwargs['s_sen']['attention_mask']
+            s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
+            ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
+
+
+
+            # for i-mix
+            bert_output_imix = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+            ori_sen_pre_imix = self.get_sen_att(x1, bert_output_imix, 'ori', attention_mask)
+
+
+            ori_sen_pre_mix = self.drop(ori_sen_pre)
+            ori_sen_pre_imix = self.drop(ori_sen_pre_imix)
+
+            ori_imix_mean1 = self.generate_hidden_mean(ori_sen_pre_mix, kwargs['ori_label'])
+            ori_imix_mean2 = self.generate_hidden_mean(ori_sen_pre_imix, kwargs['ori_label'])
+
+            # Obtain the representation vector for the classification learning branch
+            r_ids = kwargs['r_sen']['input_ids']
+            r_attention_mask = kwargs['r_sen']['attention_mask']
+            r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
+            re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
+            re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
+            re_sen_pre1 = self.generate_new_example(ori_sen_pre_mix, ori_imix_mean1, re_mean, kwargs['ori_label'], kwargs['re_label'])
+            re_sen_pre2 = self.generate_new_example(ori_sen_pre_imix, ori_imix_mean2, re_mean, kwargs['ori_label'], kwargs['re_label'])
+
+
+            ori_sen_pre_mix = self.drop(ori_sen_pre_mix)
+            ori_sen_pre_imix = self.drop(ori_sen_pre_imix)
+            re_sen_pre1 = self.drop(re_sen_pre1)
+            re_sen_pre2 = self.drop(re_sen_pre2)
+
+            # Splice the representation vectors of both branches
+            mixed_feature1 = 2 * torch.cat((kwargs['l'] * ori_sen_pre_mix, (1 - kwargs['l']) * re_sen_pre1), dim=1)
+            mixed_feature2 = 2 * torch.cat((kwargs['l'] * ori_sen_pre_imix, (1 - kwargs['l']) * re_sen_pre2), dim=1)
+
+            mixed_feature1, labels_aux, lam = self.imix(mixed_feature1, kwargs['mix_alpha'])
+
+            temp = torch.cat([mixed_feature1, mixed_feature2], dim=0)
+
+            main_output = self.fc1(temp)
+            main_output = self.fc(main_output)
+
+            main_output = nn.functional.normalize(main_output, dim=1)
+            main_output1, main_output2 = main_output[:batch_size], main_output[batch_size:]
+            mix_logits = main_output1.mm(main_output2.t())
+            mix_logits /= self.temp
+            mix_labels = torch.arange(batch_size, dtype=torch.long).cuda()
+
+            au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
+            return au_output1, mix_logits, mix_labels, labels_aux, lam
+        re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
+        mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
+        mixed_feature = self.fc1(mixed_feature)
+        mixed_feature = self.fc(mixed_feature)
+        return mixed_feature
