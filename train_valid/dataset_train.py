@@ -330,7 +330,7 @@ def dataset_train_imix_space(model, token, data, criterion, optimize, n_epoch, a
 
     for i in range(1, n_epoch + 1):
         model.train()
-        avg_loss, avgmix_loss, avgau_loss1,  avgre_loss = 0, 0, 0, 0
+        avg_loss, avgmix_loss, avgau_loss1 = 0, 0, 0
         train_ltrue_label, train_rtrue_label, train_lpre_label, train_rpre_label = [], [], [], []
         alpha = 1 - ((i - 1) / n_epoch) ** 2
         tst = time.time()
@@ -386,7 +386,7 @@ def dataset_train_imix_space(model, token, data, criterion, optimize, n_epoch, a
             if (index + 1) % 10 == 0:
                 print('Batch: %d \t Loss: %.4f \t Avgori_loss: %.4f \t Avgau_loss: %.4f' % (
                 (index + 1), avg_loss / 10, avgmix_loss / 10, avgau_loss1 / 10))
-                avg_loss, avgori_loss, avgau_loss1, avgre_loss = 0, 0, 0, 0
+                avg_loss, avgmix_loss, avgau_loss1 = 0, 0, 0
         ten = time.time()
         print('Epoch Train time: {}'.format(ten - tst))
         l_macro_f1 = f1_score(torch.LongTensor(train_ltrue_label), torch.LongTensor(train_lpre_label), average='macro')
