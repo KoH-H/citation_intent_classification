@@ -60,17 +60,19 @@ class Model(nn.Module):
             select_index_f = select_index.copy()
             relength.append(sep_location[i] - 1)
             select_index_f.remove(sep_location[i])
-            select_row = torch.index_select(lhs[i], 0, index=torch.LongTensor(select_index_f).to(sen['input_ids'].device))
-            select_mask = torch.index_select(mask[i], 0, index=torch.LongTensor(select_index_f).to(sen['input_ids'].device))
+            select_row = torch.index_select(lhs[i], 0,
+                                            index=torch.LongTensor(select_index_f).to(sen['input_ids'].device))
+            select_mask = torch.index_select(mask[i], 0,
+                                             index=torch.LongTensor(select_index_f).to(sen['input_ids'].device))
             recomposing.append(select_row)
             mask_recomposing.append(select_mask)
         matrix = torch.stack(recomposing)
         mask = torch.stack(mask_recomposing)
-        return matrix,  mask
+        return matrix, mask
 
     # Get the representation vector after calculating the attention mechanism
     def get_sen_att(self, sen, bert_output, data_type, mask):
-        word_mat,  select_mask = self.get_word(sen, bert_output, mask)
+        word_mat, select_mask = self.get_word(sen, bert_output, mask)
         word_mat = self.drop(word_mat)
         att_w = self.get_alpha(word_mat, data_type, select_mask)
         word_mat = word_mat.permute(0, 2, 1)
@@ -192,6 +194,7 @@ class Model(nn.Module):
             mean_value = torch.mean(select_vector, 0)
             mean_dict[unique_label[i].item()] = mean_value
         return mean_dict
+
     # def forward(self, x1, **kwargs):
     #
     #     input_ids = x1['input_ids']
@@ -341,8 +344,6 @@ class Model(nn.Module):
             mix_logits = bert_output_mix.mm(bert_output_imix.t())
             mix_logits /= self.temp
             mix_labels = torch.arange(batch_size, dtype=torch.long).cuda()
-            # mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
-
 
             # Obtain the representation vector for the classification learning branch
             r_ids = kwargs['r_sen']['input_ids']
@@ -350,17 +351,16 @@ class Model(nn.Module):
             r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
             re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
 
-            ori_mean = self.generate_hidden_mean(ori_sen_pre, kwargs['ori_label'])
-            re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
-            # re_sen_pre = self.generate_new_example(ori_sen_pre, ori_mean, re_mean, kwargs['ori_label'], kwargs['re_label'])
-            re_sen_pre = None
-            for i in range(ori_sen_pre.shape[0]):
-                gen_example = ori_sen_pre[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[
-                    kwargs['re_label'][i].item()]
-                if re_sen_pre is None:
-                    re_sen_pre = gen_example.unsqueeze(0)
-                else:
-                    re_sen_pre = torch.cat([re_sen_pre, gen_example.unsqueeze(0)], 0)
+            # ori_mean = self.generate_hidden_mean(ori_sen_pre, kwargs['ori_label'])
+            # re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
+            # re_sen_pre = None
+            # for i in range(ori_sen_pre.shape[0]):
+            #     gen_example = ori_sen_pre[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[
+            #         kwargs['re_label'][i].item()]
+            #     if re_sen_pre is None:
+            #         re_sen_pre = gen_example.unsqueeze(0)
+            #     else:
+            #         re_sen_pre = torch.cat([re_sen_pre, gen_example.unsqueeze(0)], 0)
 
             # Get the representation vector for the auxiliary task
             s_ids = kwargs['s_sen']['input_ids']
