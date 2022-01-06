@@ -415,6 +415,7 @@ def dataset_train_imix_space(model, token, data, criterion, optimize, n_epoch, a
 
 def dataset_train_limix_rspace(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None,
                              model_path=None, mix_alpha=1.):
+    print("limix_rspace".center(30, "*"))
     model.to(device=device)
     best_val_f1, counts, tmp, best_epoch = 0, 0, 0, 0
     train_sen = data['train']['sen']
