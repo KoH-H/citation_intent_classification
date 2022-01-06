@@ -454,10 +454,6 @@ def dataset_train_limix_rspace(model, token, data, criterion, optimize, n_epoch,
                                                                                      mix_alpha=mix_alpha,
                                                                                      ori_label=train_t_tar,
                                                                                      re_label=train_r_tar)
-            # au_output1, mix_logits, mix_labels, labels_aux, lam = model(t_sent, r_sen=r_sent,
-            #                                                             s_sen=s_sent, l=alpha,
-            #                                                             mix_alpha=mix_alpha, ori_label=train_r_tar,
-            #                                                             re_label=train_r_tar)
 
             # i-mix loss
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
