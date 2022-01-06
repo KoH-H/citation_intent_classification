@@ -240,7 +240,7 @@ class Model(nn.Module):
         re_sen_pre = None
         for i in range(ori_sen_pre.shape[0]):
             gen_example = ori_sen_pre[i] - ori_mean[ori_label[i].item()] + re_mean[
-                re_label['re_label'][i].item()]
+                re_label[i].item()]
             if re_sen_pre is None:
                 re_sen_pre = gen_example.unsqueeze(0)
             else:
