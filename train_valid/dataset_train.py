@@ -477,7 +477,7 @@ def dataset_train_limix_rspace(model, token, data, criterion, optimize, n_epoch,
             avgau_loss1 += au_loss.item()
             avgre_loss += re_loss
 
-            pre_output = torch.softmax(mix_logits, dim=1)
+            pre_output = torch.softmax(main_output, dim=1)
             train_value, train_location = torch.max(pre_output, dim=1)
 
             train_lpre_label.extend(train_location.tolist())
@@ -488,7 +488,7 @@ def dataset_train_limix_rspace(model, token, data, criterion, optimize, n_epoch,
 
             if (index + 1) % 10 == 0:
                 print('Batch: %d \t Loss: %.4f \t Avgori_loss: %.4f \t Avgau_loss: %.4f \t Avgre_loss: %.4f' % (
-                    (index + 1), avg_loss / 10, main_output / 10, avgau_loss1 / 10, avgre_loss / 10))
+                    (index + 1), avg_loss / 10, avgori_loss / 10, avgau_loss1 / 10, avgre_loss / 10))
                 avg_loss, avgori_loss, avgau_loss1, avgre_loss = 0, 0, 0, 0
         ten = time.time()
         print('Epoch Train time: {}'.format(ten - tst))
