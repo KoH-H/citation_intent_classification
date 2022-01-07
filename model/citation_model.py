@@ -351,11 +351,11 @@ class Model(nn.Module):
             r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
             re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
 
-            ori_mean = self.generate_hidden_mean(ori_sen_pre, kwargs['ori_label'])
+            ori_mean = self.generate_hidden_mean(ori_sen_pre_mix, kwargs['ori_label'])
             re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
             re_sen_pre = None
-            for i in range(ori_sen_pre.shape[0]):
-                gen_example = ori_sen_pre[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[
+            for i in range(ori_sen_pre_mix.shape[0]):
+                gen_example = ori_sen_pre_mix[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[
                     kwargs['re_label'][i].item()]
                 if re_sen_pre is None:
                     re_sen_pre = gen_example.unsqueeze(0)
@@ -368,7 +368,7 @@ class Model(nn.Module):
             s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
             ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
 
-            ori_sen_pre = self.drop(ori_sen_pre)
+            ori_sen_pre = self.drop(ori_sen_pre_mix)
             re_sen_pre = self.drop(re_sen_pre)
             # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
