@@ -548,7 +548,7 @@ def dataset_train_imixspace_cross(model, token, data, criterion, optimize, n_epo
             train_t_tar = torch.LongTensor(t_tar)
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
-            main_output, au_output1, mix_logits, mix_labels, labels_aux, lam, re_mix_logits, re_mix_labels, re_label_aux, re_lam = model(t_sent, r_sen=r_sent,
+            main_output, au_output1, mix_logits, mix_labels, labels_aux, lam = model(t_sent, r_sen=r_sent,
                                                                                      s_sen=s_sent, l=alpha,
                                                                                      mix_alpha=mix_alpha,
                                                                                      ori_label=train_t_tar,
@@ -556,14 +556,14 @@ def dataset_train_imixspace_cross(model, token, data, criterion, optimize, n_epo
 
             # i-mix loss
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
-            left_mix_loss = (re_lam * criterion(re_mix_logits, re_mix_labels) + (1. - re_lam) * criterion(re_mix_logits, re_label_aux)).mean()
+            # left_mix_loss = (re_lam * criterion(re_mix_logits, re_mix_labels) + (1. - re_lam) * criterion(re_mix_logits, re_label_aux)).mean()
             # L_o
             ori_loss = criterion(main_output, train_t_tar.to(device))
             # L_r
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
-            loss = alpha * (ori_loss + au_weight * au_loss + 0.05 * mix_loss) + (1 - alpha) * (re_loss + 0.05 * left_mix_loss)
+            loss = alpha * (ori_loss + au_weight * au_loss + 0.05 * mix_loss) + (1 - alpha) * re_loss
             loss.backward()
             optimize.step()
 
