@@ -580,8 +580,10 @@ def dataset_train_limix_rspace_v2(model, token, data, criterion, optimize, n_epo
 
             train_lpre_label.extend(train_location.tolist())
             train_ltrue_label.extend(t_tar)
+            train_ltrue_label.extend(t_tar)
 
             train_rpre_label.extend(train_location.tolist())
+            train_rtrue_label.extend(r_tar)
             train_rtrue_label.extend(r_tar)
 
             if (index + 1) % 10 == 0:
