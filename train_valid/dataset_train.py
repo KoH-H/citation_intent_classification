@@ -512,8 +512,7 @@ def dataset_train_limix_rspace(model, token, data, criterion, optimize, n_epoch,
             best_epoch = i
     return best_val_f1, best_epoch
 
-
-def dataset_train_limix_rspace_v2(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None,
+def dataset_train_imixspace_cross(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None,
                              model_path=None, mix_alpha=1.):
     print("limix_rspace".center(30, "*"))
     model.to(device=device)
@@ -557,12 +556,10 @@ def dataset_train_limix_rspace_v2(model, token, data, criterion, optimize, n_epo
 
             # i-mix loss
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
-
+            # left_mix_loss = (re_lam * criterion(re_mix_logits, re_mix_labels) + (1. - re_lam) * criterion(re_mix_logits, re_label_aux)).mean()
             # L_o
-            train_t_tar = torch.cat([train_t_tar, train_t_tar], dim=0)
             ori_loss = criterion(main_output, train_t_tar.to(device))
             # L_r
-            train_r_tar = torch.cat([train_r_tar, train_r_tar], dim=0)
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
