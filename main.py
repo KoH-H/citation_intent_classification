@@ -3,7 +3,8 @@ from transformers import AutoTokenizer
 import torch.optim as optim
 from model.citation_model import *
 from utils.scheduler import WarmupMultiStepLR
-from train_valid.dataset_train import dataset_train_contr, dataset_train, dataset_train_imix, dataset_train_space, dataset_train_imix_space, dataset_train_limix_rspace
+from train_valid.dataset_train import dataset_train_contr, dataset_train, dataset_train_imix, dataset_train_space, dataset_train_imix_space, \
+    dataset_train_limix_rspace, dataset_train_limix_rspace_v2
 from train_valid.dataset_valid import dataset_valid
 from utils.dataload import *
 from utils.util import *
@@ -52,7 +53,7 @@ def main_run(path, dev):
 
     optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train_limix_rspace(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
+    best_model_f1, best_epoch = dataset_train_limix_rspace_v2(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
                                                 scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
