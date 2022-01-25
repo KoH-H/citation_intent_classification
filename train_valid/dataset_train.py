@@ -662,8 +662,7 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
             main_output, au_output1, mix_logits, mix_labels, labels_aux, lam, des_mix_logits, des_mix_labels, des_labels_aux, des_lam\
-                = model(t_sent, r_sen=r_sent,
-                                                                                     s_sen=s_sent, des_sen=des_sent,
+                = model(t_sent, r_sen=r_sent, s_sen=s_sent, des_sen=des_sent,
                                                                                      l=alpha,
                                                                                      mix_alpha=mix_alpha,
                                                                                      ori_label=train_t_tar,
