@@ -531,6 +531,7 @@ class Model(nn.Module):
     #         re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
     #         new_re_sen_pre = None
     #         for i in range(ori_sen_pre_mix.shape[0]):
+    #             此处的ori_sen_pre_mix找的有问题
     #             gen_example = ori_sen_pre_mix[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[
     #                 kwargs['re_label'][i].item()]
     #             if new_re_sen_pre is None:
@@ -589,20 +590,17 @@ class Model(nn.Module):
 
 
             des_ids = kwargs['des_sen']['input_ids']
-            des_basz = input_ids.shape[0]
+            des_basz = des_ids.shape[0]
             des_attention_mask = kwargs['des_sen']['attention_mask']
             des_output = self.model(des_ids, attention_mask=des_attention_mask, output_hidden_states=True)
+            des_imix1 = self.get_sen_att(kwargs['des_sen'], des_output, 'des', des_attention_mask)
 
-            des_imix1 = self.drop(des_output)
-            des_imix2 = self.drop(des_output)
+            ori_des_imix1 = self.drop(des_imix1)
+            des_imix2 = self.drop(des_imix1)
 
-            des_imix1 = self.get_sen_att(des_ids, des_imix1, 'des', attention_mask)
-            des_imix2 = self.get_sen_att(des_ids, des_imix2, 'des', attention_mask)
-
-            des_imix1, des_labels_aux, des_lam = self.imix(des_imix1, kwargs['mix_alpha'])
+            des_imix1, des_labels_aux, des_lam = self.imix(ori_des_imix1, kwargs['mix_alpha'])
             tem_des_pre = torch.cat([des_imix1, des_imix2], dim=0)
             tem_des_pre = self.des_fc(tem_des_pre)
-
             tem_des_pre = nn.functional.normalize(tem_des_pre, dim=1)
             des_output_mix, des_output_imix = tem_des_pre[:des_basz], tem_des_pre[des_basz:]
             des_mix_logits = des_output_mix.mm(des_output_imix.t())
@@ -616,11 +614,10 @@ class Model(nn.Module):
             r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
             re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
 
-            # ori_mean = self.generate_hidden_mean(ori_sen_pre_i, kwargs['ori_label'])
             re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
             new_re_sen_pre = None
             for i in range(ori_sen_pre_mix.shape[0]):
-                gen_example = ori_sen_pre_mix[i] - des_imix1[kwargs['ori_label'][i].item(), :] + re_mean[
+                gen_example = ori_sen_pre_mix[i] - ori_des_imix1[kwargs['ori_label'][i].item(), :] + re_mean[
                     kwargs['re_label'][i].item()]
                 if new_re_sen_pre is None:
                     new_re_sen_pre = gen_example.unsqueeze(0)

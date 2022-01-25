@@ -76,7 +76,8 @@ def generate_batch_data(data, label_description,batch_size=16):
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
             last_sentences_list.append(citation_text)
             last_target_list.append(data['citation_class_label'][i])
-            last_label_list.append(data['label_description'][i])
+            if label_description:
+                last_label_list.append(data['label_description'][i])
         sentences_list.append(last_sentences_list)
         target_list.append(last_target_list)
         if label_description:
@@ -108,12 +109,12 @@ def load_data(label_description=False, batch_size=None):
 
     reverse_data = reverse_sampler(train)
     reverse_data = delete_aug(reverse_data)
-    data['reverse'] = generate_batch_data(reverse_data, batch_size)
+    data['reverse'] = generate_batch_data(reverse_data, label_description, batch_size)
 
     mul_sec = pd.read_csv(path / 'dataset/section_name.csv')
     mul_num = train.shape[0]
     mul_section = mul_sec.head(mul_num)
-    mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0]//batch_size))
+    mul_section_batch = generate_batch_data(mul_section, label_description, mul_section.shape[0] // (train.shape[0]//batch_size))
     data['section'] = mul_section_batch
 
     train = delete_aug(train)

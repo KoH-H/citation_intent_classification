@@ -623,18 +623,16 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
     best_val_f1, counts, tmp, best_epoch = 0, 0, 0, 0
     train_sen = data['train']['sen']
     train_tar = data['train']['tar']
-    train_des = data['train']['des']
     re_sen = data['reverse']['sen']
     re_tar = data['reverse']['tar']
-    re_des = data['reverse']['des']
     sec_sen = data['section']['sen']
     sec_tar = data['section']['tar']
-    label_des = ['The cited paper provides relevant Background information or is part of the body of literature',
-                 'The citing paper expresses similarities or differences to, or disagrees with, the cited paper.',
-                 'The citing paper extends the methods, tools or data etc. of the cited paper.',
-                 'The cited paper may be a potential avenue for future work.',
-                 'The citing paper is directly motivated by the cited paper.',
-                 'The citing paper uses the methodology or tools created by the cited paper.']
+    label_des = [['The cited paper provides relevant Background information or is part of the body of literature'],
+                 ['The citing paper expresses similarities or differences to, or disagrees with, the cited paper.'],
+                 ['The citing paper extends the methods, tools or data etc. of the cited paper.'],
+                 ['The cited paper may be a potential avenue for future work.'],
+                 ['The citing paper is directly motivated by the cited paper.'],
+                 ['The citing paper uses the methodology or tools created by the cited paper.']]
     assert len(train_sen) <= len(sec_sen)
 
     for i in range(1, n_epoch + 1):
@@ -644,7 +642,7 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
         alpha = 1 - ((i - 1) / n_epoch) ** 2
         tst = time.time()
 
-        for index, (t_sen, t_tar, t_des, r_sen, r_tar, r_des, s_sen, s_tar) in enumerate(zip(train_sen, train_tar, train_des, re_sen, re_tar, re_des,
+        for index, (t_sen, t_tar, r_sen, r_tar, s_sen, s_tar) in enumerate(zip(train_sen, train_tar, re_sen, re_tar,
                                                                                sec_sen, sec_tar)):
             t_sent = token(t_sen, return_tensors='pt', is_split_into_words=True, padding=True,
                            add_special_tokens=True, return_length=True)
@@ -659,6 +657,7 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
             t_sent = t_sent.to(device)
             r_sent = r_sent.to(device)
             s_sent = s_sent.to(device)
+            des_sent = des_sent.to(device)
             train_t_tar = torch.LongTensor(t_tar)
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
