@@ -559,10 +559,10 @@ def dataset_train_limix_rspace_v2(model, token, data, criterion, optimize, n_epo
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
 
             # L_o
-            train_t_tar = torch.cat([train_t_tar, train_t_tar], dim=0)
+            # train_t_tar = torch.cat([train_t_tar, train_t_tar], dim=0)
             ori_loss = criterion(main_output, train_t_tar.to(device))
             # L_r
-            train_r_tar = torch.cat([train_r_tar, train_r_tar], dim=0)
+            # train_r_tar = torch.cat([train_r_tar, train_r_tar], dim=0)
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
@@ -580,11 +580,11 @@ def dataset_train_limix_rspace_v2(model, token, data, criterion, optimize, n_epo
 
             train_lpre_label.extend(train_location.tolist())
             train_ltrue_label.extend(t_tar)
-            train_ltrue_label.extend(t_tar)
+            # train_ltrue_label.extend(t_tar)
 
             train_rpre_label.extend(train_location.tolist())
             train_rtrue_label.extend(r_tar)
-            train_rtrue_label.extend(r_tar)
+            # train_rtrue_label.extend(r_tar)
 
             if (index + 1) % 10 == 0:
                 print('Batch: %d \t Loss: %.4f \t Avgori_loss: %.4f \t Avgau_loss: %.4f \t Avgre_loss: %.4f' % (
