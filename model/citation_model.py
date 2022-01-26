@@ -503,12 +503,12 @@ class Model(nn.Module):
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
 
         if self.training:
-            ori_sen_pre_mix = self.drop(ori_sen_pre)
             # for i-mix
             bert_output_imix = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
             ori_sen_pre_i = self.get_sen_att(x1, bert_output_imix, 'ori', attention_mask)
+
+            ori_sen_pre_mix = self.drop(ori_sen_pre)
             ori_sen_pre_imix = self.drop(ori_sen_pre_i)
-            # bert_output_imix = self.drop(bert_output_imix)
 
 
             ori_sen_pre_mix, labels_aux, lam = self.imix(ori_sen_pre_mix, kwargs['mix_alpha'])
@@ -548,7 +548,7 @@ class Model(nn.Module):
             # ori_sen_pre = torch.cat([ori_sen_pre, ori_sen_pre_i], dim=0)
             # re_sen_pre = torch.cat([re_sen_pre, new_re_sen_pre], dim=0)
             ori_sen_pre = self.drop(ori_sen_pre)
-            re_sen_pre = self.drop(re_sen_pre)
+            re_sen_pre = self.drop(new_re_sen_pre)
 
             # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
