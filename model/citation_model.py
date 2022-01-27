@@ -529,10 +529,11 @@ class Model(nn.Module):
 
             ori_mean = self.generate_hidden_mean(ori_sen_pre_i, kwargs['ori_label'])
             re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
+
             new_re_sen_pre = None
             for i in range(ori_sen_pre_i.shape[0]):
                 # 此处的ori_sen_pre_mix找的有问题
-                gen_example = ori_sen_pre_i[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[
+                gen_example = 0.05 * (ori_sen_pre_i[i] - ori_mean[kwargs['ori_label'][i].item()]) + re_mean[
                     kwargs['re_label'][i].item()]
                 if new_re_sen_pre is None:
                     new_re_sen_pre = gen_example.unsqueeze(0)
@@ -554,6 +555,7 @@ class Model(nn.Module):
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
             main_output = self.fc1(self.drop(mixed_feature))
             main_output = self.fc(main_output)
+
             au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
             return main_output, au_output1, mix_logits, mix_labels, labels_aux, lam
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
