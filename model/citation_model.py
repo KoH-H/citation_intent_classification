@@ -618,15 +618,15 @@ class Model(nn.Module):
             r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
             re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
 
-            re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
-            new_re_sen_pre = None
-            for i in range(ori_sen_pre_i.shape[0]):
-                gen_example = 0.0001 * (ori_sen_pre_i[i] - des_imix1[kwargs['ori_label'][i].item(), :]) + re_mean[
-                    kwargs['re_label'][i].item()]
-                if new_re_sen_pre is None:
-                    new_re_sen_pre = gen_example.unsqueeze(0)
-                else:
-                    new_re_sen_pre = torch.cat([new_re_sen_pre, gen_example.unsqueeze(0)], 0)
+            # re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
+            # new_re_sen_pre = None
+            # for i in range(ori_sen_pre_i.shape[0]):
+            #     gen_example = 0.0001 * (ori_sen_pre_i[i] - des_imix1[kwargs['ori_label'][i].item(), :]) + re_mean[
+            #         kwargs['re_label'][i].item()]
+            #     if new_re_sen_pre is None:
+            #         new_re_sen_pre = gen_example.unsqueeze(0)
+            #     else:
+            #         new_re_sen_pre = torch.cat([new_re_sen_pre, gen_example.unsqueeze(0)], 0)
 
             # Get the representation vector for the auxiliary task
             s_ids = kwargs['s_sen']['input_ids']
@@ -637,7 +637,7 @@ class Model(nn.Module):
             # ori_sen_pre = torch.cat([ori_sen_pre], dim=0)
             # re_sen_pre = torch.cat([re_sen_pre], dim=0)
             ori_sen_pre = self.drop(ori_sen_pre)
-            re_sen_pre = self.drop(new_re_sen_pre)
+            re_sen_pre = self.drop(re_sen_pre)
 
             # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
