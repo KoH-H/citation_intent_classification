@@ -23,14 +23,16 @@ def run_optuna(path, dev):
 
     def objective(trial):
         model = Model('allenai/scibert_scivocab_uncased')
-        n_epoch = trial.suggest_int('n_epoch',140, 170, log=True)
+        # n_epoch = trial.suggest_int('n_epoch', 140, 170, log=True)
+        n_epoch = 150
         lr = trial.suggest_float('lr', 1e-4, 1e-3, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
-        beta = trial.suggest_float('beta', 1, 10, log=True)
+        mix_w = trial.suggest_float('mix_w', 0.01, 0.1, log=True)
+        # beta = trial.suggest_float('beta', 1, 10, log=True)
         optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-        best_model_f1, best_epoch = dataset_train_contr(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
-                                                    scheduler, model_path=path,beta=beta)
+        best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
+                                                        au_weight, dev, mix_w, scheduler, model_path=path)
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db', load_if_exists=True)
@@ -75,7 +77,7 @@ def main_run(path, dev):
 if __name__ == "__main__":
     tst = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
-    # run_optuna('citation_mul_rev_model.pth', device)
-    main_run('citation_mul_rev_model.pth', device)
+    run_optuna('citation_mul_rev_model.pth', device)
+    # main_run('citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
