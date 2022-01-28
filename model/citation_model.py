@@ -533,7 +533,8 @@ class Model(nn.Module):
             new_re_sen_pre = None
             for i in range(ori_sen_pre_i.shape[0]):
                 # 此处的ori_sen_pre_mix找的有问题
-                gen_example = 0.0001 * (ori_sen_pre_i[i] - ori_mean[kwargs['ori_label'][i].item()]) + re_mean[
+                # 当权重为0.0001时 private 0.26231
+                gen_example = 0.001 * (ori_sen_pre_i[i] - ori_mean[kwargs['ori_label'][i].item()]) + re_mean[
                     kwargs['re_label'][i].item()]
                 if new_re_sen_pre is None:
                     new_re_sen_pre = gen_example.unsqueeze(0)
