@@ -661,7 +661,7 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
             train_t_tar = torch.LongTensor(t_tar)
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
-            main_output, au_output1, mix_logits, mix_labels, labels_aux, lam, des_mix_logits, des_mix_labels, des_labels_aux, des_lam\
+            main_output, au_output1, mix_logits, mix_labels, labels_aux, lam, ori_sen_pre_out, des_imix1 \
                 = model(t_sent, r_sen=r_sent, s_sen=s_sent, des_sen=des_sent,
                                                                                      l=alpha,
                                                                                      mix_alpha=mix_alpha,
@@ -670,8 +670,8 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
 
             # i-mix loss
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
-            des_mix_loss = (des_lam * criterion(des_mix_logits, des_mix_labels) + (1. - des_lam) * criterion(des_mix_logits, des_labels_aux)).mean()
-
+            # des_mix_loss = (des_lam * criterion(des_mix_logits, des_mix_labels) + (1. - des_lam) * criterion(des_mix_logits, des_labels_aux)).mean()
+            kl_loss = compute_kl_loss(des_imix1, ori_sen_pre_out)
             # L_o
             # train_t_tar = torch.cat([train_t_tar, train_t_tar], dim=0)
             ori_loss = criterion(main_output, train_t_tar.to(device))
@@ -680,7 +680,7 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
-            loss = alpha * (ori_loss + au_weight * au_loss + 0.05 * mix_loss) + (1 - alpha) * re_loss + 0.05 * des_mix_loss
+            loss = alpha * (ori_loss + au_weight * au_loss + 0.05 * mix_loss + 0.05) + (1 - alpha) * re_loss
             loss.backward()
             optimize.step()
 
