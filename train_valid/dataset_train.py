@@ -672,8 +672,8 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
             # des_mix_loss = (des_lam * criterion(des_mix_logits, des_mix_labels) + (1. - des_lam) * criterion(des_mix_logits, des_labels_aux)).mean()
             new_des = None
-            for i in range(ori_sen_pre_out.shape[0]):
-                des = des_imix1[train_t_tar[i].item(), :]
+            for j in range(ori_sen_pre_out.shape[0]):
+                des = des_imix1[train_t_tar[j].item(), :]
                 if new_des == None:
                     new_des = des.unsqueeze(0)
                 else:
