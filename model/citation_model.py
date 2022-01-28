@@ -621,7 +621,7 @@ class Model(nn.Module):
             re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
             new_re_sen_pre = None
             for i in range(ori_sen_pre_i.shape[0]):
-                gen_example = ori_sen_pre_i[i] - des_imix1[kwargs['ori_label'][i].item(), :] + re_mean[
+                gen_example = 0.0001 * (ori_sen_pre_i[i] - des_imix1[kwargs['ori_label'][i].item(), :]) + re_mean[
                     kwargs['re_label'][i].item()]
                 if new_re_sen_pre is None:
                     new_re_sen_pre = gen_example.unsqueeze(0)
