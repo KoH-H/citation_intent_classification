@@ -618,7 +618,7 @@ def dataset_train_limix_rspace_v2(model, token, data, criterion, optimize, n_epo
 
 def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimize, n_epoch, au_weight, device, scheduler=None,
                              model_path=None, mix_alpha=1.):
-    print("limix_rspace".center(30, "*"))
+    print("dataset_train_labeldes_limix_rspace_v2".center(50, "*"))
     model.to(device=device)
     best_val_f1, counts, tmp, best_epoch = 0, 0, 0, 0
     train_sen = data['train']['sen']
@@ -671,7 +671,14 @@ def dataset_train_labeldes_limix_rspace_v2(model, token, data, criterion, optimi
             # i-mix loss
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
             # des_mix_loss = (des_lam * criterion(des_mix_logits, des_mix_labels) + (1. - des_lam) * criterion(des_mix_logits, des_labels_aux)).mean()
-            kl_loss = compute_kl_loss(des_imix1, ori_sen_pre_out)
+            new_des = None
+            for i in range(ori_sen_pre_out.shape[0]):
+                des = des_imix1[train_t_tar[i].item(), :]
+                if new_des == None:
+                    new_des = des.unsqueeze(0)
+                else:
+                    new_des = torch.cat([new_des, des.unsqueeze(0)], 0)
+            kl_loss = compute_kl_loss(new_des, ori_sen_pre_out)
             # L_o
             # train_t_tar = torch.cat([train_t_tar, train_t_tar], dim=0)
             ori_loss = criterion(main_output, train_t_tar.to(device))
