@@ -43,7 +43,7 @@ def run_optuna(path, dev):
     def objective(trial):
         model = Model('allenai/scibert_scivocab_uncased')
         # n_epoch = trial.suggest_int('n_epoch', 140, 170, log=True)
-        n_epoch = 150
+        n_epoch = 151
         lr = trial.suggest_float('lr', 1e-4, 1e-3, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
         mix_w = trial.suggest_float('mix_w', 0.01, 0.1, log=True)
@@ -68,7 +68,7 @@ def main_run(params, path, dev):
     criterion = nn.CrossEntropyLoss()
     # imix parames
     # au_weight = 0.001122
-    n_epoch = 150
+    n_epoch = 151
     # lr = 0.000583
     # mix_w = 0.022242
     # lr = 0.0001
