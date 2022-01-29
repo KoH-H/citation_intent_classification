@@ -24,11 +24,11 @@ def parse_args():
         default=None,
         type=str
     )
-    parser.add_argument(
-        '--radio',
-        help="proportion of training data",
-        type=float
-    )
+    # parser.add_argument(
+    #     '--radio',
+    #     help="proportion of training data",
+    #     type=float
+    # )
     args = parser.parse_args()
     return args
 
@@ -38,7 +38,7 @@ def run_optuna(path, dev):
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(batch_size=16)
+    dataset = load_data(batch_size=16, radio=0.2)
 
     def objective(trial):
         model = Model('allenai/scibert_scivocab_uncased')
@@ -75,7 +75,7 @@ def main_run(params, path, dev):
     # au_weight = 0.007413
     # n_epoch = 151
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(batch_size=16, radio=params.radio)
+    dataset = load_data(batch_size=16, radio=0.8)
 
     optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
