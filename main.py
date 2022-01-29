@@ -83,6 +83,6 @@ if __name__ == "__main__":
     tst = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
     # run_optuna('citation_mul_rev_model.pth', device)
-    # main_run('citation_mul_rev_model.pth', device)
+    main_run('citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
