@@ -48,10 +48,10 @@ def main_run(path, dev):
     model = Model('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     # imix parames
-    au_weight = 0.001121
+    au_weight = 0.001122
     n_epoch = 150
-    lr = 0.000582
-    mix_w = 0.022241
+    lr = 0.000583
+    mix_w = 0.022242
     # lr = 0.0001
     # au_weight = 0.007413
     # n_epoch = 151
