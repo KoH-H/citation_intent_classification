@@ -47,15 +47,20 @@ def main_run(path, dev):
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     model = Model('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
-    lr = 0.0001
-    au_weight = 0.007413
-    n_epoch = 151
+    # imix parames
+    au_weight = 0.001121
+    n_epoch = 150
+    lr = 0.000582
+    mix_w = 0.022241
+    # lr = 0.0001
+    # au_weight = 0.007413
+    # n_epoch = 151
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
     dataset = load_data(batch_size=16)
 
     optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train_labeldes_limix_rspace_v2(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev,
+    best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch, au_weight, dev, mix_w,
                                                 scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
@@ -77,7 +82,7 @@ def main_run(path, dev):
 if __name__ == "__main__":
     tst = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
-    run_optuna('citation_mul_rev_model.pth', device)
+    # run_optuna('citation_mul_rev_model.pth', device)
     # main_run('citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))

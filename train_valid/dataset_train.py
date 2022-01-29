@@ -222,6 +222,7 @@ def dataset_train_contr(model, token, data, criterion, optimize, n_epoch, au_wei
 
 def dataset_train_imix(model, token, data, criterion, optimize, n_epoch, au_weight, device, mix_w, scheduler=None,
                        model_path=None, mix_alpha=1.):
+    # best parameter value Best_Params:{'au_weight': 0.0011215333382916224, 'lr': 0.0005825712930857525, 'mix_w': 0.02224172593212441}
     model.to(device=device)
     best_val_f1, counts, tmp, best_epoch = 0, 0, 0, 0
     train_sen = data['train']['sen']
