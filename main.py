@@ -46,7 +46,7 @@ def run_optuna(path, dev):
         n_epoch = 151
         lr = trial.suggest_float('lr', 1e-4, 1e-3, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
-        mix_w = trial.suggest_float('mix_w', 0.01, 0.1, log=True)
+        mix_w = trial.suggest_float('mix_w', 0.04, 0.1, log=True)
         # beta = trial.suggest_float('beta', 1, 10, log=True)
         optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
@@ -55,7 +55,7 @@ def run_optuna(path, dev):
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db', load_if_exists=True)
-    study.optimize(objective, n_trials=30)
+    study.optimize(objective, n_trials=10)
     print("Best_Params:{} \t Best_Value:{}".format(study.best_params, study.best_value))
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
     print(history)
@@ -71,9 +71,12 @@ def main_run(params, path, dev):
     n_epoch = 151
     # lr = 0.000583
     # mix_w = 0.022242
+
+
     # lr = 0.0001
     # au_weight = 0.007413
     # n_epoch = 151
+    # mix_w = 0.05
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
     dataset = load_data(batch_size=16, radio=0.8)
 
