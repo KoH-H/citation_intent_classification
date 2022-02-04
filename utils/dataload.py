@@ -105,7 +105,7 @@ def load_data(dataname, batch_size=None, radio=None):
     if dataname == 'ACT':
         train_set = pd.read_csv(path / 'dataset/act/SDP_train.csv', sep=',')
         test = pd.read_csv(path / 'dataset/act/SDP_test.csv', sep=',').merge(
-            pd.read_csv(path / 'dataset/sample_submission.csv'), on='unique_id')
+            pd.read_csv(path / 'dataset/act/sample_submission.csv'), on='unique_id')
         train_set = sklearn.utils.shuffle(train_set, random_state=0).reset_index(drop=True)
         train = train_set.loc[:int(train_set.shape[0] * radio) - 1]
         print(train['citation_class_label'].value_counts())
