@@ -25,7 +25,7 @@ def parse_args():
         type=str
     )
     parser.add_argument(
-        "--name",
+        "--dataname",
         help="dataname",
         default=None,
         type=str
