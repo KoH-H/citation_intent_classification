@@ -6,6 +6,8 @@ from nltk.corpus import stopwords
 import collections
 from pathlib import Path
 import re
+import jsonlines
+import pandas as pd
 
 
 def reverse_sampler(train_data):
@@ -41,88 +43,104 @@ def delete_aug(data):
     return data.loc[:, ('citation_context', 'citation_class_label')]
 
 
-def generate_batch_data(data, label_description,batch_size=16):
+def generate_batch_data(data, batch_size=16):
     print('train generate_batch_data')
     stop_words = stopwords.words('english')
     stop_words = ['et', 'al', 'e', 'g'] + stop_words
     batch_count = int(data.shape[0] / batch_size)
     sentences_list, target_list = [], []
-    if label_description:
-        labeldes_list = []
     for i in range(batch_count):
         mini_batch_sentences, mini_batch_target = [], []
-        if label_description:
-            min_batch_labeldes = []
         for j in range(batch_size):
             citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i * batch_size + j]).lower()
             citation_text = nltk.word_tokenize(citation_text)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
             mini_batch_sentences.append(citation_text)
             mini_batch_target.append(data['citation_class_label'][i * batch_size + j])
-            if label_description:
-                min_batch_labeldes.append(data['label_description'][i * batch_size + j])
         sentences_list.append(mini_batch_sentences)
         target_list.append(mini_batch_target)
-        if label_description:
-            labeldes_list.append(min_batch_labeldes)
     if data.shape[0] % batch_size != 0:
         last_sentences_list = []
         last_target_list = []
-        if label_description:
-            last_label_list = []
         for i in range(batch_count * batch_size, data.shape[0]):
             citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i]).lower()
             citation_text = nltk.word_tokenize(citation_text)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
             last_sentences_list.append(citation_text)
             last_target_list.append(data['citation_class_label'][i])
-            if label_description:
-                last_label_list.append(data['label_description'][i])
         sentences_list.append(last_sentences_list)
         target_list.append(last_target_list)
-        if label_description:
-            labeldes_list.append(last_label_list)
-    if label_description:
-        return {'sen': sentences_list, 'tar': target_list, 'des': labeldes_list}
-    else:
-        return {'sen': sentences_list, 'tar': target_list}
+
+    return {'sen': sentences_list, 'tar': target_list}
 
 
-def load_data(label_description=False, batch_size=None, radio=None):
+def acljson2pd(name):
+    label_dict = {'Background': 0, 'Extends': 1, 'Uses': 2, 'Motivation': 3, 'CompareOrContrast': 4, 'Future': 5}
+    datadic = dict()
+    for setname in name:
+        data = dict()
+        with open('./dataset/acl/{}.jsonl'.format(setname), 'r+', encoding='utf8') as f:
+            for line in jsonlines.Reader(f):
+                if 'citation_context' not in data:
+                    data['citation_context'] = [line['text']]
+                    data['citation_class_label'] = [label_dict[line['intent']]]
+                else:
+                    context_list = data['citation_context']
+                    context_list.append(line['text'])
+                    label_list = data['citation_class_label']
+                    label_list.append(label_dict[line['intent']])
+                    data['citation_context'] = context_list
+                    data['citation_class_label'] = label_list
+        data_df = pd.DataFrame(data)
+        datadic[setname] = data_df
+    return datadic
+
+
+def load_data(dataname, batch_size=None, radio=None):
     assert batch_size is not None
     assert radio is not None
     data = {}
     # path = Path('citation_intent_classification') # root path
     path = Path('./')
-    if label_description:
-        train_set = pd.read_csv(path / 'dataset/new_SDP_train.csv', sep=',')
-        test = pd.read_csv(path / 'dataset/SDP_test.csv', sep=',').merge(
-            pd.read_csv(path / 'dataset/new_sample_submission.csv'), on='unique_id')
-    else:
-        train_set = pd.read_csv(path / 'dataset/SDP_train.csv', sep=',')
-        test = pd.read_csv(path / 'dataset/SDP_test.csv', sep=',').merge(
+    if dataname == 'ACT':
+        train_set = pd.read_csv(path / 'dataset/act/SDP_train.csv', sep=',')
+        test = pd.read_csv(path / 'dataset/act/SDP_test.csv', sep=',').merge(
             pd.read_csv(path / 'dataset/sample_submission.csv'), on='unique_id')
-    train_set = sklearn.utils.shuffle(train_set, random_state=0).reset_index(drop=True)
-    train = train_set.loc[:int(train_set.shape[0] * radio) - 1]
-    print(train['citation_class_label'].value_counts())
-    print(collections.Counter(train['citation_class_label']).items())
-    val = (train_set.loc[int(train_set.shape[0] * radio):]).reset_index(drop=True)
+        train_set = sklearn.utils.shuffle(train_set, random_state=0).reset_index(drop=True)
+        train = train_set.loc[:int(train_set.shape[0] * radio) - 1]
+        print(train['citation_class_label'].value_counts())
+        print(collections.Counter(train['citation_class_label']).items())
+        val = (train_set.loc[int(train_set.shape[0] * radio):]).reset_index(drop=True)
+    else:
+        os.system("tar -zxvf dataset/acl/acl.tar.gz -C dataset/acl/")
+        acldf = acljson2pd(['train', 'dev', 'test'])
+        train = acldf['train']
+        val = acldf['dev']
+        test = acldf['test']
 
     reverse_data = reverse_sampler(train)
-    reverse_data = delete_aug(reverse_data)
-    data['reverse'] = generate_batch_data(reverse_data, label_description, batch_size)
+
+    if dataname == 'ACT':
+        reverse_data = delete_aug(reverse_data)
+    data['reverse'] = generate_batch_data(reverse_data, batch_size)
+
+    # mul_sec = pd.read_csv(path / 'dataset/section_name.csv')
+    # mul_num = train.shape[0]
+    # mul_section = mul_sec.head(mul_num)
+    # mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0]//batch_size))
+    # data['section'] = mul_section_batch
+    if dataname == 'ACT':
+        train = delete_aug(train)
+        val = delete_aug(val)
+        test = delete_aug(test)
+    data['train'] = generate_batch_data(train, batch_size)
+    data['val'] = generate_batch_data(val, batch_size)
+    data['test'] = generate_batch_data(test, batch_size)
 
     mul_sec = pd.read_csv(path / 'dataset/section_name.csv')
     mul_num = train.shape[0]
     mul_section = mul_sec.head(mul_num)
-    mul_section_batch = generate_batch_data(mul_section, label_description, mul_section.shape[0] // (train.shape[0]//batch_size))
+    mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0] // batch_size))
     data['section'] = mul_section_batch
-
-    train = delete_aug(train)
-    val = delete_aug(val)
-    test = delete_aug(test)
-    data['train'] = generate_batch_data(train, label_description, batch_size)
-    data['val'] = generate_batch_data(val, label_description, batch_size)
-    data['test'] = generate_batch_data(test, label_description, batch_size)
 
     return data

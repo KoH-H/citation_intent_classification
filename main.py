@@ -17,10 +17,16 @@ import argparse
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description = 'code for Citation Intent')
+    parser = argparse.ArgumentParser(description='code for Citation Intent')
     parser.add_argument(
         "--mode",
         help="decide find parameters or train",
+        default=None,
+        type=str
+    )
+    parser.add_argument(
+        "--name",
+        help="dataname",
         default=None,
         type=str
     )
@@ -32,13 +38,13 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-def run_optuna(path, dev):
+def run_optuna(params, path, dev):
     print('Run optuna')
     setup_seed(0)
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(batch_size=16, radio=0.2)
+    dataset = load_data(params.dataname,batch_size=16, radio=0.2)
 
     def objective(trial):
         model = Model('allenai/scibert_scivocab_uncased')
@@ -78,7 +84,7 @@ def main_run(params, path, dev):
     # n_epoch = 151
     # mix_w = 0.05
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(batch_size=16, radio=0.2)
+    dataset = load_data(params.dataname, batch_size=16, radio=0.2)
 
     optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
@@ -103,16 +109,16 @@ def main_run(params, path, dev):
 
 if __name__ == "__main__":
     args = parse_args()
-    with open('params.json', 'r', encoding='utf-8') as f:
-        config = json.load(f)
-    args.lr = config['imix']['lr']
-    args.au_weight = config['imix']['au_weight']
-    args.mix_w = config['imix']['mix_w']
     tst = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
     if args.mode == 'optuna':
-        run_optuna('citation_mul_rev_model.pth', device)
+        run_optuna(args, 'citation_mul_rev_model.pth', device)
     else:
+        with open('params.json', 'r', encoding='utf-8') as f:
+            config = json.load(f)
+        args.lr = config['imix']['lr']
+        args.au_weight = config['imix']['au_weight']
+        args.mix_w = config['imix']['mix_w']
         main_run(args, 'citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))

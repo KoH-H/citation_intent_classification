@@ -23,9 +23,9 @@ import collections
 #     section_location.loc[i] = {'citation_context': section_text[i],
 #                                'citation_class_label': section_name[i]}
 # section_location.to_csv('/content/citation_classification/dataset/section_name.csv', sep=',', index=False)
-train_set = pd.read_csv('dataset/SDP_train.csv', sep=',')
+train_set = pd.read_csv('dataset/act/SDP_train.csv', sep=',')
 
-sample_submission = pd.read_csv('dataset/sample_submission.csv', sep=',')
+sample_submission = pd.read_csv('dataset/act/sample_submission.csv', sep=',')
 
 label_description = {0: 'The cited paper provides relevant Background information or is part of the body of literature',
                      1: 'The citing paper expresses similarities or differences to, or disagrees with, the cited paper.',
