@@ -20,7 +20,7 @@ def setup_seed(seed):
 
 def generate_submission(pre_list, filename, test_f1, dataname):
     if dataname == 'ACT':
-        test_unique = pd.read_csv('dataset/SDP_test.csv')
+        test_unique = pd.read_csv('dataset/act/SDP_test.csv')
         submission = pd.DataFrame(columns=['unique_id', 'citation_class_label'])
         pre_label = pd.Series(pre_list)
         submission['unique_id'] = test_unique['unique_id']
