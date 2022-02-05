@@ -88,10 +88,8 @@ def main_run(params, path, dev):
 
     optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-    # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch, params.au_weight, dev, params.mix_w,
-    #                                             scheduler, model_path=path)
-    best_model_f1 = 0
-    best_epoch = 0
+    best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch, params.au_weight, dev, params.mix_w,
+                                                scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
                                                                          dataset['test'], device,
