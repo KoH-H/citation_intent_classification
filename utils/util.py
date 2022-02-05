@@ -18,16 +18,23 @@ def setup_seed(seed):
     torch.backends.cudnn.benchmark = False
 
 
-def generate_submission(pre_list, filename, test_f1):
-    test_unique = pd.read_csv('dataset/SDP_test.csv')
-    submission = pd.DataFrame(columns=['unique_id', 'citation_class_label'])
-    pre_label = pd.Series(pre_list)
-    submission['unique_id'] = test_unique['unique_id']
-    submission['citation_class_label'] = pre_label
-    submission.to_csv('{}_F1_{:.4f}_Time_{}.csv'.format(filename, test_f1,
-                                                                                        time.strftime('%m_%d_%H',
-                                                                                              time.localtime(time.time()))),
-                      sep=',', index=False, encoding='utf-8')
+def generate_submission(pre_list, filename, test_f1, dataname):
+    if dataname == 'ACT':
+        test_unique = pd.read_csv('dataset/SDP_test.csv')
+        submission = pd.DataFrame(columns=['unique_id', 'citation_class_label'])
+        pre_label = pd.Series(pre_list)
+        submission['unique_id'] = test_unique['unique_id']
+        submission['citation_class_label'] = pre_label
+        submission.to_csv('{}_{}_F1_{:.4f}_Time_{}.csv'.format(dataname, filename, test_f1, time.strftime('%m_%d_%H',
+                                                                                              time.localtime(time.time()))), sep=',', index=False, encoding='utf-8')
+    else:
+        submission = pd.DataFrame(columns=['citation_class_label'])
+        pre_label = pd.Series(pre_list)
+        submission['citation_class_label'] = pre_label
+        submission.to_csv('{}_{}_F1_{:.4f}_Time_{}.csv'.format(dataname, filename, test_f1, time.strftime('%m_%d_%H',
+                                                                                                          time.localtime(
+                                                                                                              time.time()))),
+                          sep=',', index=False, encoding='utf-8')
 
 
 def log_result(test_f1, best_model_f1=0, c_matrix=None, per_eval=None, logfile='output.log', lr=0.1, epoch=None, fun_name=None):

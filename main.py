@@ -101,7 +101,7 @@ def main_run(params, path, dev):
     print('Test'.center(20, '='))
     test_true = torch.Tensor(test_true_label).tolist()
     test_pre = torch.Tensor(test_pre_label).tolist()
-    generate_submission(test_pre, 'mul_rev_val_f1_{:.5}_best_epoch_{}'.format(best_model_f1, best_epoch), test_f1)
+    generate_submission(test_pre, 'mul_rev_val_f1_{:.5}_best_epoch_{}'.format(best_model_f1, best_epoch), test_f1, params.dataname)
     c_matrix = confusion_matrix(test_true, test_pre, labels=[0, 1, 2, 3, 4, 5])
     per_eval = classification_report(test_true, test_pre, labels=[0, 1, 2, 3, 4, 5])
     log_result(test_f1, best_model_f1,  c_matrix, per_eval, lr=params.lr, epoch=n_epoch, fun_name='main_multi_rev')
