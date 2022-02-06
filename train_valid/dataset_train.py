@@ -858,11 +858,11 @@ def dataset_train(model, token, data, criterion, optimize, n_epoch, au_weight, d
         for index, (t_sen, t_tar, r_sen, r_tar, s_sen, s_tar) in enumerate(zip(train_sen, train_tar, re_sen, re_tar,
                                                                                sec_sen, sec_tar)):
             t_sent = token(t_sen, return_tensors='pt', is_split_into_words=True, padding=True,
-                           add_special_tokens=True, return_length=True)
+                           add_special_tokens=True, return_length=True, truncation=True)
             r_sent = token(r_sen, return_tensors='pt', is_split_into_words=True, padding=True,
-                           add_special_tokens=True, return_length=True)
+                           add_special_tokens=True, return_length=True, truncation=True)
             s_sent = token(s_sen, return_tensors='pt', is_split_into_words=True, padding=True,
-                           add_special_tokens=True, return_length=True)
+                           add_special_tokens=True, return_length=True, truncation=True)
             optimize.zero_grad()
 
             t_sent = t_sent.to(device)
