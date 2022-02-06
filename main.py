@@ -130,9 +130,9 @@ if __name__ == "__main__":
     else:
         with open('params.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
-        args.lr = config[args.type]['lr']
-        args.au_weight = config[args.type]['au_weight']
-        args.mix_w = config[args.type]['mix_w']
+        args.lr = config[args.tp]['lr']
+        args.au_weight = config[args.tp]['au_weight']
+        args.mix_w = config[args.tp]['mix_w']
         main_run(args, 'citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
