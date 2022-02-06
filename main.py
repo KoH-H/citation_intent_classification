@@ -31,7 +31,7 @@ def parse_args():
         type=str
     )
     parser.add_argument(
-        "--type",
+        "--tp",
         help="type of params",
         default=None,
         type=str
