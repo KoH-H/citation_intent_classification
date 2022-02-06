@@ -44,7 +44,7 @@ def run_optuna(params, path, dev):
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(params.dataname, batch_size=16, radio=0.8)
+    dataset = load_data(params.dataname, batch_size=16, radio=0.2)
 
     def objective(trial):
         model = Model('allenai/scibert_scivocab_uncased')
@@ -52,16 +52,18 @@ def run_optuna(params, path, dev):
         n_epoch = 151
         lr = trial.suggest_float('lr', 1e-4, 1e-3, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
-        mix_w = trial.suggest_float('mix_w', 0.04, 0.1, log=True)
+        # mix_w = trial.suggest_float('mix_w', 0.04, 0.1, log=True)
         # beta = trial.suggest_float('beta', 1, 10, log=True)
         optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-        best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
-                                                        au_weight, dev, mix_w, scheduler, model_path=path)
+        # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
+        #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
+        best_model_f1, best_epoch = dataset_train_space(model, token, dataset, criterion, optimizer, n_epoch,
+                                                       au_weight, dev, scheduler, model_path=path)
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db', load_if_exists=True)
-    study.optimize(objective, n_trials=3)
+    study.optimize(objective, n_trials=6)
     print("Best_Params:{} \t Best_Value:{}".format(study.best_params, study.best_value))
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
     print(history)
