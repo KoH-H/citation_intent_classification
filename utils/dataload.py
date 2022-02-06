@@ -70,7 +70,6 @@ def generate_batch_data(data, batch_size=16):
             last_target_list.append(data['citation_class_label'][i])
         sentences_list.append(last_sentences_list)
         target_list.append(last_target_list)
-
     return {'sen': sentences_list, 'tar': target_list}
 
 

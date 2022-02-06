@@ -30,6 +30,12 @@ def parse_args():
         default=None,
         type=str
     )
+    parser.add_argument(
+        "--type",
+        help="type of params",
+        default=None,
+        type=str
+    )
     # parser.add_argument(
     #     '--radio',
     #     help="proportion of training data",
@@ -90,7 +96,7 @@ def main_run(params, path, dev):
 
     optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch, params.au_weight, dev, params.mix_w,
+    best_model_f1, best_epoch = dataset_train(model, token, dataset, criterion, optimizer, n_epoch, params.au_weight, dev,
                                                 scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
@@ -124,9 +130,9 @@ if __name__ == "__main__":
     else:
         with open('params.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
-        args.lr = config['imix']['lr']
-        args.au_weight = config['imix']['au_weight']
-        args.mix_w = config['imix']['mix_w']
+        args.lr = config[args.type]['lr']
+        args.au_weight = config[args.type]['au_weight']
+        args.mix_w = config[args.type]['mix_w']
         main_run(args, 'citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))

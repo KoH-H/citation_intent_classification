@@ -1,0 +1,1001 @@
+unique_id,citation_class_label,label_description
+CCT1,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT2,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT3,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT4,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT5,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT6,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT7,4,The citing paper is directly motivated by the cited paper.
+CCT8,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT9,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT10,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT11,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT12,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT13,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT14,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT15,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT16,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT17,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT18,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT19,4,The citing paper is directly motivated by the cited paper.
+CCT20,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT21,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT22,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT23,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT24,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT25,4,The citing paper is directly motivated by the cited paper.
+CCT26,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT27,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT28,3,The cited paper may be a potential avenue for future work.
+CCT29,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT30,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT31,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT32,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT33,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT34,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT35,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT36,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT37,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT38,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT39,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT40,4,The citing paper is directly motivated by the cited paper.
+CCT41,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT42,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT43,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT44,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT45,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT46,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT47,4,The citing paper is directly motivated by the cited paper.
+CCT48,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT49,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT50,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT51,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT52,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT53,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT54,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT55,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT56,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT57,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT58,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT59,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT60,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT61,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT62,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT63,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT64,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT65,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT66,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT67,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT68,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT69,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT70,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT71,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT72,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT73,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT74,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT75,3,The cited paper may be a potential avenue for future work.
+CCT76,3,The cited paper may be a potential avenue for future work.
+CCT77,3,The cited paper may be a potential avenue for future work.
+CCT78,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT79,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT80,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT81,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT82,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT83,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT84,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT85,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT86,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT87,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT88,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT89,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT90,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT91,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT92,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT93,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT94,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT95,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT96,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT97,3,The cited paper may be a potential avenue for future work.
+CCT98,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT99,4,The citing paper is directly motivated by the cited paper.
+CCT100,4,The citing paper is directly motivated by the cited paper.
+CCT101,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT102,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT103,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT104,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT105,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT106,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT107,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT108,4,The citing paper is directly motivated by the cited paper.
+CCT109,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT110,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT111,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT112,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT113,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT114,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT115,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT116,4,The citing paper is directly motivated by the cited paper.
+CCT117,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT118,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT119,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT120,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT121,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT122,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT123,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT124,4,The citing paper is directly motivated by the cited paper.
+CCT125,4,The citing paper is directly motivated by the cited paper.
+CCT126,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT127,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT128,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT129,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT130,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT131,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT132,3,The cited paper may be a potential avenue for future work.
+CCT133,4,The citing paper is directly motivated by the cited paper.
+CCT134,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT135,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT136,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT137,4,The citing paper is directly motivated by the cited paper.
+CCT138,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT139,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT140,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT141,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT142,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT143,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT144,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT145,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT146,3,The cited paper may be a potential avenue for future work.
+CCT147,4,The citing paper is directly motivated by the cited paper.
+CCT148,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT149,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT150,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT151,4,The citing paper is directly motivated by the cited paper.
+CCT152,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT153,4,The citing paper is directly motivated by the cited paper.
+CCT154,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT155,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT156,3,The cited paper may be a potential avenue for future work.
+CCT157,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT158,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT159,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT160,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT161,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT162,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT163,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT164,3,The cited paper may be a potential avenue for future work.
+CCT165,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT166,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT167,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT168,4,The citing paper is directly motivated by the cited paper.
+CCT169,4,The citing paper is directly motivated by the cited paper.
+CCT170,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT171,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT172,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT173,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT174,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT175,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT176,4,The citing paper is directly motivated by the cited paper.
+CCT177,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT178,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT179,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT180,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT181,4,The citing paper is directly motivated by the cited paper.
+CCT182,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT183,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT184,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT185,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT186,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT187,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT188,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT189,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT190,3,The cited paper may be a potential avenue for future work.
+CCT191,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT192,3,The cited paper may be a potential avenue for future work.
+CCT193,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT194,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT195,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT196,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT197,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT198,4,The citing paper is directly motivated by the cited paper.
+CCT199,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT200,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT201,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT202,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT203,3,The cited paper may be a potential avenue for future work.
+CCT204,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT205,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT206,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT207,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT208,4,The citing paper is directly motivated by the cited paper.
+CCT209,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT210,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT211,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT212,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT213,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT214,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT215,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT216,4,The citing paper is directly motivated by the cited paper.
+CCT217,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT218,4,The citing paper is directly motivated by the cited paper.
+CCT219,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT220,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT221,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT222,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT223,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT224,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT225,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT226,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT227,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT228,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT229,4,The citing paper is directly motivated by the cited paper.
+CCT230,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT231,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT232,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT233,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT234,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT235,4,The citing paper is directly motivated by the cited paper.
+CCT236,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT237,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT238,3,The cited paper may be a potential avenue for future work.
+CCT239,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT240,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT241,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT242,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT243,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT244,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT245,4,The citing paper is directly motivated by the cited paper.
+CCT246,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT247,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT248,4,The citing paper is directly motivated by the cited paper.
+CCT249,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT250,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT251,3,The cited paper may be a potential avenue for future work.
+CCT252,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT253,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT254,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT255,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT256,3,The cited paper may be a potential avenue for future work.
+CCT257,4,The citing paper is directly motivated by the cited paper.
+CCT258,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT259,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT260,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT261,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT262,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT263,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT264,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT265,4,The citing paper is directly motivated by the cited paper.
+CCT266,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT267,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT268,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT269,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT270,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT271,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT272,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT273,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT274,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT275,4,The citing paper is directly motivated by the cited paper.
+CCT276,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT277,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT278,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT279,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT280,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT281,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT282,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT283,4,The citing paper is directly motivated by the cited paper.
+CCT284,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT285,4,The citing paper is directly motivated by the cited paper.
+CCT286,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT287,3,The cited paper may be a potential avenue for future work.
+CCT288,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT289,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT290,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT291,3,The cited paper may be a potential avenue for future work.
+CCT292,3,The cited paper may be a potential avenue for future work.
+CCT293,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT294,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT295,4,The citing paper is directly motivated by the cited paper.
+CCT296,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT297,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT298,4,The citing paper is directly motivated by the cited paper.
+CCT299,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT300,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT301,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT302,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT303,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT304,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT305,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT306,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT307,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT308,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT309,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT310,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT311,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT312,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT313,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT314,4,The citing paper is directly motivated by the cited paper.
+CCT315,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT316,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT317,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT318,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT319,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT320,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT321,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT322,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT323,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT324,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT325,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT326,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT327,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT328,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT329,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT330,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT331,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT332,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT333,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT334,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT335,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT336,4,The citing paper is directly motivated by the cited paper.
+CCT337,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT338,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT339,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT340,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT341,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT342,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT343,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT344,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT345,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT346,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT347,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT348,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT349,4,The citing paper is directly motivated by the cited paper.
+CCT350,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT351,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT352,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT353,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT354,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT355,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT356,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT357,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT358,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT359,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT360,4,The citing paper is directly motivated by the cited paper.
+CCT361,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT362,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT363,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT364,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT365,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT366,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT367,4,The citing paper is directly motivated by the cited paper.
+CCT368,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT369,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT370,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT371,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT372,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT373,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT374,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT375,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT376,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT377,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT378,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT379,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT380,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT381,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT382,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT383,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT384,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT385,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT386,4,The citing paper is directly motivated by the cited paper.
+CCT387,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT388,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT389,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT390,4,The citing paper is directly motivated by the cited paper.
+CCT391,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT392,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT393,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT394,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT395,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT396,4,The citing paper is directly motivated by the cited paper.
+CCT397,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT398,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT399,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT400,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT401,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT402,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT403,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT404,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT405,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT406,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT407,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT408,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT409,4,The citing paper is directly motivated by the cited paper.
+CCT410,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT411,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT412,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT413,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT414,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT415,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT416,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT417,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT418,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT419,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT420,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT421,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT422,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT423,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT424,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT425,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT426,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT427,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT428,4,The citing paper is directly motivated by the cited paper.
+CCT429,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT430,3,The cited paper may be a potential avenue for future work.
+CCT431,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT432,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT433,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT434,4,The citing paper is directly motivated by the cited paper.
+CCT435,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT436,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT437,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT438,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT439,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT440,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT441,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT442,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT443,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT444,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT445,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT446,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT447,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT448,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT449,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT450,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT451,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT452,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT453,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT454,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT455,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT456,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT457,4,The citing paper is directly motivated by the cited paper.
+CCT458,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT459,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT460,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT461,4,The citing paper is directly motivated by the cited paper.
+CCT462,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT463,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT464,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT465,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT466,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT467,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT468,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT469,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT470,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT471,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT472,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT473,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT474,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT475,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT476,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT477,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT478,4,The citing paper is directly motivated by the cited paper.
+CCT479,4,The citing paper is directly motivated by the cited paper.
+CCT480,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT481,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT482,3,The cited paper may be a potential avenue for future work.
+CCT483,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT484,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT485,4,The citing paper is directly motivated by the cited paper.
+CCT486,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT487,3,The cited paper may be a potential avenue for future work.
+CCT488,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT489,3,The cited paper may be a potential avenue for future work.
+CCT490,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT491,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT492,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT493,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT494,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT495,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT496,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT497,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT498,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT499,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT500,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT501,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT502,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT503,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT504,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT505,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT506,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT507,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT508,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT509,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT510,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT511,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT512,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT513,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT514,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT515,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT516,3,The cited paper may be a potential avenue for future work.
+CCT517,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT518,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT519,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT520,3,The cited paper may be a potential avenue for future work.
+CCT521,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT522,4,The citing paper is directly motivated by the cited paper.
+CCT523,3,The cited paper may be a potential avenue for future work.
+CCT524,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT525,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT526,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT527,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT528,4,The citing paper is directly motivated by the cited paper.
+CCT529,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT530,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT531,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT532,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT533,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT534,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT535,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT536,4,The citing paper is directly motivated by the cited paper.
+CCT537,3,The cited paper may be a potential avenue for future work.
+CCT538,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT539,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT540,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT541,4,The citing paper is directly motivated by the cited paper.
+CCT542,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT543,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT544,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT545,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT546,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT547,4,The citing paper is directly motivated by the cited paper.
+CCT548,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT549,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT550,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT551,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT552,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT553,3,The cited paper may be a potential avenue for future work.
+CCT554,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT555,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT556,4,The citing paper is directly motivated by the cited paper.
+CCT557,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT558,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT559,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT560,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT561,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT562,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT563,4,The citing paper is directly motivated by the cited paper.
+CCT564,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT565,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT566,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT567,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT568,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT569,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT570,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT571,4,The citing paper is directly motivated by the cited paper.
+CCT572,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT573,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT574,4,The citing paper is directly motivated by the cited paper.
+CCT575,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT576,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT577,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT578,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT579,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT580,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT581,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT582,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT583,4,The citing paper is directly motivated by the cited paper.
+CCT584,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT585,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT586,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT587,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT588,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT589,4,The citing paper is directly motivated by the cited paper.
+CCT590,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT591,3,The cited paper may be a potential avenue for future work.
+CCT592,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT593,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT594,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT595,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT596,4,The citing paper is directly motivated by the cited paper.
+CCT597,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT598,4,The citing paper is directly motivated by the cited paper.
+CCT599,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT600,4,The citing paper is directly motivated by the cited paper.
+CCT601,3,The cited paper may be a potential avenue for future work.
+CCT602,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT603,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT604,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT605,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT606,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT607,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT608,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT609,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT610,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT611,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT612,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT613,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT614,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT615,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT616,4,The citing paper is directly motivated by the cited paper.
+CCT617,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT618,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT619,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT620,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT621,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT622,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT623,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT624,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT625,3,The cited paper may be a potential avenue for future work.
+CCT626,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT627,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT628,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT629,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT630,4,The citing paper is directly motivated by the cited paper.
+CCT631,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT632,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT633,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT634,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT635,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT636,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT637,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT638,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT639,4,The citing paper is directly motivated by the cited paper.
+CCT640,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT641,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT642,3,The cited paper may be a potential avenue for future work.
+CCT643,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT644,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT645,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT646,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT647,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT648,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT649,4,The citing paper is directly motivated by the cited paper.
+CCT650,4,The citing paper is directly motivated by the cited paper.
+CCT651,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT652,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT653,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT654,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT655,3,The cited paper may be a potential avenue for future work.
+CCT656,4,The citing paper is directly motivated by the cited paper.
+CCT657,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT658,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT659,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT660,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT661,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT662,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT663,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT664,3,The cited paper may be a potential avenue for future work.
+CCT665,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT666,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT667,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT668,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT669,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT670,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT671,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT672,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT673,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT674,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT675,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT676,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT677,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT678,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT679,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT680,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT681,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT682,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT683,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT684,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT685,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT686,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT687,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT688,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT689,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT690,4,The citing paper is directly motivated by the cited paper.
+CCT691,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT692,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT693,4,The citing paper is directly motivated by the cited paper.
+CCT694,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT695,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT696,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT697,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT698,4,The citing paper is directly motivated by the cited paper.
+CCT699,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT700,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT701,4,The citing paper is directly motivated by the cited paper.
+CCT702,3,The cited paper may be a potential avenue for future work.
+CCT703,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT704,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT705,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT706,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT707,3,The cited paper may be a potential avenue for future work.
+CCT708,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT709,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT710,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT711,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT712,3,The cited paper may be a potential avenue for future work.
+CCT713,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT714,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT715,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT716,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT717,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT718,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT719,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT720,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT721,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT722,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT723,3,The cited paper may be a potential avenue for future work.
+CCT724,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT725,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT726,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT727,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT728,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT729,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT730,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT731,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT732,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT733,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT734,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT735,3,The cited paper may be a potential avenue for future work.
+CCT736,4,The citing paper is directly motivated by the cited paper.
+CCT737,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT738,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT739,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT740,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT741,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT742,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT743,4,The citing paper is directly motivated by the cited paper.
+CCT744,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT745,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT746,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT747,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT748,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT749,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT750,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT751,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT752,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT753,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT754,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT755,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT756,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT757,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT758,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT759,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT760,3,The cited paper may be a potential avenue for future work.
+CCT761,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT762,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT763,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT764,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT765,4,The citing paper is directly motivated by the cited paper.
+CCT766,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT767,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT768,4,The citing paper is directly motivated by the cited paper.
+CCT769,4,The citing paper is directly motivated by the cited paper.
+CCT770,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT771,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT772,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT773,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT774,4,The citing paper is directly motivated by the cited paper.
+CCT775,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT776,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT777,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT778,4,The citing paper is directly motivated by the cited paper.
+CCT779,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT780,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT781,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT782,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT783,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT784,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT785,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT786,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT787,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT788,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT789,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT790,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT791,4,The citing paper is directly motivated by the cited paper.
+CCT792,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT793,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT794,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT795,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT796,3,The cited paper may be a potential avenue for future work.
+CCT797,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT798,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT799,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT800,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT801,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT802,4,The citing paper is directly motivated by the cited paper.
+CCT803,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT804,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT805,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT806,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT807,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT808,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT809,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT810,4,The citing paper is directly motivated by the cited paper.
+CCT811,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT812,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT813,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT814,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT815,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT816,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT817,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT818,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT819,4,The citing paper is directly motivated by the cited paper.
+CCT820,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT821,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT822,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT823,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT824,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT825,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT826,4,The citing paper is directly motivated by the cited paper.
+CCT827,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT828,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT829,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT830,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT831,4,The citing paper is directly motivated by the cited paper.
+CCT832,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT833,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT834,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT835,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT836,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT837,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT838,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT839,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT840,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT841,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT842,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT843,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT844,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT845,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT846,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT847,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT848,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT849,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT850,3,The cited paper may be a potential avenue for future work.
+CCT851,4,The citing paper is directly motivated by the cited paper.
+CCT852,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT853,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT854,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT855,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT856,3,The cited paper may be a potential avenue for future work.
+CCT857,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT858,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT859,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT860,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT861,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT862,3,The cited paper may be a potential avenue for future work.
+CCT863,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT864,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT865,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT866,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT867,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT868,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT869,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT870,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT871,4,The citing paper is directly motivated by the cited paper.
+CCT872,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT873,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT874,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT875,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT876,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT877,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT878,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT879,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT880,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT881,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT882,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT883,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT884,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT885,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT886,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT887,4,The citing paper is directly motivated by the cited paper.
+CCT888,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT889,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT890,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT891,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT892,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT893,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT894,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT895,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT896,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT897,3,The cited paper may be a potential avenue for future work.
+CCT898,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT899,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT900,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT901,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT902,4,The citing paper is directly motivated by the cited paper.
+CCT903,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT904,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT905,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT906,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT907,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT908,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT909,3,The cited paper may be a potential avenue for future work.
+CCT910,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT911,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT912,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT913,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT914,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT915,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT916,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT917,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT918,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT919,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT920,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT921,4,The citing paper is directly motivated by the cited paper.
+CCT922,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT923,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT924,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT925,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT926,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT927,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT928,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT929,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT930,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT931,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT932,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT933,4,The citing paper is directly motivated by the cited paper.
+CCT934,2,"The citing paper extends the methods, tools or data etc. of the cited paper."
+CCT935,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT936,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT937,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT938,3,The cited paper may be a potential avenue for future work.
+CCT939,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT940,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT941,4,The citing paper is directly motivated by the cited paper.
+CCT942,4,The citing paper is directly motivated by the cited paper.
+CCT943,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT944,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT945,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT946,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT947,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT948,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT949,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT950,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT951,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT952,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT953,4,The citing paper is directly motivated by the cited paper.
+CCT954,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT955,3,The cited paper may be a potential avenue for future work.
+CCT956,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT957,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT958,4,The citing paper is directly motivated by the cited paper.
+CCT959,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT960,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT961,4,The citing paper is directly motivated by the cited paper.
+CCT962,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT963,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT964,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT965,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT966,4,The citing paper is directly motivated by the cited paper.
+CCT967,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT968,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT969,3,The cited paper may be a potential avenue for future work.
+CCT970,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT971,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT972,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT973,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT974,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT975,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT976,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT977,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT978,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT979,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT980,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT981,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT982,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT983,4,The citing paper is directly motivated by the cited paper.
+CCT984,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT985,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT986,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT987,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT988,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT989,4,The citing paper is directly motivated by the cited paper.
+CCT990,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT991,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT992,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT993,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT994,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT995,5,The citing paper uses the methodology or tools created by the cited paper.
+CCT996,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT997,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT998,0,The cited paper provides relevant Background information or is part of the body of literature
+CCT999,1,"The citing paper expresses similarities or differences to, or disagrees with, the cited paper."
+CCT1000,2,"The citing paper extends the methods, tools or data etc. of the cited paper."

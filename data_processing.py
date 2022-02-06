@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import jsonlines
+# import jsonlines
 from pathlib import Path
 import numpy as np
 import pandas as pd
-import json
+# import json
 import collections
 
 # root_path = Path('/content/citation_classification/dataset')
@@ -36,16 +36,23 @@ label_description = {0: 'The cited paper provides relevant Background informatio
 
 label_deslist = []
 for index, row in train_set.iterrows():
+    context = row['citation_context']
+    # print(context)
+    label_des = label_description.get(row['citation_class_label'])
+    context = context + ' ' + label_des
+    # print(context)
+    train_set['citation_context'].loc[index] = context
+
     # print(label_description[row['citation_class_label']])
-    label_deslist.append(label_description[row['citation_class_label']])
-train_set['label_description'] = label_deslist
-train_set.to_csv('dataset/new_SDP_train.csv', sep=',', index=False, encoding='utf-8')
-
-sampel_label_list = []
-
-for index, row in sample_submission.iterrows():
-    sampel_label_list.append(label_description[row['citation_class_label']])
-print(sampel_label_list)
-sample_submission['label_description'] = sampel_label_list
-sample_submission.to_csv('dataset/new_sample_submission.csv', sep=',', index=False, encoding='utf-8')
-print(sample_submission)
+    # label_deslist.append(label_description[row['citation_class_label']])
+# train_set['label_description'] = label_deslist
+train_set.to_csv('dataset/act/new_SDP_train.csv', sep=',', index=False, encoding='utf-8')
+#
+# sampel_label_list = []
+#
+# for index, row in sample_submission.iterrows():
+#     sampel_label_list.append(label_description[row['citation_class_label']])
+# print(sampel_label_list)
+# sample_submission['label_description'] = sampel_label_list
+# sample_submission.to_csv('dataset/new_sample_submission.csv', sep=',', index=False, encoding='utf-8')
+# print(sample_submission)
