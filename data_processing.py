@@ -3,6 +3,7 @@
 from pathlib import Path
 import numpy as np
 import pandas as pd
+import re
 # import json
 import collections
 
@@ -33,20 +34,49 @@ label_description = {0: 'The cited paper provides relevant Background informatio
                      3: 'The cited paper may be a potential avenue for future work.',
                      4: 'The citing paper is directly motivated by the cited paper.',
                      5: 'The citing paper uses the methodology or tools created by the cited paper.'}
+# 判断 是否 一篇文章有多个引用意图
+trai = train_set.drop_duplicates("cited_title", "first", inplace=True)
+print(trai)
+value = dict()
+resul = dict()
+for ind, row in train_set.iterrows():
+    res = re.findall(r"\[.*?\]", row['citation_context'])
+    if len(res) != 0:
+        if len(res) > 1 | (len(res[0].split(',')) > 1):
+            resul[''.join(res)] = row['citation_class_label']
+            if value.__contains__(row['citation_class_label']):
+                value[row['citation_class_label']] = value.get(row['citation_class_label']) + 1
+            else:
+                value[row['citation_class_label']] = 1
+            continue
+    res1 = re.findall(r"\(.*?\)", row['citation_context'])
+    if len(res1) > 0:
+        for i in res1:
+            ress = re.findall("[0-9]{4}", i)
+            if len(ress) > 1:
+                resul[''.join(ress)] = row['citation_class_label']
+                if value.__contains__(row['citation_class_label']):
+                    value[row['citation_class_label']] = value.get(row['citation_class_label']) + 1
+                else:
+                    value[row['citation_class_label']] = 1
+        continue
+print(value)
+# print(len(resul))
 
-label_deslist = []
-for index, row in train_set.iterrows():
-    context = row['citation_context']
-    # print(context)
-    label_des = label_description.get(row['citation_class_label'])
-    context = context + ' ' + label_des
-    # print(context)
-    train_set['citation_context'].loc[index] = context
-
-    # print(label_description[row['citation_class_label']])
-    # label_deslist.append(label_description[row['citation_class_label']])
-# train_set['label_description'] = label_deslist
-train_set.to_csv('dataset/act/new_SDP_train.csv', sep=',', index=False, encoding='utf-8')
+# ress = re.findall("[0-9]{4}", res[0])
+# label_deslist = []
+# for index, row in train_set.iterrows():
+#     context = row['citation_context']
+#     # print(context)
+#     label_des = label_description.get(row['citation_class_label'])
+#     context = context + ' ' + label_des
+#     # print(context)
+#     train_set['citation_context'].loc[index] = context
+#
+#     # print(label_description[row['citation_class_label']])
+#     # label_deslist.append(label_description[row['citation_class_label']])
+# # train_set['label_description'] = label_deslist
+# train_set.to_csv('dataset/act/new_SDP_train.csv', sep=',', index=False, encoding='utf-8')
 #
 # sampel_label_list = []
 #

@@ -60,7 +60,8 @@ def run_optuna(params, path, dev):
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
         # mix_w = trial.suggest_float('mix_w', 0.04, 0.1, log=True)
         # beta = trial.suggest_float('beta', 1, 10, log=True)
-        optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
+        # optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
+        optimizer = optim.Adam(model.parameters(), lr=lr)
         scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
         # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
         #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
@@ -69,7 +70,7 @@ def run_optuna(params, path, dev):
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db', load_if_exists=True)
-    study.optimize(objective, n_trials=6)
+    study.optimize(objective, n_trials=5)
     print("Best_Params:{} \t Best_Value:{}".format(study.best_params, study.best_value))
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
     print(history)
@@ -113,6 +114,8 @@ def main_run(params, path, dev):
     c_matrix = confusion_matrix(test_true, test_pre, labels=[0, 1, 2, 3, 4, 5])
     per_eval = classification_report(test_true, test_pre, labels=[0, 1, 2, 3, 4, 5])
     log_result(test_f1, best_model_f1,  c_matrix, per_eval, lr=params.lr, epoch=n_epoch, fun_name='main_multi_rev')
+# 是否在输出时加上 1- dropout
+# 将SGD改为Adam
 
 
 if __name__ == "__main__":
