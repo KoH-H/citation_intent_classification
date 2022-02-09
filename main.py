@@ -56,7 +56,7 @@ def run_optuna(params, path, dev):
         n_epoch = 40
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
-        mix_w = trial.suggest_float('mix_w', 0.04, 0.1, log=True)
+        mix_w = trial.suggest_float('mix_w', 0.01, 0.1, log=True)
         # beta = trial.suggest_float('beta', 1, 10, log=True)
         # optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         optimizer = optim.Adam(model.parameters(), lr=lr)
