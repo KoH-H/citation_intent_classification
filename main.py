@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
-
 from transformers import AutoTokenizer
 import torch.optim as optim
 from model.citation_model import *
 from utils.scheduler import WarmupMultiStepLR
-from train_valid.dataset_train import dataset_train_contr, dataset_train, dataset_train_imix, dataset_train_space, dataset_train_imix_space, \
-    dataset_train_limix_rspace, dataset_train_imixspace_cross, dataset_train_limix_rspace_v2, dataset_train_labeldes_limix_rspace_v2
+from train_valid.dataset_train import *
 from train_valid.dataset_valid import dataset_valid
 from utils.dataload import *
 from utils.util import *
@@ -95,7 +93,8 @@ def main_run(params, path, dev):
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
     dataset = load_data(params.dataname, batch_size=16, radio=0.8)
 
-    optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
+    # optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
+    optimizer = optim.Adam(model.parameters(), lr=params.lr)
     scheduler = WarmupMultiStepLR(optimizer, [90, 110], gamma=0.1, warmup_epochs=5)
     best_model_f1, best_epoch = dataset_train_space(model, token, dataset, criterion, optimizer, n_epoch, params.au_weight, dev,
                                                 scheduler, model_path=path)
@@ -114,7 +113,7 @@ def main_run(params, path, dev):
     c_matrix = confusion_matrix(test_true, test_pre, labels=[0, 1, 2, 3, 4, 5])
     per_eval = classification_report(test_true, test_pre, labels=[0, 1, 2, 3, 4, 5])
     log_result(test_f1, best_model_f1,  c_matrix, per_eval, lr=params.lr, epoch=n_epoch, fun_name='main_multi_rev')
-# 是否在输出时加上 1- dropout
+# 是否在输出时加上 1- dropout, 不需要加 因为在训练阶段不仅会遮盖 还会将遮盖后的放大。  https://www.zhihu.com/question/61751133
 # 将SGD改为Adam
 
 
