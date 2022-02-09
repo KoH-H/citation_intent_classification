@@ -48,7 +48,7 @@ def run_optuna(params, path, dev):
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(params.dataname, batch_size=16, radio=0.2)
+    dataset = load_data(params.dataname, batch_size=16, radio=0.8)
 
     def objective(trial):
         model = Model('allenai/scibert_scivocab_uncased')
