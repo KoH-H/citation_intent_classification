@@ -1,19 +1,36 @@
 {
-  "original": {
-    "lr": 0.000184,
-    "au_weight":  0.007413,
-    "mix_w": 0
+  "ACT":  {
+    "original": {
+      "lr": 0.000184,
+      "au_weight":  0.007413,
+      "mix_w": 0
+    },
+    "imix": {
+      "lr": 0.000034,
+      "au_weight": 0.004727,
+      "mix_w": 0.037736
+    },
+    "space": {
+      "lr": 0.000228,
+      "au_weight": 0.003263,
+      "mix_w": 0
+    }
   },
-  "imix":
-  {
-    "lr": 0.000034,
-    "au_weight": 0.004727,
-    "mix_w": 0.037736
-  },
-  "space":
-  {
-    "lr": 0.000228,
-    "au_weight": 0.003263,
-    "mix_w": 0
+  "ACL": {
+    "original": {
+      "lr": 0.000184,
+      "au_weight":  0.007413,
+      "mix_w": 0
+    },
+    "imix": {
+      "lr": 0.000019,
+      "au_weight": 0.008306,
+      "mix_w": 0.069573
+    },
+    "space": {
+      "lr": 0.000228,
+      "au_weight": 0.003263,
+      "mix_w": 0
+    }
   }
 }

@@ -79,15 +79,10 @@ def main_run(params, path, dev):
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     model = Model('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
-    # imix parames
-    # au_weight = 0.001122
     n_epoch = 40
-    # lr = 0.000583
-    # mix_w = 0.022242
-
-
     # lr = 0.0001
     # au_weight = 0.007413
+    # optimizer = SGD
     # n_epoch = 151
     # mix_w = 0.05
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
@@ -133,9 +128,9 @@ if __name__ == "__main__":
     else:
         with open('params.json', 'r', encoding='utf-8') as f:
             config = json.load(f)
-        args.lr = config[args.tp]['lr']
-        args.au_weight = config[args.tp]['au_weight']
-        args.mix_w = config[args.tp]['mix_w']
+        args.lr = config[args.dataname][args.tp]['lr']
+        args.au_weight = config[args.dataname][args.tp]['au_weight']
+        args.mix_w = config[args.dataname][args.tp]['mix_w']
         main_run(args, 'citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
