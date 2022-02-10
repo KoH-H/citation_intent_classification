@@ -16,7 +16,7 @@ class Model(nn.Module):
         self.mix_fc1 = nn.Linear(768, 6)
         self.des_fc = nn.Linear(768, 6)
         self.fc = nn.Linear(768, 6)
-        self.drop = nn.Dropout(0.5)
+        self.drop = nn.Dropout(0.1)
 
         self.au_task_fc1 = nn.Linear(768, 5)
 

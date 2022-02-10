@@ -52,7 +52,9 @@ def generate_batch_data(data, batch_size=16):
     for i in range(batch_count):
         mini_batch_sentences, mini_batch_target = [], []
         for j in range(batch_size):
-            citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i * batch_size + j]).lower()
+            # citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i * batch_size + j]).lower()
+            citation_text = re.sub(r'\[.*?\]', ' ', data['citation_context'][i * batch_size + j]).lower()
+            citation_text = re.sub(r'\(.*?\)', '', citation_text)
             citation_text = nltk.word_tokenize(citation_text)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
             mini_batch_sentences.append(citation_text)
@@ -63,7 +65,9 @@ def generate_batch_data(data, batch_size=16):
         last_sentences_list = []
         last_target_list = []
         for i in range(batch_count * batch_size, data.shape[0]):
-            citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i]).lower()
+            # citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i]).lower()
+            citation_text = re.sub(r'\[.*?\]', ' ', data['citation_context'][i]).lower()
+            citation_text = re.sub(r'\(.*?\)', '', citation_text)
             citation_text = nltk.word_tokenize(citation_text)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
             last_sentences_list.append(citation_text)
