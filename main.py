@@ -67,7 +67,8 @@ def run_optuna(params, path, dev):
                                                        au_weight, dev, mix_w, scheduler, model_path=path)
 
         return best_model_f1
-    study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db', load_if_exists=True)
+    study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db',
+                                load_if_exists=True)
     study.optimize(objective, n_trials=6)
     print("Best_Params:{} \t Best_Value:{}".format(study.best_params, study.best_value))
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
@@ -91,7 +92,7 @@ def main_run(params, path, dev):
     # optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     optimizer = optim.Adam(model.parameters(), lr=params.lr)
     scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
+    best_model_f1, best_epoch = dataset_train_limix_rspace_cnn(model, token, dataset, criterion, optimizer, n_epoch,
                                                    params.au_weight, dev, params.mix_w,
                                                    scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
