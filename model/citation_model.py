@@ -11,14 +11,14 @@ class CNNBert(nn.Module):
         super(CNNBert, self).__init__()
         filter_sizes = [2, 3, 4]
         num_filters = 32
-        self.conv1 = nn.ModuleList([nn.Conv2d(4, num_filters, (K, emb_size)) for K in filter_sizes])
+        self.conv1 = nn.ModuleList([nn.Conv2d(3, num_filters, (K, emb_size)) for K in filter_sizes])
         # self.dropout = nn.Dropout(0.1)
         self.fc = nn.Linear(len(filter_sizes) * num_filters, 768)
 
     def forward(self, bert_in):
         x = (bert_in[7], bert_in[9], bert_in[12])
         x = torch.stack(x, dim=1)
-        x = [F.relu(conv(x)).squeeze(3) for conv in self.convs1]
+        x = [F.relu(conv(x)).squeeze(3) for conv in self.conv1]
         x = [F.max_pool1d(i, i.size(2)).squeeze(2) for i in x]
         x = torch.cat(x, 1)
         # x = self.dropout(x)
@@ -100,77 +100,20 @@ class Model(nn.Module):
     #     return mixed_feature
 
     # forward for i-mix
-    # def forward(self, x1, **kwargs):
-    #     input_ids = x1['input_ids']
-    #     batch_size = input_ids.shape[0]
-    #     attention_mask = x1['attention_mask']
-    #     bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
-    #     ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
-    #
-    #     if self.training:
-    #         ori_sen_pre_mix = self.drop(ori_sen_pre)
-    #         # for i-mix
-    #         bert_output_imix = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
-    #         ori_sen_pre_imix = self.get_sen_att(x1, bert_output_imix, 'ori', attention_mask)
-    #         ori_sen_pre_imix = self.drop(ori_sen_pre_imix)
-    #         # bert_output_imix = self.drop(bert_output_imix)
-    #         ori_sen_pre_mix, labels_aux, lam = self.imix(ori_sen_pre_mix, kwargs['mix_alpha'])
-    #         tem_ori_pre = torch.cat([ori_sen_pre_mix, ori_sen_pre_imix], dim=0)
-    #         tem_ori_pre = self.mix_fc(tem_ori_pre)
-    #
-    #         tem_ori_pre = nn.functional.normalize(tem_ori_pre, dim=1)
-    #         bert_output_mix, bert_output_imix = tem_ori_pre[:batch_size], tem_ori_pre[batch_size:]
-    #         mix_logits = bert_output_mix.mm(bert_output_imix.t())
-    #         mix_logits /= self.temp
-    #         mix_labels = torch.arange(batch_size, dtype=torch.long).cuda()
-    #         # mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
-    #
-    #
-    #         # Obtain the representation vector for the classification learning branch
-    #         re_sen_pre = self.generate_sen_pre(sen=kwargs['r_sen'], tp='re')
-    #         # r_ids = kwargs['r_sen']['input_ids']
-    #         # r_attention_mask = kwargs['r_sen']['attention_mask']
-    #         # r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
-    #         # re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
-    #
-    #         # Get the representation vector for the auxiliary task
-    #         ausec_sen_pre = self.generate_sen_pre(sen=kwargs['s_sen'], tp='ori')
-    #         # s_ids = kwargs['s_sen']['input_ids']
-    #         # s_attention_mask = kwargs['s_sen']['attention_mask']
-    #         # s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
-    #         # ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
-    #
-    #         ori_sen_pre = self.drop(ori_sen_pre)
-    #         re_sen_pre = self.drop(re_sen_pre)
-
-    #         # Splice the representation vectors of both branches
-    #         mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
-    #         main_output = self.fc1(self.drop(mixed_feature))
-    #         main_output = self.fc(main_output)
-    #         au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
-    #         return main_output, au_output1, mix_logits, mix_labels, labels_aux, lam
-    #     re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
-    #     mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
-    #     mixed_feature = self.fc1(mixed_feature)
-    #     mixed_feature = self.fc(mixed_feature)
-    #     return mixed_feature
-
-
-
-
-    # left imix & left cnn for right space
-    def forward(self, x1, **kwargs): # dataset_train_limix_rspace_cnn
+    def forward(self, x1, **kwargs):
         input_ids = x1['input_ids']
         batch_size = input_ids.shape[0]
         attention_mask = x1['attention_mask']
         bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
-        cnn_out = self.cnnber(bert_output[2])
+
         if self.training:
             ori_sen_pre_mix = self.drop(ori_sen_pre)
+            # for i-mix
             bert_output_imix = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
             ori_sen_pre_imix = self.get_sen_att(x1, bert_output_imix, 'ori', attention_mask)
             ori_sen_pre_imix = self.drop(ori_sen_pre_imix)
+            # bert_output_imix = self.drop(bert_output_imix)
             ori_sen_pre_mix, labels_aux, lam = self.imix(ori_sen_pre_mix, kwargs['mix_alpha'])
             tem_ori_pre = torch.cat([ori_sen_pre_mix, ori_sen_pre_imix], dim=0)
             tem_ori_pre = self.mix_fc(tem_ori_pre)
@@ -180,38 +123,95 @@ class Model(nn.Module):
             mix_logits = bert_output_mix.mm(bert_output_imix.t())
             mix_logits /= self.temp
             mix_labels = torch.arange(batch_size, dtype=torch.long).cuda()
+            # mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
 
+
+            # Obtain the representation vector for the classification learning branch
             re_sen_pre = self.generate_sen_pre(sen=kwargs['r_sen'], tp='re')
+            # r_ids = kwargs['r_sen']['input_ids']
+            # r_attention_mask = kwargs['r_sen']['attention_mask']
+            # r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
+            # re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
+
+            # Get the representation vector for the auxiliary task
             ausec_sen_pre = self.generate_sen_pre(sen=kwargs['s_sen'], tp='ori')
-
-            # for CNN
-            # cnn_out = self.cnnber(bert_output[2])
-            ori_mean = self.generate_hidden_mean(cnn_out, kwargs['ori_label'])
-            re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
-            re_sen_pre = None
-            for i in range(cnn_out.shape[0]):
-                gen_example = cnn_out[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[kwargs['re_label'][i].item()]
-                if re_sen_pre is None:
-                    re_sen_pre = gen_example.unsqueeze(0)
-                else:
-                    re_sen_pre = torch.cat([re_sen_pre, gen_example.unsqueeze(0)], 0)
-
-            ori_sen_pre = 0.5 * ori_sen_pre + 0.5 * cnn_out
+            # s_ids = kwargs['s_sen']['input_ids']
+            # s_attention_mask = kwargs['s_sen']['attention_mask']
+            # s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
+            # ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
 
             ori_sen_pre = self.drop(ori_sen_pre)
             re_sen_pre = self.drop(re_sen_pre)
 
+            # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
             main_output = self.fc1(self.drop(mixed_feature))
             main_output = self.fc(main_output)
             au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
             return main_output, au_output1, mix_logits, mix_labels, labels_aux, lam
-        ori_sen_pre = 0.5 * ori_sen_pre + 0.5 * cnn_out
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         mixed_feature = self.fc1(mixed_feature)
         mixed_feature = self.fc(mixed_feature)
         return mixed_feature
+
+
+
+
+    # left imix & left cnn for right space
+    # def forward(self, x1, **kwargs): # dataset_train_limix_rspace_cnn
+    #     input_ids = x1['input_ids']
+    #     batch_size = input_ids.shape[0]
+    #     attention_mask = x1['attention_mask']
+    #     bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+    #     ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
+    #     cnn_out = self.cnnber(bert_output[2])
+    #     if self.training:
+    #         ori_sen_pre_mix = self.drop(ori_sen_pre)
+    #         bert_output_imix = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+    #         ori_sen_pre_imix = self.get_sen_att(x1, bert_output_imix, 'ori', attention_mask)
+    #         ori_sen_pre_imix = self.drop(ori_sen_pre_imix)
+    #         ori_sen_pre_mix, labels_aux, lam = self.imix(ori_sen_pre_mix, kwargs['mix_alpha'])
+    #         tem_ori_pre = torch.cat([ori_sen_pre_mix, ori_sen_pre_imix], dim=0)
+    #         tem_ori_pre = self.mix_fc(tem_ori_pre)
+    #
+    #         tem_ori_pre = nn.functional.normalize(tem_ori_pre, dim=1)
+    #         bert_output_mix, bert_output_imix = tem_ori_pre[:batch_size], tem_ori_pre[batch_size:]
+    #         mix_logits = bert_output_mix.mm(bert_output_imix.t())
+    #         mix_logits /= self.temp
+    #         mix_labels = torch.arange(batch_size, dtype=torch.long).cuda()
+    #
+    #         re_sen_pre = self.generate_sen_pre(sen=kwargs['r_sen'], tp='re')
+    #         ausec_sen_pre = self.generate_sen_pre(sen=kwargs['s_sen'], tp='ori')
+    #
+    #         # for CNN
+    #         # cnn_out = self.cnnber(bert_output[2])
+    #         ori_mean = self.generate_hidden_mean(cnn_out, kwargs['ori_label'])
+    #         re_mean = self.generate_hidden_mean(re_sen_pre, kwargs['re_label'])
+    #         re_sen_pre = None
+    #         for i in range(cnn_out.shape[0]):
+    #             gen_example = cnn_out[i] - ori_mean[kwargs['ori_label'][i].item()] + re_mean[kwargs['re_label'][i].item()]
+    #             if re_sen_pre is None:
+    #                 re_sen_pre = gen_example.unsqueeze(0)
+    #             else:
+    #                 re_sen_pre = torch.cat([re_sen_pre, gen_example.unsqueeze(0)], 0)
+    #
+    #         ori_sen_pre = 0.5 * ori_sen_pre + 0.5 * cnn_out
+    #
+    #         ori_sen_pre = self.drop(ori_sen_pre)
+    #         re_sen_pre = self.drop(re_sen_pre)
+    #
+    #         mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
+    #         main_output = self.fc1(self.drop(mixed_feature))
+    #         main_output = self.fc(main_output)
+    #         au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
+    #         return main_output, au_output1, mix_logits, mix_labels, labels_aux, lam
+    #     ori_sen_pre = 0.5 * ori_sen_pre + 0.5 * cnn_out
+    #     re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
+    #     mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
+    #     mixed_feature = self.fc1(mixed_feature)
+    #     mixed_feature = self.fc(mixed_feature)
+    #     return mixed_feature
 
 
 
