@@ -4,6 +4,7 @@ import torch.nn as nn
 from transformers import AutoModel
 import numpy as np
 import torch.nn.functional as F
+from math import sqrt
 
 
 class CNNBert(nn.Module):
@@ -25,13 +26,32 @@ class CNNBert(nn.Module):
         x = self.fc(x)
         return x
 
-# class AttentionLayer(nn.Module):
-#     def __init__(self):
-#         super(AttentionLayer, self).__init__()
-#         self.Q_linear = nn.Linear(768, 768, bias=False)
-#         self.K_linear = nn.Linear(768, 768, bias=False)
-#         self.V_linear = nn.Linear(768, 768, bias=False)
 
+class AttentionLayer(nn.Module):
+    def __init__(self):
+        super(AttentionLayer, self).__init__()
+        self.q_linear = nn.Linear(768, 768, bias=False)
+        self.k_linear = nn.Linear(768, 768, bias=False)
+        self.v_linear = nn.Linear(768, 768, bias=False)
+        self._norm_fact = 1 / sqrt(768)
+
+    def forward(self, b_in, mask):
+        q = self.q_linear(b_in)
+        k = self.k_linear(b_in)
+        v = self.v_linear(b_in)
+
+        mask = mask.unsqueeze(2)
+        attention = torch.bmm(q, k.transpose(1, 2)) * self._norm_fact
+        attention = attention.masked_fill(mask == 0, float('-inf'))
+        attention = F.softmax(attention, dim=-1)
+        attention = torch.bmm(attention, v)
+        pre = attention[:, 0, :]
+        return pre
+
+
+    # mask = mask.unsqueeze(2)
+    # att_w = att_w.masked_fill(mask == 0, float('-inf'))
+    # att_w = F.softmax(att_w, dim=1)
 
 
 class Model(nn.Module):
@@ -44,7 +64,7 @@ class Model(nn.Module):
         self.mix_fc1 = nn.Linear(768, 6)
         self.des_fc = nn.Linear(768, 6)
         self.fc = nn.Linear(768, 6)
-        self.drop = nn.Dropout(0.1)
+        self.drop = nn.Dropout(0.3)
 
         self.au_task_fc1 = nn.Linear(768, 5)
 
