@@ -45,8 +45,8 @@ def delete_aug(data):
 
 def generate_batch_data(data, batch_size=16):
     print('train generate_batch_data')
-    # stop_words = stopwords.words('english')
-    # stop_words = ['et', 'al', 'e', 'g'] + stop_words
+    stop_words = stopwords.words('english')
+    stop_words = ['et', 'al', 'e', 'g'] + stop_words
     batch_count = int(data.shape[0] / batch_size)
     sentences_list, target_list = [], []
     for i in range(batch_count):
