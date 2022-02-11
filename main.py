@@ -63,7 +63,7 @@ def run_optuna(params, path, dev):
         scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
         # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
         #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
-        best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
+        best_model_f1, best_epoch = dataset_train_limix_rspace_cnn(model, token, dataset, criterion, optimizer, n_epoch,
                                                        au_weight, dev, mix_w, scheduler, model_path=path)
 
         return best_model_f1
