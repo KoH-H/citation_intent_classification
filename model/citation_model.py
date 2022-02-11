@@ -10,7 +10,7 @@ class CNNBert(nn.Module):
     def __init__(self, emb_size):
         super(CNNBert, self).__init__()
         filter_sizes = [2, 3, 4]
-        num_filters = 32
+        num_filters = 4
         self.conv1 = nn.ModuleList([nn.Conv2d(3, num_filters, (K, emb_size)) for K in filter_sizes])
         # self.dropout = nn.Dropout(0.1)
         self.fc = nn.Linear(len(filter_sizes) * num_filters, 768)
@@ -24,6 +24,14 @@ class CNNBert(nn.Module):
         # x = self.dropout(x)
         x = self.fc(x)
         return x
+
+# class AttentionLayer(nn.Module):
+#     def __init__(self):
+#         super(AttentionLayer, self).__init__()
+#         self.Q_linear = nn.Linear(768, 768, bias=False)
+#         self.K_linear = nn.Linear(768, 768, bias=False)
+#         self.V_linear = nn.Linear(768, 768, bias=False)
+
 
 
 class Model(nn.Module):
@@ -53,6 +61,8 @@ class Model(nn.Module):
         self.des_word_weight = nn.Linear(384, 1, bias=False)
         self.cnnber = CNNBert(768)
 
+
+
     def generate_sen_pre(self, sen, tp):
         # s_ids = kwargs['s_sen']['input_ids']
         # s_attention_mask = kwargs['s_sen']['attention_mask']
@@ -64,6 +74,7 @@ class Model(nn.Module):
         bert_output = self.model(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
         sen = self.get_sen_att(sen, bert_output, tp, sen['attention_mask'])
         return sen
+
 
     # original
     # def forward(self, x1, **kwargs):
