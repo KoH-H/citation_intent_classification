@@ -26,6 +26,16 @@ import collections
 # section_location.to_csv('/content/citation_classification/dataset/section_name.csv', sep=',', index=False)
 train_set = pd.read_csv('dataset/act/SDP_train.csv', sep=',')
 
+
+for index, row in train_set.iterrows():
+    citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
+    citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+    citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+    citation_text4 = nltk.word_tokenize(citation_text3)
+    citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
+    if len(citation_text) == 0:
+        print(row['citation_context'])
+
 sample_submission = pd.read_csv('dataset/act/sample_submission.csv', sep=',')
 
 label_description = {0: 'The cited paper provides relevant Background information or is part of the body of literature',
@@ -86,3 +96,27 @@ print(value)
 # sample_submission['label_description'] = sampel_label_list
 # sample_submission.to_csv('dataset/new_sample_submission.csv', sep=',', index=False, encoding='utf-8')
 # print(sample_submission)
+
+def clear_section():
+    train_set = pd.read_csv('dataset/section_name.csv', sep=',')
+    index_list = []
+    for index, row in train_set.iterrows():
+        citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
+        citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+        citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+        citation_text4 = nltk.word_tokenize(citation_text3)
+        citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
+        if len(citation_text) == 0:
+            index_list.append(index)
+            print("index-------------", row['citation_context'])
+    new_set = train_set.drop(index=index_list)
+    print("line".center(20, "*"))
+    for index, row in new_set.iterrows():
+        citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
+        citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+        citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+        citation_text4 = nltk.word_tokenize(citation_text3)
+        citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
+        if len(citation_text) == 0:
+            print(row['citation_context'])
+    new_set.to_csv('dataset/new_section_name.csv', sep=',', index=False, encoding='utf-8')

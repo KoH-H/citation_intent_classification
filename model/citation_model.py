@@ -6,6 +6,19 @@ import numpy as np
 import torch.nn.functional as F
 
 
+# class CNNBert(nn.Module):
+#     def __init__(self, emb_size):
+#         super(CNNBert, self).__init__()
+#         filter_sizes = [2, 3, 4]
+#         num_filters = 32
+#         self.conv1 = nn.ModuleList([nn.Conv2d(4, num_filters, (K, emb_size)) for K in filter_sizes])
+#         self.dropout = nn.Dropout(0.1)
+#         self.fc = nn.Linear(len(filter_sizes) * num_filters, 1)
+#
+#     def forward(self, bert_in):
+#         pass
+#         return 1
+
 class Model(nn.Module):
     def __init__(self, name, temp=0.2):
         super(Model, self).__init__()

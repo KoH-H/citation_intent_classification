@@ -257,7 +257,8 @@ def dataset_train_imix(model, token, data, criterion, optimize, n_epoch, au_weig
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
             main_output, au_output1, mix_logits,  mix_labels, labels_aux, lam = model(t_sent, r_sen=r_sent,
-                                                                                      s_sen=s_sent, l=alpha, mix_alpha=mix_alpha)
+                                                                                      s_sen=s_sent, l=alpha,
+                                                                                      mix_alpha=mix_alpha)
 
             # i-mix loss
             mix_loss = (lam * criterion(mix_logits, mix_labels) + (1. - lam) * criterion(mix_logits, labels_aux)).mean()
