@@ -27,14 +27,14 @@ import torch.nn.functional as F
 
 class ModelCNN(nn.Module):
     def __init__(self, name, temp=0.2):
-        super(Model, self).__init__()
+        super(ModelCNN, self).__init__()
         self.model = AutoModel.from_pretrained(name)
         self.temp = temp
         self.fc1 = nn.Linear(768 * 4, 768)
         self.fc = nn.Linear(768, 6)
         self.drop = nn.Dropout(0.3)
 
-        self.au_task_fc1 = nn.Linear(768, 5)
+        self.au_task_fc1 = nn.Linear(768*2, 5)
 
         self.ori_word_atten = nn.Linear(768, 384)
         self.ori_tanh = nn.Tanh()
