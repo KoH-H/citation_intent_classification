@@ -21,7 +21,7 @@ def dataset_valid(model, tokenizer, valid, device, mode=None, path=None, criteri
             label2one = F.one_hot(t_num - 1, 14).float().to(device)
 
             sentences = sentences.to(device)
-            output = model(sentences, label2one)
+            output = model(sentences, label2one=label2one)
             if criterion is not None:
                 loss_target = torch.LongTensor(target)
                 loss = criterion(output, loss_target.to(device))
