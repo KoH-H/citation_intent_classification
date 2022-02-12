@@ -59,7 +59,7 @@ class NumModel(nn.Module):
         super(NumModel, self).__init__()
         self.model = AutoModel.from_pretrained(name)
         self.temp = temp
-        self.fc1 = nn.Linear(768 * 3, 768)
+        self.fc1 = nn.Linear((768 + 384) * 2, 768)
         self.fc = nn.Linear(768, 6)
         self.drop = nn.Dropout(0.3)
         self.labelfc = nn.Linear(14, 192)

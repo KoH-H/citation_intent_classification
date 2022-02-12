@@ -24,7 +24,8 @@ import collections
 #     section_location.loc[i] = {'citation_context': section_text[i],
 #                                'citation_class_label': section_name[i]}
 # section_location.to_csv('/content/citation_classification/dataset/section_name.csv', sep=',', index=False)
-train_set = pd.read_csv('dataset/act/SDP_train.csv', sep=',')
+train_set = pd.read_csv('dataset/act/SDP_test.csv', sep=',')
+sam = pd.read_csv('dataset/act/sample_submission.csv', sep=',')
 # print(train_set.shape)
 # exit()
 
@@ -107,10 +108,10 @@ for ind, row in train_set.iterrows():
     paper_list.append(1)
 
 print(len(paper_list))
-train_set['paper_list'] = paper_list
+sam['paper_list'] = paper_list
 # print(train_set)
 print(list(set(paper_list)))
-train_set.to_csv('dataset/act/citednum_train.csv', sep=',', index=False, encoding='utf-8')
+sam.to_csv('dataset/act/citednum_sam.csv', sep=',', index=False, encoding='utf-8')
     # res1 = re.findall(r"\(.*?\)", row['citation_context'])
     # if len(res1) > 0:
     #     # paper_list.append(len(ress))

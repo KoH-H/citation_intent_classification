@@ -35,12 +35,15 @@ def reverse_sampler(train_data):
     return revere_data
 
 
-def delete_aug(data):
+def delete_aug(data, datatp=None):
     for index in range(data.shape[0]):
         # cited_author = data['cited_author'][index]
         citation_text = re.sub(r"#AUTHOR_TAG", ' ', data['citation_context'][index])
         data.loc[index, 'citation_context'] = citation_text
-    return data.loc[:, ('citation_context', 'citation_class_label')]
+    if datatp is None:
+        return data.loc[:, ('citation_context', 'citation_class_label')]
+    else:
+        return data.loc[:, ('citation_context', 'citation_class_label', 'paper_list')]
 
 
 # def generate_batch_data(data, batch_size=16):
@@ -103,7 +106,7 @@ def generate_batch_data(data, batch_size=16, datatp=None):
             mini_batch_sentences.append(citation_text)
             mini_batch_target.append(data['citation_class_label'][i * batch_size + j])
             if datatp is not None:
-                mini_batch_num.append(data['citation_class_label'][i * batch_size + j])
+                mini_batch_num.append(data['paper_list'][i * batch_size + j])
         sentences_list.append(mini_batch_sentences)
         target_list.append(mini_batch_target)
         if datatp is not None:
@@ -124,15 +127,15 @@ def generate_batch_data(data, batch_size=16, datatp=None):
             last_sentences_list.append(citation_text)
             last_target_list.append(data['citation_class_label'][i])
             if datatp is not None:
-                last_num_list.append(data['citation_class_label'][i])
+                last_num_list.append(data['paper_list'][i])
         sentences_list.append(last_sentences_list)
         target_list.append(last_target_list)
         if datatp is not None:
             num_list.append(last_num_list)
-        if datatp is not None:
-            return {'sen': sentences_list, 'tar': target_list, 'num': num_list}
-        else:
-            return {'sen': sentences_list, 'tar': target_list}
+    if datatp is not None:
+        return {'sen': sentences_list, 'tar': target_list, 'num': num_list}
+    else:
+        return {'sen': sentences_list, 'tar': target_list}
 
 
 def acljson2pd(name):
@@ -166,7 +169,7 @@ def load_data(dataname, batch_size=None, radio=None):
     if dataname == 'ACT':
         train_set = pd.read_csv(path / 'dataset/act/citednum_train.csv', sep=',')
         test = pd.read_csv(path / 'dataset/act/SDP_test.csv', sep=',').merge(
-            pd.read_csv(path / 'dataset/act/sample_submission.csv'), on='unique_id')
+            pd.read_csv(path / 'dataset/act/citednum_sam.csv'), on='unique_id')
         train_set = sklearn.utils.shuffle(train_set, random_state=0).reset_index(drop=True)
         train = train_set.loc[:int(train_set.shape[0] * radio) - 1]
         print(train['citation_class_label'].value_counts())
@@ -186,7 +189,7 @@ def load_data(dataname, batch_size=None, radio=None):
     reverse_data = reverse_sampler(train)
 
     if dataname == 'ACT':
-        reverse_data = delete_aug(reverse_data)
+        reverse_data = delete_aug(reverse_data, 'reverse')
     data['reverse'] = generate_batch_data(reverse_data, batch_size, datatp="reverse")
 
     # mul_sec = pd.read_csv(path / 'dataset/section_name.csv')
@@ -195,12 +198,12 @@ def load_data(dataname, batch_size=None, radio=None):
     # mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0]//batch_size))
     # data['section'] = mul_section_batch
     if dataname == 'ACT':
-        train = delete_aug(train)
-        val = delete_aug(val)
-        test = delete_aug(test)
+        train = delete_aug(train, 'train')
+        val = delete_aug(val, 'val')
+        test = delete_aug(test, 'test')
     data['train'] = generate_batch_data(train, batch_size, datatp="train")
-    data['val'] = generate_batch_data(val, batch_size)
-    data['test'] = generate_batch_data(test, batch_size)
+    data['val'] = generate_batch_data(val, batch_size, datatp='val')
+    data['test'] = generate_batch_data(test, batch_size, datatp='test')
 
     mul_sec = pd.read_csv(path / 'dataset/new_section_name.csv')
     mul_num = train.shape[0]

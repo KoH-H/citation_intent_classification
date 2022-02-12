@@ -1050,11 +1050,11 @@ def dataset_train_paper_num(model, token, data, criterion, optimize, n_epoch, au
                                                                                re_sen, re_tar, re_num,
                                                                                sec_sen, sec_tar)):
             t_sent = token(t_sen, return_tensors='pt', is_split_into_words=True, padding=True,
-                           add_special_tokens=True, return_length=True, truncation=True)
+                           add_special_tokens=True, return_length=True, truncation=True, max_length=512)
             r_sent = token(r_sen, return_tensors='pt', is_split_into_words=True, padding=True,
-                           add_special_tokens=True, return_length=True, truncation=True)
+                           add_special_tokens=True, return_length=True, truncation=True, max_length=512)
             s_sent = token(s_sen, return_tensors='pt', is_split_into_words=True, padding=True,
-                           add_special_tokens=True, return_length=True, truncation=True)
+                           add_special_tokens=True, return_length=True, truncation=True, max_length=512)
             t_num = torch.LongTensor(t_num)
             r_num = torch.LongTensor(r_num)
             t_label2one = F.one_hot(t_num - 1, 14).float().to(device)
