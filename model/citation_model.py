@@ -59,7 +59,7 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.model = AutoModel.from_pretrained(name)
         self.temp = temp
-        self.fc1 = nn.Linear(768 * 2, 768)
+        self.fc1 = nn.Linear(768 * 3, 768)
         self.mix_fc = nn.Linear(768, 6)
         self.mix_fc1 = nn.Linear(768, 6)
         self.des_fc = nn.Linear(768, 6)
@@ -227,7 +227,7 @@ class Model(nn.Module):
                 else:
                     re_sen_pre = torch.cat([re_sen_pre, gen_example.unsqueeze(0)], 0)
 
-            ori_sen_pre = ori_sen_pre + cnn_out
+            ori_sen_pre = torch.cat((ori_sen_pre, cnn_out), dim=1)
 
             ori_sen_pre = self.drop(ori_sen_pre)
             re_sen_pre = self.drop(re_sen_pre)
@@ -237,7 +237,8 @@ class Model(nn.Module):
             main_output = self.fc(main_output)
             au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
             return main_output, au_output1, mix_logits, mix_labels, labels_aux, lam
-        ori_sen_pre = ori_sen_pre + cnn_out
+        # ori_sen_pre = ori_sen_pre + cnn_out
+        ori_sen_pre = torch.cat((ori_sen_pre, cnn_out), dim=1)
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         mixed_feature = self.fc1(mixed_feature)
