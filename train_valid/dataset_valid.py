@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import torch
 from sklearn.metrics import f1_score
-
+import torch.nn.functional as F
 
 def dataset_valid(model, tokenizer, valid, device, mode=None, path=None, criterion=None):
 
@@ -14,11 +14,14 @@ def dataset_valid(model, tokenizer, valid, device, mode=None, path=None, criteri
     avg_loss = 0
     model.eval()
     with torch.no_grad():
-        for index, (sentence, target) in enumerate(zip(valid['sen'], valid['tar'])):
+        for index, (sentence, target, num) in enumerate(zip(valid['sen'], valid['tar'], valid['num'])):
             sentences = tokenizer(sentence, return_tensors='pt', is_split_into_words=True, padding=True,
                                   return_length=True)
+            t_num = torch.LongTensor(num)
+            label2one = F.one_hot(t_num - 1, 14).float().to(device)
+
             sentences = sentences.to(device)
-            output = model(sentences)
+            output = model(sentences, label2one)
             if criterion is not None:
                 loss_target = torch.LongTensor(target)
                 loss = criterion(output, loss_target.to(device))

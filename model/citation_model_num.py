@@ -94,7 +94,6 @@ class NumModel(nn.Module):
         if self.training:
             onum2vec = self.labelfc(kwargs['t_one'])
             onum2vec = self.labelfc2(onum2vec)
-
             # Obtain the representation vector for the classification learning branch
             r_ids = kwargs['r_sen']['input_ids']
             r_attention_mask = kwargs['r_sen']['attention_mask']
@@ -121,7 +120,16 @@ class NumModel(nn.Module):
             main_output = self.fc(main_output)
             au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
             return main_output, au_output1
+
+        onum2vec = self.labelfc(kwargs['label2one'])
+        onum2vec = self.labelfc2(onum2vec)
+        rnum2vec = self.labelfc(kwargs['label2one'])
+        rnum2vec = self.labelfc2(rnum2vec)
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
+
+        ori_sen_pre = torch.cat((ori_sen_pre, onum2vec), dim=1)
+        re_sen_pre = torch.cat((re_sen_pre, rnum2vec), dim=1)
+
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         mixed_feature = self.fc1(mixed_feature)
         mixed_feature = self.fc(mixed_feature)
