@@ -205,7 +205,7 @@ def load_data(dataname, batch_size=None, radio=None):
     mul_sec = pd.read_csv(path / 'dataset/new_section_name.csv')
     mul_num = train.shape[0]
     mul_section = mul_sec.head(mul_num)
-    mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0] // batch_size), datatp="section")
+    mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0] // batch_size))
     data['section'] = mul_section_batch
 
     return data
