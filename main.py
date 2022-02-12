@@ -3,6 +3,7 @@ import json
 from transformers import AutoTokenizer
 import torch.optim as optim
 from model.citation_model import *
+from model.citation_model_num import *
 from utils.scheduler import WarmupMultiStepLR
 from train_valid.dataset_train import *
 from train_valid.dataset_valid import dataset_valid
@@ -51,20 +52,21 @@ def run_optuna(params, path, dev):
     dataset = load_data(params.dataname, batch_size=16, radio=0.8)
 
     def objective(trial):
-        model = Model('allenai/scibert_scivocab_uncased')
+        # model = Model('allenai/scibert_scivocab_uncased')
+        model = NumModel('allenai/scibert_scivocab_uncased')
         # n_epoch = trial.suggest_int('n_epoch', 140, 170, log=True)
         n_epoch = 40
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
-        mix_w = trial.suggest_float('mix_w', 0.01, 0.1, log=True)
+        # mix_w = trial.suggest_float('mix_w', 0.01, 0.1, log=True)
         # beta = trial.suggest_float('beta', 1, 10, log=True)
         # optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         optimizer = optim.Adam(model.parameters(), lr=lr)
         scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
         # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
         #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
-        best_model_f1, best_epoch = dataset_train_limix_rspace_cnn(model, token, dataset, criterion, optimizer, n_epoch,
-                                                       au_weight, dev, mix_w, scheduler, model_path=path)
+        best_model_f1, best_epoch = dataset_train_paper_num(model, token, dataset, criterion, optimizer, n_epoch,
+                                                       au_weight, dev, scheduler, model_path=path)
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db',

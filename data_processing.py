@@ -25,18 +25,20 @@ import collections
 #                                'citation_class_label': section_name[i]}
 # section_location.to_csv('/content/citation_classification/dataset/section_name.csv', sep=',', index=False)
 train_set = pd.read_csv('dataset/act/SDP_train.csv', sep=',')
+# print(train_set.shape)
+# exit()
 
 
-for index, row in train_set.iterrows():
-    citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
-    citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
-    citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
-    citation_text4 = nltk.word_tokenize(citation_text3)
-    citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
-    if len(citation_text) == 0:
-        print(row['citation_context'])
-
-sample_submission = pd.read_csv('dataset/act/sample_submission.csv', sep=',')
+# for index, row in train_set.iterrows():
+#     citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
+#     citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+#     citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+#     citation_text4 = nltk.word_tokenize(citation_text3)
+#     citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
+#     if len(citation_text) == 0:
+#         print(row['citation_context'])
+#
+# sample_submission = pd.read_csv('dataset/act/sample_submission.csv', sep=',')
 
 label_description = {0: 'The cited paper provides relevant Background information or is part of the body of literature',
                      1: 'The citing paper expresses similarities or differences to, or disagrees with, the cited paper.',
@@ -44,33 +46,90 @@ label_description = {0: 'The cited paper provides relevant Background informatio
                      3: 'The cited paper may be a potential avenue for future work.',
                      4: 'The citing paper is directly motivated by the cited paper.',
                      5: 'The citing paper uses the methodology or tools created by the cited paper.'}
+
 # 判断 是否 一篇文章有多个引用意图
-trai = train_set.drop_duplicates("cited_title", "first", inplace=True)
-print(trai)
+# trai = train_set.drop_duplicates("cited_title", "first", inplace=True)
+# print(trai)
+
+
 value = dict()
 resul = dict()
+paper_list = []
 for ind, row in train_set.iterrows():
+    # print(row['citation_context'])
     res = re.findall(r"\[.*?\]", row['citation_context'])
     if len(res) != 0:
-        if len(res) > 1 | (len(res[0].split(',')) > 1):
-            resul[''.join(res)] = row['citation_class_label']
-            if value.__contains__(row['citation_class_label']):
-                value[row['citation_class_label']] = value.get(row['citation_class_label']) + 1
+        num = 0
+        list_v = None
+        for i in res:
+            if list_v is None:
+                list_v = i.split(',')
             else:
-                value[row['citation_class_label']] = 1
-            continue
+                list_v.extend(i.split(','))
+        # print(list_v)
+        # print(len(list_v))
+        listlen = len(list_v)
+        if listlen == 15:
+            paper_list.append(13)
+        elif listlen == 17:
+            paper_list.append(14)
+        else:
+            paper_list.append(listlen)
+
+        continue
+
+        # if len(res) > 1 | (len(res[0].split(',')) > 1):
+        #     paper_list.append(len(res))
+        #     resul[''.join(res)] = row['citation_class_label']
+        #     if value.__contains__(row['citation_class_label']):
+        #         value[row['citation_class_label']] = value.get(row['citation_class_label']) + 1
+        #     else:
+        #         value[row['citation_class_label']] = 1
+        #     continue
+
     res1 = re.findall(r"\(.*?\)", row['citation_context'])
     if len(res1) > 0:
+        # paper_list.append(len(ress))
+        # print(res1)
+        num = 0
         for i in res1:
             ress = re.findall("[0-9]{4}", i)
-            if len(ress) > 1:
-                resul[''.join(ress)] = row['citation_class_label']
-                if value.__contains__(row['citation_class_label']):
-                    value[row['citation_class_label']] = value.get(row['citation_class_label']) + 1
-                else:
-                    value[row['citation_class_label']] = 1
-        continue
-print(value)
+            num = num + len(ress)
+        if num != 0:
+            if num == 15:
+                paper_list.append(13)
+            elif num == 17:
+                paper_list.append(14)
+            else:
+                paper_list.append(num)
+            continue
+        # print(num)
+    paper_list.append(1)
+
+print(len(paper_list))
+train_set['paper_list'] = paper_list
+# print(train_set)
+print(list(set(paper_list)))
+train_set.to_csv('dataset/act/citednum_train.csv', sep=',', index=False, encoding='utf-8')
+    # res1 = re.findall(r"\(.*?\)", row['citation_context'])
+    # if len(res1) > 0:
+    #     # paper_list.append(len(ress))
+    #     print(res1)
+    #     for i in res1:
+    #         ress = re.findall("[0-9]{4}", i)
+    #         print(ress)
+    #         if len(ress) > 1:
+    #             # paper_list.append(len(ress))
+    #             resul[''.join(ress)] = row['citation_class_label']
+    #             if value.__contains__(row['citation_class_label']):
+    #                 value[row['citation_class_label']] = value.get(row['citation_class_label']) + 1
+    #             else:
+    #                 value[row['citation_class_label']] = 1
+    #     continue
+# print(value)
+# train_set['paper_list'] = paper_list
+# print(paper_list)
+# print(train_set)
 # print(len(resul))
 
 # ress = re.findall("[0-9]{4}", res[0])
@@ -97,26 +156,26 @@ print(value)
 # sample_submission.to_csv('dataset/new_sample_submission.csv', sep=',', index=False, encoding='utf-8')
 # print(sample_submission)
 
-def clear_section():
-    train_set = pd.read_csv('dataset/section_name.csv', sep=',')
-    index_list = []
-    for index, row in train_set.iterrows():
-        citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
-        citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
-        citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
-        citation_text4 = nltk.word_tokenize(citation_text3)
-        citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
-        if len(citation_text) == 0:
-            index_list.append(index)
-            print("index-------------", row['citation_context'])
-    new_set = train_set.drop(index=index_list)
-    print("line".center(20, "*"))
-    for index, row in new_set.iterrows():
-        citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
-        citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
-        citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
-        citation_text4 = nltk.word_tokenize(citation_text3)
-        citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
-        if len(citation_text) == 0:
-            print(row['citation_context'])
-    new_set.to_csv('dataset/new_section_name.csv', sep=',', index=False, encoding='utf-8')
+# def clear_section():
+#     train_set = pd.read_csv('dataset/section_name.csv', sep=',')
+#     index_list = []
+#     for index, row in train_set.iterrows():
+#         citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
+#         citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+#         citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+#         citation_text4 = nltk.word_tokenize(citation_text3)
+#         citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
+#         if len(citation_text) == 0:
+#             index_list.append(index)
+#             print("index-------------", row['citation_context'])
+#     new_set = train_set.drop(index=index_list)
+#     print("line".center(20, "*"))
+#     for index, row in new_set.iterrows():
+#         citation_text1 = re.sub(r'\[.*?\]', '', row['citation_context'])
+#         citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+#         citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+#         citation_text4 = nltk.word_tokenize(citation_text3)
+#         citation_text = [word for word in citation_text4 if (word not in stop_words and len(word) > 1)]
+#         if len(citation_text) == 0:
+#             print(row['citation_context'])
+#     new_set.to_csv('dataset/new_section_name.csv', sep=',', index=False, encoding='utf-8')
