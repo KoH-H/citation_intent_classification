@@ -15,6 +15,7 @@ import optuna
 import time
 import argparse
 
+device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
 
 
 def parse_args():
@@ -53,7 +54,7 @@ def run_optuna(params, path, dev):
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(params.dataname, batch_size=16, radio=0.2)
+    dataset = load_data(params.dataname, batch_size=16, radio=0.8)
 
     def objective(trial):
         model = Model('allenai/scibert_scivocab_uncased', config=config)
@@ -81,6 +82,15 @@ def run_optuna(params, path, dev):
     print("Best_Params:{} \t Best_Value:{}".format(study.best_params, study.best_value))
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
     print(history)
+    print("Train".center(30, '-'))
+    args.lr = study.best_params['lr']
+    args.au_weight = study.best_params['au_weight']
+    if study.best_params.__contains__("mix_w"):
+
+        args.mix_w = study.best_params['mix_w']
+    else:
+        args.mix_w = 0
+    main_run(args, 'citation_mul_rev_model.pth', device)
 
 
 def main_run(params, path, dev):
@@ -89,8 +99,9 @@ def main_run(params, path, dev):
     # cnn1 = CNNBert(768)
     # cnn2 = CNNBert(768)
     # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
-
-    model = Model('allenai/scibert_scivocab_uncased')
+    config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
+    config.hidden_dropout_prob = 0.3
+    model = Model('allenai/scibert_scivocab_uncased', config=config)
     criterion = nn.CrossEntropyLoss()
     n_epoch = 40
     # lr = 0.0001
@@ -141,7 +152,7 @@ if __name__ == "__main__":
     # }
     args = parse_args()
     tst = time.time()
-    device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
+    # device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
     if args.mode == 'optuna':
         run_optuna(args, 'citation_mul_rev_model.pth', device)
     else:
