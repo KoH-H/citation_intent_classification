@@ -54,10 +54,10 @@ def run_optuna(params, path, dev):
     dataset = load_data(params.dataname, batch_size=16, radio=0.8)
 
     def objective(trial):
-        # model = Model('allenai/scibert_scivocab_uncased')
-        cnn1 = CNNBert(768)
-        cnn2 = CNNBert(768)
-        model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
+        model = Model('allenai/scibert_scivocab_uncased')
+        # cnn1 = CNNBert(768)
+        # cnn2 = CNNBert(768)
+        # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
         # n_epoch = trial.suggest_int('n_epoch', 140, 170, log=True)
         n_epoch = 40
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
@@ -69,7 +69,7 @@ def run_optuna(params, path, dev):
         scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
         # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
         #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
-        best_model_f1, best_epoch = dataset_train(model, token, dataset, criterion, optimizer, n_epoch,
+        best_model_f1, best_epoch = dataset_train_rdrop(model, token, dataset, criterion, optimizer, n_epoch,
                                                        au_weight, dev, scheduler, model_path=path)
 
         return best_model_f1
