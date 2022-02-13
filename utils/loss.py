@@ -14,7 +14,7 @@ class SupConLoss(nn.Module):
         # device = (torch.device('cuda')
         #           if features.is_cuda
         #           else torch.device('cpu'))
-        device = features.device()
+        device = features.device
         if len(features.shape) < 3:
             raise ValueError('`features` needs to be [bsz, n_views, ...],'
                              'at least 3 dimensions are required')
@@ -56,7 +56,6 @@ class SupConLoss(nn.Module):
 
         # tile mask
         mask = mask.repeat(anchor_count, contrast_count)  # 扩充矩阵
-        print(mask[0])
         # mask-out self-contrast cases
         logits_mask = torch.scatter(
             torch.ones_like(mask),
