@@ -5,28 +5,28 @@ import numpy as np
 import torch.nn.functional as F
 
 
-# class CNNBert(nn.Module):
-#     def __init__(self, emb_size):
-#         super(CNNBert, self).__init__()
-#         filter_sizes = [2, 3, 4]
-#         num_filters = 4
-#         self.conv1 = nn.ModuleList([nn.Conv2d(3, num_filters, (K, emb_size)) for K in filter_sizes])
-#         # self.dropout = nn.Dropout(0.1)
-#         self.fc = nn.Linear(len(filter_sizes) * num_filters, 768)
-#
-#     def forward(self, bert_in):
-#         x = (bert_in[7], bert_in[9], bert_in[12])
-#         x = torch.stack(x, dim=1)
-#         x = [F.relu(conv(x)).squeeze(3) for conv in self.conv1]
-#         x = [F.max_pool1d(i, i.size(2)).squeeze(2) for i in x]
-#         x = torch.cat(x, 1)
-#         # x = self.dropout(x)
-#         x = self.fc(x)
-#         return x
+class CNNBert(nn.Module):
+    def __init__(self, emb_size):
+        super(CNNBert, self).__init__()
+        filter_sizes = [2, 3, 4]
+        num_filters = 4
+        self.conv1 = nn.ModuleList([nn.Conv2d(3, num_filters, (K, emb_size)) for K in filter_sizes])
+        # self.dropout = nn.Dropout(0.1)
+        self.fc = nn.Linear(len(filter_sizes) * num_filters, 768)
+
+    def forward(self, bert_in):
+        x = (bert_in[7], bert_in[9], bert_in[12])
+        x = torch.stack(x, dim=1)
+        x = [F.relu(conv(x)).squeeze(3) for conv in self.conv1]
+        x = [F.max_pool1d(i, i.size(2)).squeeze(2) for i in x]
+        x = torch.cat(x, 1)
+        # x = self.dropout(x)
+        x = self.fc(x)
+        return x
 
 
 class ModelCNN(nn.Module):
-    def __init__(self, name, temp=0.2):
+    def __init__(self, name, temp=0.2, cnnl=None, cnnr=None):
         super(ModelCNN, self).__init__()
         self.model = AutoModel.from_pretrained(name)
         self.temp = temp
@@ -47,42 +47,13 @@ class ModelCNN(nn.Module):
         self.des_word_atten = nn.Linear(768, 384)
         self.des_tanh = nn.Tanh()
         self.des_word_weight = nn.Linear(384, 1, bias=False)
-        # self.cnnberl = CNNBert(768)
-        # self.cnnberr = CNNBert(768)
-
-        filter_sizes = [2, 3, 4]
-        num_filters = 4
-        self.conv1 = nn.ModuleList([nn.Conv2d(3, num_filters, (K, 768)) for K in filter_sizes])
-        self.conv2 = nn.ModuleList([nn.Conv2d(3, num_filters, (K, 768)) for K in filter_sizes])
-        # self.dropout = nn.Dropout(0.1)
-        self.conv_fc1 = nn.Linear(len(filter_sizes) * num_filters, 768)
-        self.conv_fc2 = nn.Linear(len(filter_sizes) * num_filters, 768)
-
-    def cnn(self, bert_in, datatp):
-        x = (bert_in[7], bert_in[9], bert_in[12])
-        x = torch.stack(x, dim=1)
-        if datatp == 'ori':
-            x = [F.relu(conv(x)).squeeze(3) for conv in self.conv1]
-        else:
-            x = [F.relu(conv(x)).squeeze(3) for conv in self.conv2]
-        x = [F.max_pool1d(i, i.size(2)).squeeze(2) for i in x]
-        x = torch.cat(x, 1)
-        # x = self.dropout(x)
-        if datatp == 'ori':
-            x = self.conv_fc1(x)
-        else:
-            x = self.conv_fc2(x)
-        return x
+        self.cnnl = cnnl
+        self.cnnr = cnnr
 
     def generate_sen_pre(self, sen, tp):
-        cnn_out = None
         bert_output = self.model(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
-        if tp == 're':
-            cnn_out = self.cnn(bert_output[2], tp)
-        else:
-            cnn_out = self.cnn(bert_output[2], tp)
         sen = self.get_sen_att(sen, bert_output, tp, sen['attention_mask'])
-        return sen, cnn_out
+        return sen, bert_output
 
     def forward(self, x1, **kwargs):  # dataset_train_limix_rspace_cnn
         input_ids = x1['input_ids']
@@ -90,14 +61,15 @@ class ModelCNN(nn.Module):
         attention_mask = x1['attention_mask']
         bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
-        ocnn_out = self.cnn(bert_output[2], 'ori')
+        ocnn_out = self.cnnl(bert_output[2])
         if self.training:
-            re_sen_pre, rcnn_out = self.generate_sen_pre(sen=kwargs['r_sen'], tp='re')
-            ausec_sen_pre, acnn_out = self.generate_sen_pre(sen=kwargs['s_sen'], tp='ori')
+            re_sen_pre, rb_output = self.generate_sen_pre(sen=kwargs['r_sen'], tp='re')
+            ausec_sen_pre, ab_output = self.generate_sen_pre(sen=kwargs['s_sen'], tp='ori')
 
             # for CNN
             # cnn_out = self.cnnber(bert_output[2])
-
+            rcnn_out = self.cnnr(rb_output[2])
+            acnn_out = self.cnnl(ab_output[2])
             ori_sen_pre = torch.cat((ori_sen_pre, ocnn_out), dim=1)
             re_sen_pre = torch.cat((re_sen_pre, rcnn_out), dim=1)
             ausec_sen_pre = torch.cat((ausec_sen_pre, acnn_out), dim=1)
@@ -113,7 +85,7 @@ class ModelCNN(nn.Module):
         # ori_sen_pre = ori_sen_pre + cnn_out
         ori_sen_pre = torch.cat((ori_sen_pre, ocnn_out), dim=1)
 
-        rcnn_out = self.cnn(bert_output[2], 're')
+        rcnn_out = self.cnnr(bert_output[2])
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
         re_sen_pre= torch.cat((re_sen_pre, rcnn_out), dim=1)
 

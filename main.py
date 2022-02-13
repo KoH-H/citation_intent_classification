@@ -16,6 +16,7 @@ import time
 import argparse
 
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description='code for Citation Intent')
     parser.add_argument(
@@ -54,7 +55,9 @@ def run_optuna(params, path, dev):
 
     def objective(trial):
         # model = Model('allenai/scibert_scivocab_uncased')
-        model = ModelCNN('allenai/scibert_scivocab_uncased')
+        cnn1 = CNNBert(768)
+        cnn2 = CNNBert(768)
+        model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
         # n_epoch = trial.suggest_int('n_epoch', 140, 170, log=True)
         n_epoch = 40
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
@@ -81,7 +84,9 @@ def run_optuna(params, path, dev):
 def main_run(params, path, dev):
     setup_seed(0)
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
-    model = NumModel('allenai/scibert_scivocab_uncased')
+    cnn1 = CNNBert(768)
+    cnn2 = CNNBert(768)
+    model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
     criterion = nn.CrossEntropyLoss()
     n_epoch = 40
     # lr = 0.0001
