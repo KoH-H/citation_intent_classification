@@ -81,7 +81,7 @@ def run_optuna(params, path, dev):
 def main_run(params, path, dev):
     setup_seed(0)
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
-    model = ModelCNN('allenai/scibert_scivocab_uncased')
+    model = NumModel('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     n_epoch = 40
     # lr = 0.0001
@@ -116,6 +116,12 @@ def main_run(params, path, dev):
 # 是否在输出时加上 1- dropout, 不需要加 因为在训练阶段不仅会遮盖 还会将遮盖后的放大。  https://www.zhihu.com/question/61751133
 # 将SGD改为Adam
 
+
+# "original": {
+#       "lr": 0.000036,
+#       "au_weight":  0.003202,
+#       "mix_w": 0
+#     },
 
 if __name__ == "__main__":
     # act imix best params
