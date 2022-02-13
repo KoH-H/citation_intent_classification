@@ -1163,10 +1163,10 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             s_tar = torch.LongTensor(s_tar)
 
             # r-drop
-            main_output, au_output1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
-            main_output1, au_output2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output, au_output1, supout1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output1, au_output2, supout2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
 
-            mf = torch.cat([main_output.unsqueeze(1), main_output1.unsqueeze(1)], dim=1)
+            mf = torch.cat([supout1.unsqueeze(1), supout2.unsqueeze(1)], dim=1)
             # af = torch.cat([au_output1.unsqueeze(1), au_output2.unsqueeze(1)], dim=1)
 
             osclloss = supcon(features=mf, labels=train_t_tar.to(device))
