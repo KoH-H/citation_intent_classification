@@ -55,9 +55,9 @@ class AttentionLayer(nn.Module):
 
 
 class Model(nn.Module):
-    def __init__(self, name, temp=0.2):
+    def __init__(self, name, temp=0.2, config=None):
         super(Model, self).__init__()
-        self.model = AutoModel.from_pretrained(name)
+        self.model = AutoModel.from_pretrained(name, config)
         self.temp = temp
         self.fc1 = nn.Linear(768 * 2, 768)
         self.mix_fc = nn.Linear(768, 6)

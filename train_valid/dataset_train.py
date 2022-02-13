@@ -1067,16 +1067,13 @@ def dataset_train_rdrop(model, token, data, criterion, optimize, n_epoch, au_wei
             ori_loss1 = criterion(main_output, train_t_tar.to(device))
             ori_loss2 = criterion(main_output1, train_t_tar.to(device))
             ori_loss = 0.5 * (ori_loss1 + ori_loss2)
-
             ori_loss = ori_loss + ori_kl * 4
 
-            re_kl = compute_kl_loss(p=au_output1, q=au_output2)
-
             # L_r
+            re_kl = compute_kl_loss(p=main_output, q=main_output1)
             re_loss1 = criterion(main_output, train_r_tar.to(device))
-            re_loss2 = criterion(main_output, train_r_tar.to(device))
+            re_loss2 = criterion(main_output1, train_r_tar.to(device))
             re_loss = 0.5 * (re_loss1 + re_loss2)
-
             re_loss = re_loss + re_kl * 4
 
             # L_a

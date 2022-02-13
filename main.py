@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoConfig
 import torch.optim as optim
 from model.citation_model import *
 from model.citation_model_num import *
@@ -48,13 +48,15 @@ def parse_args():
 def run_optuna(params, path, dev):
     print('Run optuna')
     setup_seed(0)
+    config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
+    config.hidden_dropout_prob = 0.3
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
     dataset = load_data(params.dataname, batch_size=16, radio=0.2)
 
     def objective(trial):
-        model = Model('allenai/scibert_scivocab_uncased')
+        model = Model('allenai/scibert_scivocab_uncased', config=config)
         # cnn1 = CNNBert(768)
         # cnn2 = CNNBert(768)
         # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
@@ -69,7 +71,7 @@ def run_optuna(params, path, dev):
         scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
         # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
         #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
-        best_model_f1, best_epoch = dataset_train_suploss(model, token, dataset, criterion, optimizer, n_epoch,
+        best_model_f1, best_epoch = dataset_train_rdrop(model, token, dataset, criterion, optimizer, n_epoch,
                                                        au_weight, dev, scheduler, model_path=path)
 
         return best_model_f1
