@@ -95,7 +95,6 @@ class Model(nn.Module):
         sen = self.get_sen_att(sen, bert_output, tp, sen['attention_mask'])
         return sen
 
-
     # original
     def forward(self, x1, **kwargs):
         input_ids = x1['input_ids']
