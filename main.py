@@ -90,7 +90,7 @@ def main_run(params, path, dev):
     # n_epoch = 151
     # mix_w = 0.05
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(params.dataname, batch_size=16, radio=0.8)
+    dataset = load_data(params.dataname, batch_size=4, radio=0.8)
 
     # optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     optimizer = optim.Adam(model.parameters(), lr=params.lr)
