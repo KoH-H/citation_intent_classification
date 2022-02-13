@@ -1170,21 +1170,21 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             main_output1, au_output2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
 
             mf = torch.cat([main_output.unsqueeze(1), main_output1.unsqueeze(1)], dim=1)
-            af = torch.cat([au_output1.unsqueeze(1), au_output2.unsqueeze(1)], dim=1)
+            # af = torch.cat([au_output1.unsqueeze(1), au_output2.unsqueeze(1)], dim=1)
 
             sclcriterion = SupConLoss()
             osclloss = sclcriterion(mf, train_t_tar.to(device))
 
-            rsclloss = sclcriterion(mf, train_r_tar.to(device))
+            # rsclloss = sclcriterion(mf, train_r_tar.to(device))
 
-            asclloss = sclcriterion(af, s_tar.to(device))
+            # asclloss = sclcriterion(af, s_tar.to(device))
 
             # L_o
-            ori_loss = criterion(main_output, train_t_tar.to(device)) + osclloss
+            ori_loss = criterion(main_output, train_t_tar.to(device)) + 0.05 * osclloss
             # L_r
-            re_loss = criterion(main_output, train_r_tar.to(device)) + rsclloss
+            re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
-            au_loss = criterion(au_output1, s_tar.to(device)) + asclloss
+            au_loss = criterion(au_output1, s_tar.to(device))
 
             loss = alpha * (ori_loss + au_weight * au_loss) + (1 - alpha) * re_loss  # 0.05表现较好
             loss.backward()
