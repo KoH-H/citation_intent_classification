@@ -1169,8 +1169,7 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             mf = torch.cat([main_output.unsqueeze(1), main_output1.unsqueeze(1)], dim=1)
             # af = torch.cat([au_output1.unsqueeze(1), au_output2.unsqueeze(1)], dim=1)
 
-            sclcriterion = SupConLoss()
-            osclloss = sclcriterion(mf, train_t_tar.to(device))
+            osclloss = supcon(features=mf, labels=train_t_tar.to(device))
 
             # rsclloss = sclcriterion(mf, train_r_tar.to(device))
 
