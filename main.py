@@ -81,7 +81,7 @@ def run_optuna(params, path, dev):
 def main_run(params, path, dev):
     setup_seed(0)
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
-    model = Model('allenai/scibert_scivocab_uncased')
+    model = ModelCNN('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     n_epoch = 40
     # lr = 0.0001
