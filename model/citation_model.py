@@ -59,7 +59,7 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.model = AutoModel.from_pretrained(name)
         self.temp = temp
-        self.fc1 = nn.Linear(768 * 3, 768)
+        self.fc1 = nn.Linear(768 * 2, 768)
         self.mix_fc = nn.Linear(768, 6)
         self.mix_fc1 = nn.Linear(768, 6)
         self.des_fc = nn.Linear(768, 6)
