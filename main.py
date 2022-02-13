@@ -95,12 +95,12 @@ def main_run(params, path, dev):
     # n_epoch = 151
     # mix_w = 0.05
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(params.dataname, batch_size=4, radio=0.8)
+    dataset = load_data(params.dataname, batch_size=16, radio=0.8)
 
     # optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     optimizer = optim.Adam(model.parameters(), lr=params.lr)
     scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train_paper_num(model, token, dataset, criterion, optimizer, n_epoch,
+    best_model_f1, best_epoch = dataset_train(model, token, dataset, criterion, optimizer, n_epoch,
                                                    params.au_weight, dev,
                                                    scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
