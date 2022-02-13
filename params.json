@@ -1,8 +1,8 @@
 {
   "ACT":  {
     "original": {
-      "lr": 0.000036,
-      "au_weight":  0.003202,
+      "lr": 0.000019,
+      "au_weight":  0.003399,
       "mix_w": 0
     },
     "imix": {

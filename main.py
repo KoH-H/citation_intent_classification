@@ -84,9 +84,11 @@ def run_optuna(params, path, dev):
 def main_run(params, path, dev):
     setup_seed(0)
     token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
-    cnn1 = CNNBert(768)
-    cnn2 = CNNBert(768)
-    model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
+    # cnn1 = CNNBert(768)
+    # cnn2 = CNNBert(768)
+    # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
+
+    model = Model('allenai/scibert_scivocab_uncased')
     criterion = nn.CrossEntropyLoss()
     n_epoch = 40
     # lr = 0.0001
@@ -100,7 +102,7 @@ def main_run(params, path, dev):
     # optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     optimizer = optim.Adam(model.parameters(), lr=params.lr)
     scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train(model, token, dataset, criterion, optimizer, n_epoch,
+    best_model_f1, best_epoch = dataset_train_rdrop(model, token, dataset, criterion, optimizer, n_epoch,
                                                    params.au_weight, dev,
                                                    scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
