@@ -24,8 +24,8 @@ import collections
 #     section_location.loc[i] = {'citation_context': section_text[i],
 #                                'citation_class_label': section_name[i]}
 # section_location.to_csv('/content/citation_classification/dataset/section_name.csv', sep=',', index=False)
-train_set = pd.read_csv('dataset/act/SDP_test.csv', sep=',')
-sam = pd.read_csv('dataset/act/sample_submission.csv', sep=',')
+train_set = pd.read_csv('dataset/act/SDP_train.csv', sep=',')
+# sam = pd.read_csv('dataset/act/sample_submission.csv', sep=',')
 # print(train_set.shape)
 # exit()
 
@@ -71,10 +71,22 @@ for ind, row in train_set.iterrows():
         # print(len(list_v))
         listlen = len(list_v)
         if listlen == 15:
+            if resul.__contains__(13):
+                resul.get(13).append(row['citation_class_label'])
+            else:
+                resul[13] = [-1]
             paper_list.append(13)
         elif listlen == 17:
+            if resul.__contains__(14):
+                resul.get(14).append(row['citation_class_label'])
+            else:
+                resul[14] = [-1]
             paper_list.append(14)
         else:
+            if resul.__contains__(listlen):
+                resul.get(listlen).append(row['citation_class_label'])
+            else:
+                resul[listlen] = [-1]
             paper_list.append(listlen)
 
         continue
@@ -98,20 +110,42 @@ for ind, row in train_set.iterrows():
             num = num + len(ress)
         if num != 0:
             if num == 15:
+                if resul.__contains__(13):
+                    resul.get(13).append(row['citation_class_label'])
+                else:
+                    resul[13] = [-1]
                 paper_list.append(13)
             elif num == 17:
+                print(row['citation_context'])
+                if resul.__contains__(14):
+                    resul.get(14).append(row['citation_class_label'])
+                else:
+                    resul[14] = [-1]
                 paper_list.append(14)
             else:
+                if resul.__contains__(num):
+                    resul.get(num).append(row['citation_class_label'])
+                else:
+                    resul[num] = [-1]
                 paper_list.append(num)
             continue
         # print(num)
+    if resul.__contains__(1):
+        resul.get(1).append(row['citation_class_label'])
+    else:
+        resul[1] = [-1]
     paper_list.append(1)
+# print(paper_list)
+# print(collections.Counter(paper_list).items())
+for i in resul.keys():
+    print(i)
+    print(collections.Counter(resul[i]).items())
 
-print(len(paper_list))
-sam['paper_list'] = paper_list
-# print(train_set)
-print(list(set(paper_list)))
-sam.to_csv('dataset/act/citednum_sam.csv', sep=',', index=False, encoding='utf-8')
+# print(len(paper_list))
+# train_set['paper_list'] = paper_list
+# # print(train_set)
+# print(list(set(paper_list)))
+# sam.to_csv('dataset/act/citednum_sam.csv', sep=',', index=False, encoding='utf-8')
     # res1 = re.findall(r"\(.*?\)", row['citation_context'])
     # if len(res1) > 0:
     #     # paper_list.append(len(ress))
