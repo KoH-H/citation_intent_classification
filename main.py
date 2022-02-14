@@ -72,7 +72,7 @@ def run_optuna(params, path, dev):
         scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
         # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
         #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
-        best_model_f1, best_epoch = dataset_train_suploss(model, token, dataset, criterion, optimizer, n_epoch,
+        best_model_f1, best_epoch = dataset_train_rdrop(model, token, dataset, criterion, optimizer, n_epoch,
                                                        au_weight, dev, scheduler, model_path=path)
 
         return best_model_f1
@@ -83,11 +83,11 @@ def run_optuna(params, path, dev):
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
     print(history)
     print("Train".center(30, '-'))
-    args.lr = study.best_params['lr']
-    args.au_weight = study.best_params['au_weight']
+    args.lr = format(study.best_params['lr'], '.6f')
+    args.au_weight = format(study.best_params['au_weight'], '.6f')
     if study.best_params.__contains__("mix_w"):
 
-        args.mix_w = study.best_params['mix_w']
+        args.mix_w = format(study.best_params['mix_w'], '.6f')
     else:
         args.mix_w = 0
     main_run(args, 'citation_mul_rev_model.pth', device)
@@ -115,7 +115,7 @@ def main_run(params, path, dev):
     # optimizer = optim.SGD(model.parameters(), lr=params.lr, momentum=0.9, weight_decay=2e-4)
     optimizer = optim.Adam(model.parameters(), lr=params.lr)
     scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
-    best_model_f1, best_epoch = dataset_train_suploss(model, token, dataset, criterion, optimizer, n_epoch,
+    best_model_f1, best_epoch = dataset_train_rdrop(model, token, dataset, criterion, optimizer, n_epoch,
                                                    params.au_weight, dev,
                                                    scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
