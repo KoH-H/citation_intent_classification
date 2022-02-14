@@ -28,8 +28,8 @@
   },
   "ACL": {
     "original": {
-      "lr": 0.000184,
-      "au_weight":  0.007413,
+      "lr": 0.000036,
+      "au_weight":  0.003202,
       "mix_w": 0
     },
     "imix": {
