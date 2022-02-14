@@ -1171,7 +1171,7 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
 
             osclloss = supcon(features=mf, labels=train_t_tar.to(device))
 
-            # rsclloss = sclcriterion(mf, train_r_tar.to(device))
+            # rsclloss = supcon(mf, train_r_tar.to(device))
 
             # asclloss = sclcriterion(af, s_tar.to(device))
 

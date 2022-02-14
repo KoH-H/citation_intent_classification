@@ -121,10 +121,10 @@ class Model(nn.Module):
             # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
             main_output = self.fc1(self.drop(mixed_feature))
-            # sup_out = self.supfc(main_output)
+            sup_out = self.supfc(ori_sen_pre)
             main_output = self.fc(main_output)
             au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
-            return main_output, au_output1
+            return main_output, au_output1, sup_out
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         mixed_feature = self.fc1(mixed_feature)
