@@ -189,8 +189,8 @@ def load_data(dataname, batch_size=None, radio=None):
     reverse_data = reverse_sampler(train)
 
     if dataname == 'ACT':
-        reverse_data = delete_aug(reverse_data, 'reverse')
-    data['reverse'] = generate_batch_data(reverse_data, batch_size, datatp="reverse")
+        reverse_data = delete_aug(reverse_data)
+    data['reverse'] = generate_batch_data(reverse_data, batch_size)
 
     # mul_sec = pd.read_csv(path / 'dataset/section_name.csv')
     # mul_num = train.shape[0]
@@ -198,12 +198,12 @@ def load_data(dataname, batch_size=None, radio=None):
     # mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0]//batch_size))
     # data['section'] = mul_section_batch
     if dataname == 'ACT':
-        train = delete_aug(train, 'train')
-        val = delete_aug(val, 'val')
-        test = delete_aug(test, 'test')
-    data['train'] = generate_batch_data(train, batch_size, datatp="train")
-    data['val'] = generate_batch_data(val, batch_size, datatp='val')
-    data['test'] = generate_batch_data(test, batch_size, datatp='test')
+        train = delete_aug(train)
+        val = delete_aug(val)
+        test = delete_aug(test)
+    data['train'] = generate_batch_data(train, batch_size)
+    data['val'] = generate_batch_data(val, batch_size)
+    data['test'] = generate_batch_data(test, batch_size)
 
     mul_sec = pd.read_csv(path / 'dataset/new_section_name.csv')
     mul_num = train.shape[0]
