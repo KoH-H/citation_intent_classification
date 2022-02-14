@@ -83,11 +83,11 @@ def run_optuna(params, path, dev):
     history = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
     print(history)
     print("Train".center(30, '-'))
-    args.lr = format(study.best_params['lr'], '.6f')
-    args.au_weight = format(study.best_params['au_weight'], '.6f')
+    args.lr = float(format(study.best_params['lr'], '.6f'))
+    args.au_weight = float(format(study.best_params['au_weight'], '.6f'))
     if study.best_params.__contains__("mix_w"):
 
-        args.mix_w = format(study.best_params['mix_w'], '.6f')
+        args.mix_w = float(format(study.best_params['mix_w'], '.6f'))
     else:
         args.mix_w = 0
     main_run(args, 'citation_mul_rev_model.pth', device)
