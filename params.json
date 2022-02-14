@@ -8,7 +8,7 @@
     "suploss":{
       "lr": 0.000082,
       "au_weight": 0.001628,
-      "mix_x": 0
+      "mix_w": 0
     },
     "imix": {
       "lr": 0.000068,
