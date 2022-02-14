@@ -98,10 +98,11 @@ def generate_batch_data(data, batch_size=16, datatp=None):
             mini_batch_num = []
         for j in range(batch_size):
             # citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i * batch_size + j]).lower()
-            citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i * batch_size + j]).lower()
-            citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
-            citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
-            citation_text = nltk.word_tokenize(citation_text3)
+            citation_text1 = data['citation_context'][i * batch_size + j].lower()
+            # citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i * batch_size + j]).lower()
+            # citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+            # citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+            citation_text = nltk.word_tokenize(citation_text1)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
             mini_batch_sentences.append(citation_text)
             mini_batch_target.append(data['citation_class_label'][i * batch_size + j])
@@ -119,10 +120,11 @@ def generate_batch_data(data, batch_size=16, datatp=None):
             last_num_list = []
         for i in range(batch_count * batch_size, data.shape[0]):
             # citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i]).lower()
-            citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i]).lower()
-            citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
-            citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
-            citation_text = nltk.word_tokenize(citation_text3)
+            citation_text1 = data['citation_context'][i].lower()
+            # citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i]).lower()
+            # citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)
+            # citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
+            citation_text = nltk.word_tokenize(citation_text1)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
             last_sentences_list.append(citation_text)
             last_target_list.append(data['citation_class_label'][i])
