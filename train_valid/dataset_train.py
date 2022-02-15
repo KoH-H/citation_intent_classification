@@ -1177,9 +1177,9 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             # asclloss = sclcriterion(af, s_tar.to(device))
 
             # L_o
-            ori_loss = criterion(main_output, train_t_tar.to(device)) + 0.05 * osclloss
+            ori_loss = criterion(main_output, train_t_tar.to(device)) + osclloss
             # L_r
-            re_loss = criterion(main_output, train_r_tar.to(device)) + 0.05 * rsclloss
+            re_loss = criterion(main_output, train_r_tar.to(device)) + rsclloss
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
 
@@ -1218,7 +1218,7 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
         print('LR'.center(20, '*'))
         print('Learning Rate: {} \t Epoch'.format(optimize.param_groups[0]['lr']), i)
         print('LR'.center(20, '*'))
-        # scheduler.step()
+        scheduler.step()
         val_f1, val_micro_f1 = dataset_valid(model, token, data['val'], device, criterion=criterion)
         print("Val".center(20, '='))
         print('Epoch: %d \t macro_F1: %.4f \t micro_F1: %.4f' % (i, val_f1, val_micro_f1))
