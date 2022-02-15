@@ -73,7 +73,7 @@ def run_optuna(params, path, dev):
         scheduler = None
         # best_model_f1, best_epoch = dataset_train_imix(model, token, dataset, criterion, optimizer, n_epoch,
         #                                                 au_weight, dev, mix_w, scheduler, model_path=path)
-        best_model_f1, best_epoch = dataset_train_rdrop(model, token, dataset, criterion, optimizer, n_epoch,
+        best_model_f1, best_epoch = dataset_train_suploss(model, token, dataset, criterion, optimizer, n_epoch,
                                                           au_weight, dev, scheduler, model_path=path)
 
         return best_model_f1
@@ -117,7 +117,7 @@ def main_run(params, path, dev):
     optimizer = optim.Adam(model.parameters(), lr=params.lr)
     # scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
     scheduler = None
-    best_model_f1, best_epoch = dataset_train_rdrop(model, token, dataset, criterion, optimizer, n_epoch,
+    best_model_f1, best_epoch = dataset_train_suploss(model, token, dataset, criterion, optimizer, n_epoch,
                                                       params.au_weight, dev,
                                                       scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
