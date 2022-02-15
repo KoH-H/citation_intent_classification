@@ -79,12 +79,12 @@ class Model(nn.Module):
             )
         self.ori_att = nn.Sequential(
             nn.Linear(768, 384),
-            nn.Tanh(inplace=True),
+            nn.Tanh(),
             nn.Linear(384, 1, bias=False)
         )
         self.re_att = nn.Sequential(
             nn.Linear(768, 384),
-            nn.Tanh(inplace=True),
+            nn.Tanh(),
             nn.Linear(384, 1, bias=False)
         )
 
@@ -144,7 +144,7 @@ class Model(nn.Module):
             sup_out1 = self.supmlp1(ori_sen_pre)
             sup_out1 = F.normalize(sup_out1, dim=1)
             sup_out2 = self.supmlp2(re_sen_pre)
-            sup_out2 = F.normalize(sup_out2, dim=2)
+            sup_out2 = F.normalize(sup_out2, dim=1)
 
             main_output = self.fc(main_output)
             au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
