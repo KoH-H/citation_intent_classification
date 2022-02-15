@@ -59,14 +59,17 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.model = AutoModel.from_pretrained(name, config)
         self.temp = temp
-        self.fc1 = nn.Linear(768 * 2, 768)
-        self.mix_fc = nn.Linear(768, 6)
-        self.mix_fc1 = nn.Linear(768, 6)
-        self.des_fc = nn.Linear(768, 6)
-        self.fc = nn.Linear(768, 6)
         self.drop = nn.Dropout(0.3)
+        self.fc1 = nn.Linear(768 * 2, 768)
+        self.fc2 = nn.Linear(768, 6)
 
-        self.au_task_fc1 = nn.Linear(768, 5)
+        # self.mix_fc = nn.Linear(768, 6)
+        # self.mix_fc1 = nn.Linear(768, 6)
+        # self.des_fc = nn.Linear(768, 6)
+
+        self.au_task_fc1 = nn.Linear(768, 768)
+        self.au_task_fc2 = nn.Linear(768, 5)
+
         self.supmlp1 = nn.Sequential(
             nn.Linear(768, 768),
             nn.ReLU(inplace=True),
@@ -118,41 +121,52 @@ class Model(nn.Module):
     # original
     def forward(self, x1, **kwargs):
         input_ids = x1['input_ids']
-        batch_size = input_ids.shape[0]
+        # batch_size = input_ids.shape[0]
         attention_mask = x1['attention_mask']
         bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
 
         if self.training:
             # Obtain the representation vector for the classification learning branch
-            r_ids = kwargs['r_sen']['input_ids']
-            r_attention_mask = kwargs['r_sen']['attention_mask']
-            r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
-            re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
+            # r_ids = kwargs['r_sen']['input_ids']
+            # r_attention_mask = kwargs['r_sen']['attention_mask']
+            # r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
+            # re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
+            re_sen_pre = self.generate_sen_pre(kwargs['r_sen'], 're')
             # Get the representation vector for the auxiliary task
-            s_ids = kwargs['s_sen']['input_ids']
-            s_attention_mask = kwargs['s_sen']['attention_mask']
-            s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
-            ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
+            # s_ids = kwargs['s_sen']['input_ids']
+            # s_attention_mask = kwargs['s_sen']['attention_mask']
+            # s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
+            # ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
+            ausec_sen_pre = self.generate_sen_pre(kwargs['s_sen'], 'ori')
 
             ori_sen_pre = self.drop(ori_sen_pre)
             re_sen_pre = self.drop(re_sen_pre)
             # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
-            main_output = self.fc1(self.drop(mixed_feature))
 
             sup_out1 = self.supmlp1(ori_sen_pre)
             sup_out1 = F.normalize(sup_out1, dim=1)
             sup_out2 = self.supmlp2(re_sen_pre)
             sup_out2 = F.normalize(sup_out2, dim=1)
 
-            main_output = self.fc(main_output)
-            au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
+            main_output = self.fc1(mixed_feature)
+            main_output = nn.ReLU(inplace=True)(main_output)
+            main_output = self.drop(main_output)
+            main_output = self.fc2(main_output)
+
+            au_output1 = self.au_task_fc1(ausec_sen_pre)
+            au_output1 = nn.ReLU(inplace=True)(au_output1)
+            au_output1 = self.drop(au_output1)
+            au_output1 = self.au_task_fc2(au_output1)
+
             return main_output, au_output1, sup_out1, sup_out2
+
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         mixed_feature = self.fc1(mixed_feature)
-        mixed_feature = self.fc(mixed_feature)
+        mixed_feature = nn.ReLU(inplace=True)(mixed_feature)
+        mixed_feature = self.fc2(mixed_feature)
         return mixed_feature
 
     # forward for i-mix

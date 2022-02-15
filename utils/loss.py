@@ -122,11 +122,11 @@ def supcon(features, contrast_mode='all', temperature=5, base_temperature=5, lab
         anchor_count = contrast_count
     else:
         raise ValueError('Unknown mode: {}'.format(contrast_mode))
-    print(contrast_feature[0])
+    # print(contrast_feature[0])
     anchor_dot_contrast = torch.div(
         torch.matmul(anchor_feature, contrast_feature.T), temperature)
-    print(anchor_dot_contrast)
-    exit()
+    # print(anchor_dot_contrast)
+    # exit()
     # for numerical stability
     logits_max, _ = torch.max(anchor_dot_contrast, dim=1, keepdim=True)
 
