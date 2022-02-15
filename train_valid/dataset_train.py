@@ -1163,23 +1163,23 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             s_tar = torch.LongTensor(s_tar)
 
             # r-drop
-            main_output, au_output1, supout1,  supout2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
-            main_output1, au_output2, supout11, supout22 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output, au_output1, supout1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output1, au_output2, supout11 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
 
             mf1 = torch.cat([supout1.unsqueeze(1), supout11.unsqueeze(1)], dim=1)
-            mf2 = torch.cat([supout2.unsqueeze(1), supout22.unsqueeze(1)], dim=1)
+            # mf2 = torch.cat([supout2.unsqueeze(1), supout22.unsqueeze(1)], dim=1)
             # af = torch.cat([au_output1.unsqueeze(1), au_output2.unsqueeze(1)], dim=1)
 
             osclloss = supcon(features=mf1, labels=train_t_tar.to(device))
 
-            rsclloss = supcon(features=mf2, labels=train_r_tar.to(device))
+            # rsclloss = supcon(features=mf2, labels=train_r_tar.to(device))
 
             # asclloss = sclcriterion(af, s_tar.to(device))
 
             # L_o
             ori_loss = criterion(main_output, train_t_tar.to(device)) + osclloss
             # L_r
-            re_loss = criterion(main_output, train_r_tar.to(device)) + rsclloss
+            re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
 

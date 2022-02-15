@@ -147,8 +147,9 @@ class Model(nn.Module):
 
             sup_out1 = self.supmlp1(ori_sen_pre)
             sup_out1 = F.normalize(sup_out1, dim=1)
-            sup_out2 = self.supmlp2(re_sen_pre)
-            sup_out2 = F.normalize(sup_out2, dim=1)
+
+            # sup_out2 = self.supmlp2(re_sen_pre)
+            # sup_out2 = F.normalize(sup_out2, dim=1)
 
             main_output = self.fc1(mixed_feature)
             main_output = nn.ReLU(inplace=True)(main_output)
@@ -160,7 +161,7 @@ class Model(nn.Module):
             au_output1 = self.drop(au_output1)
             au_output1 = self.au_task_fc2(au_output1)
 
-            return main_output, au_output1, sup_out1, sup_out2
+            return main_output, au_output1, sup_out1
 
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
