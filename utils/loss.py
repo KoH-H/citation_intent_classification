@@ -88,7 +88,7 @@ import torch.nn as nn
 #         self.contrast_mode = contrast_mode
 #         self.base_temperature = base_temperature
 
-def supcon(features, contrast_mode='all', temperature=5, base_temperature=5, labels=None, mask=None):
+def supcon(features, contrast_mode='all', temperature=0.1, base_temperature=0.05, labels=None, mask=None):
     # device = (torch.device('cuda')
     #           if features.is_cuda
     #           else torch.device('cpu'))
