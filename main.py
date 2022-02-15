@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, AutoConfig
 import torch.optim as optim
 from model.citation_model import *
 from model.citation_model_num import *
-from model.cnn_bert import *
+# from model.cnn_bert import *
 from utils.scheduler import WarmupMultiStepLR
 from train_valid.dataset_train import *
 from train_valid.dataset_valid import dataset_valid
@@ -57,12 +57,12 @@ def run_optuna(params, path, dev):
     dataset = load_data(params.dataname, batch_size=16, radio=0.2)
 
     def objective(trial):
-        model = Model('allenai/scibert_scivocab_uncased', config=config)
-        # cnn1 = CNNBert(768)
-        # cnn2 = CNNBert(768)
+        cnn1 = CNNBert(768)
+        cnn2 = CNNBert(768)
+        model = Model('allenai/scibert_scivocab_uncased', config=config, cnn1, cnn2)
         # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
         # n_epoch = trial.suggest_int('n_epoch', 140, 170, log=True)
-        n_epoch = 40
+        n_epoch = 35
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
         au_weight = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
         # mix_w = trial.suggest_float('mix_w', 0.01, 0.1, log=True)
@@ -102,9 +102,11 @@ def main_run(params, path, dev):
     # cnn1 = CNNBert(768)
     # cnn2 = CNNBert(768)
     # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
-    model = Model('allenai/scibert_scivocab_uncased', config=config)
+    cnn1 = CNNBert(768)
+    cnn2 = CNNBert(768)
+    model = Model('allenai/scibert_scivocab_uncased', config=config, cnn1, cnn2)
     criterion = nn.CrossEntropyLoss()
-    n_epoch = 40
+    n_epoch = 35
     # lr = 0.0001
     # au_weight = 0.007413
     # optimizer = SGD
