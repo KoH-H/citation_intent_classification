@@ -59,7 +59,7 @@ def run_optuna(params, path, dev):
     def objective(trial):
         cnn1 = CNNBert(768)
         cnn2 = CNNBert(768)
-        model = Model('allenai/scibert_scivocab_uncased', config=config, cnn1, cnn2)
+        model = Model('allenai/scibert_scivocab_uncased', config=config, cnnl=cnn1, cnnr=cnn2)
         # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
         # n_epoch = trial.suggest_int('n_epoch', 140, 170, log=True)
         n_epoch = 35
@@ -104,7 +104,7 @@ def main_run(params, path, dev):
     # model = ModelCNN('allenai/scibert_scivocab_uncased', cnnl=cnn1, cnnr=cnn2)
     cnn1 = CNNBert(768)
     cnn2 = CNNBert(768)
-    model = Model('allenai/scibert_scivocab_uncased', config=config, cnn1, cnn2)
+    model = Model('allenai/scibert_scivocab_uncased', config=config, cnnl=cnn1, cnnr=cnn2)
     criterion = nn.CrossEntropyLoss()
     n_epoch = 35
     # lr = 0.0001
