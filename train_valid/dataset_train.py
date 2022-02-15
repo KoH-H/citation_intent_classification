@@ -1163,7 +1163,7 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             s_tar = torch.LongTensor(s_tar)
 
             # r-drop
-            main_output, au_output1, supout1,  supout2= model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output, au_output1, supout1,  supout2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
             main_output1, au_output2, supout11, supout22 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
 
             mf1 = torch.cat([supout1.unsqueeze(1), supout11.unsqueeze(1)], dim=1)

@@ -63,25 +63,43 @@ class Model(nn.Module):
         self.mix_fc = nn.Linear(768, 6)
         self.mix_fc1 = nn.Linear(768, 6)
         self.des_fc = nn.Linear(768, 6)
-        self.supfc1 = nn.Linear(768, 192)
-        self.supfc2 = nn.Linear(768, 192)
         self.fc = nn.Linear(768, 6)
         self.drop = nn.Dropout(0.3)
 
         self.au_task_fc1 = nn.Linear(768, 5)
+        self.supmlp1 = nn.Sequential(
+            nn.Linear(768, 768),
+            nn.ReLU(inplace=True),
+            nn.Linear(768, 192)
+            )
+        self.supmlp2 = nn.Sequential(
+            nn.Linear(768, 768),
+            nn.ReLU(inplace=True),
+            nn.Linear(768, 192)
+            )
+        self.ori_att = nn.Sequential(
+            nn.Linear(768, 384),
+            nn.Tanh(inplace=True),
+            nn.Linear(384, 1, bias=False)
+        )
+        self.re_att = nn.Sequential(
+            nn.Linear(768, 384),
+            nn.Tanh(inplace=True),
+            nn.Linear(384, 1, bias=False)
+        )
 
-        self.ori_word_atten = nn.Linear(768, 384)
-        self.ori_tanh = nn.Tanh()
-        self.ori_word_weight = nn.Linear(384, 1, bias=False)
+        # self.ori_word_atten = nn.Linear(768, 384)
+        # self.ori_tanh = nn.Tanh()
+        # self.ori_word_weight = nn.Linear(384, 1, bias=False)
+        #
+        # self.re_word_atten = nn.Linear(768, 384)
+        # self.re_tanh = nn.Tanh()
+        # self.re_word_weight = nn.Linear(384, 1, bias=False)
 
-        self.re_word_atten = nn.Linear(768, 384)
-        self.re_tanh = nn.Tanh()
-        self.re_word_weight = nn.Linear(384, 1, bias=False)
-
-        self.des_word_atten = nn.Linear(768, 384)
-        self.des_tanh = nn.Tanh()
-        self.des_word_weight = nn.Linear(384, 1, bias=False)
-        self.cnnber = CNNBert(768)
+        # self.des_word_atten = nn.Linear(768, 384)
+        # self.des_tanh = nn.Tanh()
+        # self.des_word_weight = nn.Linear(384, 1, bias=False)
+        # self.cnnber = CNNBert(768)
 
 
 
@@ -122,8 +140,12 @@ class Model(nn.Module):
             # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
             main_output = self.fc1(self.drop(mixed_feature))
-            sup_out1 = self.supfc1(ori_sen_pre)
-            sup_out2 = self.supfc2(re_sen_pre)
+
+            sup_out1 = self.supmlp1(ori_sen_pre)
+            sup_out1 = F.normalize(sup_out1, dim=1)
+            sup_out2 = self.supmlp2(re_sen_pre)
+            sup_out2 = F.normalize(sup_out2, dim=2)
+
             main_output = self.fc(main_output)
             au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
             return main_output, au_output1, sup_out1, sup_out2
@@ -714,18 +736,20 @@ class Model(nn.Module):
     def get_alpha(self, word_mat, data_type, mask):
         if data_type == 'ori':
             # representation learning  attention
-            att_w = self.ori_word_atten(word_mat)
-            att_w = self.ori_tanh(att_w)
-            att_w = self.ori_word_weight(att_w)
-        elif data_type == 'des':
-            att_w = self.des_word_atten(word_mat)
-            att_w = self.des_tanh(att_w)
-            att_w = self.des_word_weight(att_w)
+            # att_w = self.ori_word_atten(word_mat)
+            # att_w = self.ori_tanh(att_w)
+            # att_w = self.ori_word_weight(att_w)
+            att_w = self.ori_att(word_mat)
+        # elif data_type == 'des':
+        #     att_w = self.des_word_atten(word_mat)
+        #     att_w = self.des_tanh(att_w)
+        #     att_w = self.des_word_weight(att_w)
         else:
+            att_w = self.re_att(word_mat)
             # classification learning  attention
-            att_w = self.re_word_atten(word_mat)
-            att_w = self.re_tanh(att_w)
-            att_w = self.re_word_weight(att_w)
+            # att_w = self.re_word_atten(word_mat)
+            # att_w = self.re_tanh(att_w)
+            # att_w = self.re_word_weight(att_w)
 
         mask = mask.unsqueeze(2)
         att_w = att_w.masked_fill(mask == 0, float('-inf'))
