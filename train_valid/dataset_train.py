@@ -1059,10 +1059,10 @@ def dataset_train_rdrop(model, token, data, criterion, optimize, n_epoch, au_wei
             train_t_tar = torch.LongTensor(t_tar)
             train_r_tar = torch.LongTensor(r_tar)
             s_tar = torch.LongTensor(s_tar)
-            main_output, au_output1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
-            main_output1, au_output2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output, au_output1, sup_out1, sup_out2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output1, au_output2, sup_out11, sup_out22 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
 
-            ori_kl = compute_kl_loss(p=main_output, q=main_output1)
+            ori_kl = compute_kl_loss(p=sup_out1, q=sup_out11)
             # L_o
             ori_loss1 = criterion(main_output, train_t_tar.to(device))
             ori_loss2 = criterion(main_output1, train_t_tar.to(device))
@@ -1070,11 +1070,11 @@ def dataset_train_rdrop(model, token, data, criterion, optimize, n_epoch, au_wei
             ori_loss = ori_loss + ori_kl * 4
 
             # L_r
-            # re_kl = compute_kl_loss(p=main_output, q=main_output1)
-            re_loss = criterion(main_output, train_r_tar.to(device))
-            # re_loss2 = criterion(main_output1, train_r_tar.to(device))
-            # re_loss = 0.5 * (re_loss1 + re_loss2)
-            # re_loss = re_loss + re_kl * 4
+            re_kl = compute_kl_loss(p=sup_out2, q=sup_out22)
+            re_loss1 = criterion(main_output, train_r_tar.to(device))
+            re_loss2 = criterion(main_output1, train_r_tar.to(device))
+            re_loss = 0.5 * (re_loss1 + re_loss2)
+            re_loss = re_loss + re_kl * 4
 
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
@@ -1163,22 +1163,23 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             s_tar = torch.LongTensor(s_tar)
 
             # r-drop
-            main_output, au_output1, supout1 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
-            main_output1, au_output2, supout2 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output, au_output1, supout1,  supout2= model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
+            main_output1, au_output2, supout11, supout22 = model(t_sent, r_sen=r_sent, s_sen=s_sent, l=alpha)
 
-            mf = torch.cat([supout1.unsqueeze(1), supout2.unsqueeze(1)], dim=1)
+            mf1 = torch.cat([supout1.unsqueeze(1), supout11.unsqueeze(1)], dim=1)
+            mf2 = torch.cat([supout2.unsqueeze(1), supout22.unsqueeze(1)], dim=1)
             # af = torch.cat([au_output1.unsqueeze(1), au_output2.unsqueeze(1)], dim=1)
 
-            osclloss = supcon(features=mf, labels=train_t_tar.to(device))
+            osclloss = supcon(features=mf1, labels=train_t_tar.to(device))
 
-            # rsclloss = supcon(mf, train_r_tar.to(device))
+            rsclloss = supcon(features=mf2, labels=train_r_tar.to(device))
 
             # asclloss = sclcriterion(af, s_tar.to(device))
 
             # L_o
-            ori_loss = criterion(main_output, train_t_tar.to(device)) + 0.005 * osclloss
+            ori_loss = criterion(main_output, train_t_tar.to(device)) + 0.05 * osclloss
             # L_r
-            re_loss = criterion(main_output, train_r_tar.to(device))
+            re_loss = criterion(main_output, train_r_tar.to(device)) + 0.05 * rsclloss
             # L_a
             au_loss = criterion(au_output1, s_tar.to(device))
 
