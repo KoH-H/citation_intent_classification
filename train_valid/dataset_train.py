@@ -1177,7 +1177,7 @@ def dataset_train_suploss(model, token, data, criterion, optimize, n_epoch, au_w
             # asclloss = sclcriterion(af, s_tar.to(device))
 
             # L_o
-            ori_loss = criterion(main_output, train_t_tar.to(device)) + 0.05 * osclloss
+            ori_loss = 0.5 * criterion(main_output, train_t_tar.to(device)) + osclloss
             # L_r
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a

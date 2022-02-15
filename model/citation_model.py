@@ -110,7 +110,7 @@ class Model(nn.Module):
         attention_mask = x1['attention_mask']
         bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
-        ocnn_sen_pre = self.cnnl(bert_output)
+        ocnn_sen_pre = self.cnnl(bert_output[2])
         if self.training:
             # Obtain the representation vector for the classification learning branch
             # r_ids = kwargs['r_sen']['input_ids']
@@ -118,14 +118,14 @@ class Model(nn.Module):
             # r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
             # re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
             re_sen_pre, r_bert_out = self.generate_sen_pre(kwargs['r_sen'], 're')
-            rcnn_sen_pre = self.cnnr(r_bert_out)
+            rcnn_sen_pre = self.cnnr(r_bert_out[2])
             # Get the representation vector for the auxiliary task
             # s_ids = kwargs['s_sen']['input_ids']
             # s_attention_mask = kwargs['s_sen']['attention_mask']
             # s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
             # ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
             ausec_sen_pre, a_bert_out = self.generate_sen_pre(kwargs['s_sen'], 'ori')
-            acnn_sen_pre = self.cnnl(a_bert_out)
+            acnn_sen_pre = self.cnnl(a_bert_out[2])
 
             ori_sen_pre = torch.cat((ori_sen_pre, ocnn_sen_pre), dim=1)
             re_sen_pre = torch.cat((re_sen_pre, rcnn_sen_pre), dim=1)
@@ -155,7 +155,7 @@ class Model(nn.Module):
             return main_output, au_output1, sup_out1
 
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
-        rcnn_sen_pre = self.cnnr(re_sen_pre)
+        rcnn_sen_pre = self.cnnr(bert_output[2])
 
         ori_sen_pre = torch.cat((ori_sen_pre, ocnn_sen_pre), dim=1)
         re_sen_pre = torch.cat((re_sen_pre, rcnn_sen_pre), dim=1)
