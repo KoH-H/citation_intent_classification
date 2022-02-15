@@ -2,7 +2,7 @@
   "ACT":  {
     "original": {
       "lr": 0.00005,
-      "au_weight":  0.007,
+      "au_weight":  0.003,
       "mix_w": 0
     },
     "suploss":{

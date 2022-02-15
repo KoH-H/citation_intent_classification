@@ -94,7 +94,7 @@ def focalloss(logits, labels, ce, falpha, fgamma):
     F_loss = falpha  * (1 - pt) ** fgamma * ce_loss
     return F_loss
 
-def supcon(features, contrast_mode='all', temperature=0.01, base_temperature=0.05, labels=None, mask=None):
+def supcon(features, contrast_mode='all', temperature=0.05, base_temperature=0.05, labels=None, mask=None):
     # device = (torch.device('cuda')
     #           if features.is_cuda
     #           else torch.device('cpu'))
