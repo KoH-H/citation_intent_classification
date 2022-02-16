@@ -151,7 +151,7 @@ class Model(nn.Module):
 
             sup_out1 = F.normalize(sup_out1, dim=1)
 
-            ausec_sen_pre = torch.cat((ausec_sen_pre, acnn_sen_pre), dim=1)
+            # ausec_sen_pre = torch.cat((ausec_sen_pre, acnn_sen_pre), dim=1)
             au_output1 = self.au_task_fc1(ausec_sen_pre)
             au_output1 = nn.ReLU(inplace=True)(au_output1)
             au_output1 = self.drop(au_output1)
