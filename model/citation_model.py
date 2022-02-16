@@ -61,7 +61,7 @@ class Model(nn.Module):
         self.temp = temp
         self.drop = nn.Dropout(0.3)
         self.fc1 = nn.Linear(768 * 4, 768)
-        self.fc2 = nn.Linear(768, 6)
+        self.fc2 = nn.Linear(192, 6)
 
         # self.mix_fc = nn.Linear(768, 6)
         # self.mix_fc1 = nn.Linear(768, 6)
@@ -70,8 +70,8 @@ class Model(nn.Module):
         self.au_task_fc1 = nn.Linear(768 * 2, 768)
         self.au_task_fc2 = nn.Linear(768, 5)
 
-        self.supmlp1 = nn.Sequential(nn.Linear(768 * 2, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
-        self.supmlp2 = nn.Sequential(nn.Linear(768 * 2, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
+        self.supmlp1 = nn.Sequential(nn.Linear(768, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
+        # self.supmlp2 = nn.Sequential(nn.Linear(768, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
         self.ori_att = nn.Sequential(nn.Linear(768, 384), nn.Tanh(), nn.Linear(384, 1, bias=False))
         self.re_att = nn.Sequential(nn.Linear(768, 384), nn.Tanh(), nn.Linear(384, 1, bias=False))
         self.cnnl = cnnl
@@ -135,16 +135,21 @@ class Model(nn.Module):
             # Splice the representation vectors of both branches
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
 
-            sup_out1 = self.supmlp1(ori_sen_pre)
-            sup_out1 = F.normalize(sup_out1, dim=1)
+            # sup_out1 = self.supmlp1(ori_sen_pre)
+            # sup_out1 = F.normalize(sup_out1, dim=1)
 
             # sup_out2 = self.supmlp2(re_sen_pre)
             # sup_out2 = F.normalize(sup_out2, dim=1)
 
             main_output = self.fc1(mixed_feature)
-            main_output = nn.ReLU(inplace=True)(main_output)
+            # main_output = nn.ReLU(inplace=True)(main_output)
+            sup_out1 = self.supmlp1(main_output)
+
+            main_output = nn.ReLU(inplace=True)(sup_out1)
             main_output = self.drop(main_output)
             main_output = self.fc2(main_output)
+
+            sup_out1 = F.normalize(sup_out1, dim=1)
 
             ausec_sen_pre = torch.cat((ausec_sen_pre, acnn_sen_pre), dim=1)
             au_output1 = self.au_task_fc1(ausec_sen_pre)
@@ -162,7 +167,8 @@ class Model(nn.Module):
 
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         mixed_feature = self.fc1(mixed_feature)
-        mixed_feature = nn.ReLU(inplace=True)(mixed_feature)
+        sup_out1 = self.supmlp1(mixed_feature)
+        mixed_feature = nn.ReLU(inplace=True)(sup_out1)
         mixed_feature = self.fc2(mixed_feature)
         return mixed_feature
 
