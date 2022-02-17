@@ -174,8 +174,8 @@ def load_data(dataname, batch_size=None, radio=None):
             pd.read_csv(path / 'dataset/act/citednum_sam.csv'), on='unique_id')
         train_set = sklearn.utils.shuffle(train_set, random_state=0).reset_index(drop=True)
         train = train_set.loc[:int(train_set.shape[0] * radio) - 1]
-        print(train['citation_class_label'].value_counts())
-        print(collections.Counter(train['citation_class_label']).items())
+        # print(train['citation_class_label'].value_counts())
+        # print(collections.Counter(train['citation_class_label']).items())
         val = (train_set.loc[int(train_set.shape[0] * radio):]).reset_index(drop=True)
     else:
         os.system("tar -zxvf dataset/acl/acl.tar.gz -C dataset/acl/")

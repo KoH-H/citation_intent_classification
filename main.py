@@ -70,7 +70,7 @@ def run_optuna(params, path, dev):
     # token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
     # criterion = nn.CrossEntropyLoss()
     # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
-    dataset = load_data(params.dataname, batch_size=params.epochs, radio=0.2)
+    dataset = load_data(params.dataname, batch_size=params.bsz, radio=0.2)
 
     def objective(trial):
         model = set_model(params.tp, conf)
@@ -104,7 +104,7 @@ def main_run(params, path, dev):
     # n_epoch = 35
     # lr = 0.0001
     # au_weight = 0.007413
-    dataset = load_data(params.dataname, batch_size=params.epochs, radio=0.8)
+    dataset = load_data(params.dataname, batch_size=params.bsz, radio=0.8)
     optimizer, scheduler = set_optimizer(params.lr, model)
     best_model_f1, best_epoch = onlycnn(model, token, dataset, criterion, optimizer, params.epochs, params.auw, dev,
                                         scheduler, model_path=path)

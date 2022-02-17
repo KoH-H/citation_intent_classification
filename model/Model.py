@@ -45,7 +45,7 @@ class SupCNN(nn.Module):
     def forward(self, x1, **kwargs):
         input_ids = x1['input_ids']
         attention_mask = x1['attention_mask']
-        bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+        bert_output = self.encoder(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
         ocnn_sen_pre = self.cnnl(bert_output[2])
         if self.training:
@@ -95,7 +95,7 @@ class SupCNN(nn.Module):
         return att_w
 
     def generate_sen_pre(self, sen, tp):
-        bert_output = self.model(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
+        bert_output = self.encoder(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
         sen = self.get_sen_att(sen, bert_output, tp, sen['attention_mask'])
         return sen, bert_output
 
@@ -139,7 +139,7 @@ class SupCNN(nn.Module):
 class OnlySupLoss(nn.Module):
     def __init__(self, model, config):
         super(OnlySupLoss, self).__init__()
-        self.endocer = AutoModel.from_pretrained(model, config)
+        self.encoder = AutoModel.from_pretrained(model, config)
         self.drop = nn.Dropout(0.3)
 
         self.fc1 = nn.Linear(768 * 2, 768)
@@ -155,7 +155,7 @@ class OnlySupLoss(nn.Module):
     def forward(self, x1, **kwargs):
         input_ids = x1['input_ids']
         attention_mask = x1['attention_mask']
-        bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+        bert_output = self.encoder(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
         if self.training:
             re_sen_pre, r_bert_out = self.generate_sen_pre(kwargs['r_sen'], 're')
@@ -196,7 +196,7 @@ class OnlySupLoss(nn.Module):
         return att_w
 
     def generate_sen_pre(self, sen, tp):
-        bert_output = self.model(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
+        bert_output = self.encoder(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
         sen = self.get_sen_att(sen, bert_output, tp, sen['attention_mask'])
         return sen, bert_output
 
@@ -242,7 +242,7 @@ class OnlyCNN(nn.Module):
         super(OnlyCNN, self).__init__()
         self.encoder = AutoModel.from_pretrained(model, config)
         self.fc1 = nn.Linear(768 * 4, 768)
-        self.fc = nn.Linear(768, 6)
+        self.fc2 = nn.Linear(768, 6)
         self.drop = nn.Dropout(0.3)
         # self.au_task_fc1 = nn.Linear(768 * 2, 5)
 
@@ -258,7 +258,7 @@ class OnlyCNN(nn.Module):
     def forward(self, x1, **kwargs):
         input_ids = x1['input_ids']
         attention_mask = x1['attention_mask']
-        bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
+        bert_output = self.encoder(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
         ocnn_out = self.cnnl(bert_output[2])
         if self.training:
@@ -300,11 +300,11 @@ class OnlyCNN(nn.Module):
         feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         feature = self.fc1(feature)
         feature = nn.ReLU(inplace=True)(feature)
-        out = self.fc(feature)
+        out = self.fc2(feature)
         return out
 
     def generate_sen_pre(self, sen, tp):
-        bert_output = self.model(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
+        bert_output = self.encoder(sen['input_ids'], attention_mask=sen['attention_mask'], output_hidden_states=True)
         sen = self.get_sen_att(sen, bert_output, tp, sen['attention_mask'])
         return sen, bert_output
 
