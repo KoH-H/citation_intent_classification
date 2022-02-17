@@ -8,10 +8,10 @@
       "mix_w": 0
     },
     "onlycnn": {
-      "lr": 0.00001,
-      "auw": 0.003,
+      "lr": 0.000036,
+      "auw": 0.003202,
       "bsz": 16,
-      "epochs": 35,
+      "epochs": 40,
       "mix_w": 0
     },
     "onlysup": {
