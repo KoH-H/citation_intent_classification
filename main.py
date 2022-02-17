@@ -26,11 +26,6 @@ def parse_args():
     parser.add_argument("--dataname", help="dataname", default=None, type=str)
     parser.add_argument("--tp", help="type of params", default=None, type=str)
     parser.add_argument("--epochs", default=16, type=int)
-    # parser.add_argument(
-    #     '--radio',
-    #     help="proportion of training data",
-    #     type=float
-    # )
     args = parser.parse_args()
     return args
 
@@ -65,22 +60,13 @@ def run_optuna(params, path, dev):
     print('Run optuna')
     setup_seed(0)
     token, criterion, conf = set_token()
-    # config = AutoConfig.from_pretrained('allenai/scibert_scivocab_uncased')
-    # config.hidden_dropout_prob = 0.3
-    # token = AutoTokenizer.from_pretrained('allenai/scibert_scivocab_uncased')
-    # criterion = nn.CrossEntropyLoss()
-    # dataset = load_data(16, reverse=True, multi=True, mul_num=2400)
     dataset = load_data(params.dataname, batch_size=params.bsz, radio=0.2)
 
     def objective(trial):
         model = set_model(params.tp, conf)
-        # n_epoch = 35
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
         auw = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
-        # optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=2e-4)
         optimizer, scheduler = set_optimizer(lr, model=model)
-        # optimizer = optim.Adam(model.parameters(), lr=lr)
-        # scheduler = WarmupMultiStepLR(optimizer, [15, 25], gamma=0.1, warmup_epochs=5)
         best_model_f1, best_epoch = onlycnn(model, token, dataset, criterion, optimizer, params.epochs,
                                                           auw, dev, scheduler, model_path=path)
 
