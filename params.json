@@ -1,50 +1,71 @@
 {
   "ACT":  {
+    "supcnn": {
+      "lr": 0.00005,
+      "auw": 0.003,
+      "bsz": 16,
+      "epochs": 35,
+      "mix_w": 0
+    },
+    "onlycnn": {
+      "lr": 0.000036,
+      "auw": 0.003202,
+      "bsz": 16,
+      "epochs": 35,
+      "mix_w": 0
+    },
+    "onlysup": {
+      "lr": 0.00001,
+      "auw": 0.001,
+      "bsz": 4,
+      "epochs": 35,
+      "mix_w": 0
+    },
     "original": {
       "lr": 0.000007,
-      "au_weight":  0.001,
+      "auw":  0.001,
       "mix_w": 0
     },
     "suploss":{
       "lr": 0.000082,
-      "au_weight": 0.001628,
+      "auw": 0.001628,
       "mix_w": 0
     },
     "imix": {
       "lr": 0.000068,
-      "au_weight": 0.001092,
+      "auw": 0.001092,
       "mix_w": 0.045271
     },
     "space": {
       "lr": 0.000228,
-      "au_weight": 0.003263,
+      "auw": 0.003263,
       "mix_w": 0
     },
     "rdrop": {
       "lr": 0.000034,
-      "au_weight": 0.006063,
+      "auw": 0.006063,
       "mix_w": 0
     },
     "cnn": {
       "lr": 0.000018,
-      "au_weight": 0.002297,
+      "auw": 0.002297,
       "mix_w": 0.017347
     }
   },
   "ACL": {
     "original": {
       "lr": 0.000036,
-      "au_weight":  0.003202,
+      "auw":  0.003202,
       "mix_w": 0
     },
     "imix": {
       "lr": 0.000019,
-      "au_weight": 0.008306,
+      "auw": 0.008306,
       "mix_w": 0.069573
     },
     "space": {
       "lr": 0.000228,
-      "au_weight": 0.003263,
+      "auw": 0.003263,
       "mix_w": 0
     }
   }
