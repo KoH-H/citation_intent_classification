@@ -27,7 +27,7 @@ class CNN(nn.Module):
         x = self.fc(x)
         return x
 
-class SupCNN(nn.Model):
+class SupCNN(nn.Module):
     def __init__(self, model, config=None, cnnl=None, cnnr=None):
         super(SupCNN, self).__init__()
         self.encoder = AutoModel.from_pretrained(model, config)

@@ -2,8 +2,8 @@
 import json
 from transformers import AutoTokenizer, AutoConfig
 import torch.optim as optim
-from model.citation_model import *
-from model.citation_model_num import *
+# from model.citation_model import *
+# from model.citation_model_num import *
 from model.Model import *
 # from model.cnn_bert import *
 from utils.scheduler import WarmupMultiStepLR
@@ -22,29 +22,10 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else 'cpu')
 
 def parse_args():
     parser = argparse.ArgumentParser(description='code for Citation Intent')
-    parser.add_argument(
-        "--mode",
-        help="decide find parameters or train",
-        default=None,
-        type=str
-    )
-    parser.add_argument(
-        "--dataname",
-        help="dataname",
-        default=None,
-        type=str
-    )
-    parser.add_argument(
-        "--tp",
-        help="type of params",
-        default=None,
-        type=str
-    )
-    parser.add_argument(
-        "--epochs",
-        default=16,
-        type=int
-    )
+    parser.add_argument("--mode", help="decide find parameters or train", default=None, type=str)
+    parser.add_argument("--dataname", help="dataname", default=None, type=str)
+    parser.add_argument("--tp", help="type of params", default=None, type=str)
+    parser.add_argument("--epochs", default=16, type=int)
     # parser.add_argument(
     #     '--radio',
     #     help="proportion of training data",
