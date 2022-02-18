@@ -83,6 +83,15 @@ def run_optuna(params, path, dev):
     main_run(args, 'citation_mul_rev_model.pth', device)
 
 
+# "onlycnn": {
+#       "lr": 0.000036,
+#       "auw": 0.003202,
+#       "bsz": 16,
+#       "epochs": 40,
+#       "mix_w": 0
+#     },
+
+
 def main_run(params, path, dev):
     setup_seed(0)
     token, criterion, conf = set_token()
