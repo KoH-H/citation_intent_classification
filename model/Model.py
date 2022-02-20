@@ -240,14 +240,14 @@ class OnlySupLoss(nn.Module):
 class OnlyCNN(nn.Module):
     def __init__(self, model, config, cnnl, cnnr):
         super(OnlyCNN, self).__init__()
-        self.encoder = AutoModel.from_pretrained(model, config)
+        self.encoder = AutoModel.from_pretrained(model)
         self.fc1 = nn.Linear(768 * 4, 768)
         self.fc2 = nn.Linear(768, 6)
         self.drop = nn.Dropout(0.3)
         # self.au_task_fc1 = nn.Linear(768 * 2, 5)
 
-        self.afc1 = nn.Linear(768 * 2, 768)
-        self.afc2 = nn.Linear(768, 5)
+        # self.afc1 = nn.Linear(768 * 2, 768)
+        self.afc2 = nn.Linear(768 * 2, 5)
 
         self.ori_att = nn.Sequential(nn.Linear(768, 384), nn.Tanh(), nn.Linear(384, 1, bias=False))
         self.re_att = nn.Sequential(nn.Linear(768, 384), nn.Tanh(), nn.Linear(384, 1, bias=False))
@@ -273,24 +273,24 @@ class OnlyCNN(nn.Module):
             re_sen_pre = torch.cat((re_sen_pre, rcnn_out), dim=1)
             au_sen_pre = torch.cat((au_sen_pre, acnn_out), dim=1)
 
-            # ori_sen_pre = self.drop(ori_sen_pre)
-            # re_sen_pre = self.drop(re_sen_pre)
+            # only cnn中有以下两行
+            ori_sen_pre = self.drop(ori_sen_pre)
+            re_sen_pre = self.drop(re_sen_pre)
 
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
 
-            # main_output = self.fc1(self.drop(mixed_feature))
-            # main_output = self.fc(main_output)
             main_output = self.fc1(mixed_feature)
-            main_output = nn.ReLU(inplace=True)(main_output)
-            main_output = self.drop(main_output)
+            # only cnn 中无以下两行
+            # main_output = nn.ReLU(inplace=True)(main_output)
+            # main_output = self.drop(main_output)
             main_output = self.fc2(main_output)
 
-            au_output1 = self.afc1(au_sen_pre)
-            au_output1 = nn.ReLU(inplace=True)(au_output1)
-            au_output1 = self.drop(au_output1)
-            au_output1 = self.afc2(au_output1)
+            # only cnn中无以下三行
+            # au_output1 = self.afc1(au_sen_pre)
+            # au_output1 = nn.ReLU(inplace=True)(au_output1)
+            # au_output1 = self.drop(au_output1)
+            au_output1 = self.afc1(self.drop(au_sen_pre))
 
-            # au_output1 = self.au_task_fc1(self.drop(ausec_sen_pre))
             return main_output, au_output1
         ori_sen_pre = torch.cat((ori_sen_pre, ocnn_out), dim=1)
         rcnn_out = self.cnnr(bert_output[2])
@@ -299,7 +299,8 @@ class OnlyCNN(nn.Module):
 
         feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         feature = self.fc1(feature)
-        feature = nn.ReLU(inplace=True)(feature)
+        # only cnn中无以下一行
+        # feature = nn.ReLU(inplace=True)(feature)
         out = self.fc2(feature)
         return out
 
