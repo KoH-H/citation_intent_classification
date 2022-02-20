@@ -61,7 +61,7 @@ def run_optuna(params, path, dev):
     print('Run optuna')
     setup_seed(0)
     token, criterion, conf = set_token()
-    dataset = load_data(params.dataname, batch_size=params.bsz, radio=0.2)
+    dataset = load_data(params.dataname, batch_size=params.bsz, radio=0.8)
 
     def objective(trial):
         model = set_model(params.tp, conf)
