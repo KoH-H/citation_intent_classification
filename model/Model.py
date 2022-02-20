@@ -68,10 +68,10 @@ class SupCNN(nn.Module):
             main_output = self.fc2(main_output)
 
             au_sen_pre = torch.cat((au_sen_pre, acnn_sen_pre), dim=1)
-            au_output1 = self.au_task_fc1(au_sen_pre)
+            au_output1 = self.afc1(au_sen_pre)
             au_output1 = nn.ReLU(inplace=True)(au_output1)
             au_output1 = self.drop(au_output1)
-            au_output1 = self.au_task_fc2(au_output1)
+            au_output1 = self.afc2(au_output1)
             return main_output, au_output1, sup_out1
 
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)

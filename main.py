@@ -25,7 +25,8 @@ def parse_args():
     parser.add_argument("--mode", help="decide find parameters or train", default=None, type=str)
     parser.add_argument("--dataname", help="dataname", default=None, type=str)
     parser.add_argument("--tp", help="type of params", default=None, type=str)
-    parser.add_argument("--epochs", default=16, type=int)
+    parser.add_argument("--epochs", default=35, type=int)
+    parser.add_argument("--bsz", default=16, type=int)
     args = parser.parse_args()
     return args
 
