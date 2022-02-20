@@ -67,7 +67,7 @@ def run_optuna(params, path, dev):
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
         auw = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
         optimizer, scheduler = set_optimizer(lr, model=model)
-        best_model_f1, best_epoch = onlycnn(model, token, dataset, criterion, optimizer, params.epochs,
+        best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs,
                                                           auw, dev, scheduler, model_path=path)
 
         return best_model_f1
