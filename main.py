@@ -66,10 +66,10 @@ def run_optuna(params, path, dev):
     def objective(trial):
         model = set_model(params.tp, conf)
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
-        auw = trial.suggest_float('au_weight', 0.001, 0.01, log=True)
+        auw = trial.suggest_float('auw', 0.001, 0.01, log=True)
         optimizer, scheduler = set_optimizer(lr, model=model)
         best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs,
-                                                          auw, dev, scheduler, model_path=path)
+                                           auw, dev, scheduler, model_path=path)
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db',
@@ -80,7 +80,7 @@ def run_optuna(params, path, dev):
     print(history)
     print("Train".center(30, '-'))
     args.lr = float(format(study.best_params['lr'], '.6f'))
-    args.au_weight = float(format(study.best_params['au_weight'], '.6f'))
+    args.auw = float(format(study.best_params['auw'], '.6f'))
     main_run(args, 'citation_mul_rev_model.pth', device)
 
 
@@ -102,7 +102,7 @@ def main_run(params, path, dev):
     # au_weight = 0.007413
     dataset = load_data(params.dataname, batch_size=params.bsz, radio=0.8)
     optimizer, scheduler = set_optimizer(params.lr, model)
-    best_model_f1, best_epoch = onlycnn(model, token, dataset, criterion, optimizer, params.epochs, params.auw, dev,
+    best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs, params.auw, dev,
                                         scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
