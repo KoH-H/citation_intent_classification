@@ -182,12 +182,12 @@ def load_data(dataname, batch_size=None, radio=None):
     else:
         os.system("tar -zxvf dataset/acl/acl.tar.gz -C dataset/acl/")
         acldf = acljson2pd(['train', 'dev', 'test'])
-        if radio == 0.2:
-            val = acldf['train']
-            train = acldf['dev']
-        else:
-            train = acldf['train']
-            val = acldf['dev']
+        # if radio == 0.2:
+        #     val = acldf['train']
+        #     train = acldf['dev']
+        # else:
+        train = acldf['train']
+        val = acldf['dev']
         test = acldf['test']
 
     reverse_data = reverse_sampler(train)
