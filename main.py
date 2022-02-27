@@ -150,3 +150,12 @@ if __name__ == "__main__":
         main_run(args, 'citation_mul_rev_model.pth', device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
+
+
+# "supcnn": {
+#       "lr": 0.00005,
+#       "auw": 0.005,
+#       "bsz": 16,
+#       "epochs": 35,
+#       "mix_w": 0
+#     }  0.6942
