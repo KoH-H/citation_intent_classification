@@ -59,6 +59,13 @@
       "bsz": 16,
       "epochs": 35,
       "mix_w": 0
+    },
+    "onlysup": {
+      "lr": 0.00003,
+      "auw": 0.003,
+      "bsz": 4,
+      "epochs": 35,
+      "mix_w": 0
     }
   }
 }
