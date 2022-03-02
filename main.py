@@ -110,8 +110,18 @@ def main_run(params, path, dev):
     # au_weight = 0.007413
     dataset = load_data(params.dataname, batch_size=params.bsz, radio=0.8)
     optimizer, scheduler = set_optimizer(params.lr, model)
-    best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs, params.auw, dev,
-                                        scheduler, model_path=path)
+    # best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs, params.auw, dev,
+    #                                     scheduler, model_path=path)
+    if params.tp == 'supcnn':
+
+        best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs,
+                                           params.auw, dev, scheduler, model_path=path)
+    elif params.tp == 'onlysup':
+        best_model_f1, best_epoch = onlysup(model, token, dataset, criterion, optimizer, params.epochs,
+                                            params.auw, dev, scheduler, model_path=path)
+    else:
+        best_model_f1, best_epoch = onlycnn(model, token, dataset, criterion, optimizer, params.epochs,
+                                            params.auw, dev, scheduler, model_path=path)
     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
                                                                             dataset['test'], device,
