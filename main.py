@@ -68,8 +68,16 @@ def run_optuna(params, path, dev):
         lr = trial.suggest_float('lr', 1e-5, 1e-4, log=True)
         auw = trial.suggest_float('auw', 0.001, 0.01, log=True)
         optimizer, scheduler = set_optimizer(lr, model=model)
-        best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs,
-                                           auw, dev, scheduler, model_path=path)
+        if params.tp == 'supcnn':
+
+            best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs,
+                                               auw, dev, scheduler, model_path=path)
+        elif params.tp == 'onlysup':
+            best_model_f1, best_epoch = onlysup(model, token, dataset, criterion, optimizer, params.epochs,
+                                               auw, dev, scheduler, model_path=path)
+        else:
+            best_model_f1, best_epoch = onlycnn(model, token, dataset, criterion, optimizer, params.epochs,
+                                               auw, dev, scheduler, model_path=path)
 
         return best_model_f1
     study = optuna.create_study(study_name='studyname', direction='maximize', storage='sqlite:///optuna.db',

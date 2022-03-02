@@ -289,7 +289,7 @@ class OnlyCNN(nn.Module):
             # au_output1 = self.afc1(au_sen_pre)
             # au_output1 = nn.ReLU(inplace=True)(au_output1)
             # au_output1 = self.drop(au_output1)
-            au_output1 = self.afc1(self.drop(au_sen_pre))
+            au_output1 = self.afc2(self.drop(au_sen_pre))
 
             return main_output, au_output1
         ori_sen_pre = torch.cat((ori_sen_pre, ocnn_out), dim=1)
