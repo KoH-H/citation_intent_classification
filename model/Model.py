@@ -279,7 +279,7 @@ class OnlyCNN(nn.Module):
 
             mixed_feature = 2 * torch.cat((kwargs['l'] * ori_sen_pre, (1 - kwargs['l']) * re_sen_pre), dim=1)
 
-            main_output = self.fc1(mixed_feature)
+            main_output = self.fc1(self.drop(mixed_feature))
             # only cnn 中无以下两行
             # main_output = nn.ReLU(inplace=True)(main_output)
             # main_output = self.drop(main_output)
