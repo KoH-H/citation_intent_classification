@@ -49,7 +49,7 @@ def supcnn(model, token, data, criterion, optimize, n_epoch, au_weight, device, 
             osuploss = supcon(features=mf1, labels=train_t_tar.to(device))
 
             # L_o
-            ori_loss = 0.5 * criterion(main_output, train_t_tar.to(device)) + osuploss
+            ori_loss = 0.3 * criterion(main_output, train_t_tar.to(device)) + osuploss
             # L_r
             re_loss = criterion(main_output, train_r_tar.to(device))
             # L_a
