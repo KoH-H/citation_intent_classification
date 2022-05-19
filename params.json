@@ -4,7 +4,7 @@
       "lr": 0.00005,
       "auw": 0.003,
       "bsz": 16,
-      "epochs": 35,
+      "epochs": 1,
       "mix_w": 0
     },
     "onlycnn": {
