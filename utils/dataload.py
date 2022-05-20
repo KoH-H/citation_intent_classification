@@ -82,7 +82,7 @@ def delete_aug(data, datatp=None):
 #     return {'sen': sentences_list, 'tar': target_list}
 
 
-def generate_batch_data(data, batch_size=16, datatp=None):
+def generate_batch_data(data, batch_size=16, datatp=None, dataname=None):
     print('train generate_batch_data')
     stop_words = stopwords.words('english')
     stop_words = ['et', 'al', 'e', 'g'] + stop_words
@@ -98,10 +98,15 @@ def generate_batch_data(data, batch_size=16, datatp=None):
             mini_batch_num = []
         for j in range(batch_size):
             # citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i * batch_size + j]).lower()
-            # citation_text1 = data['citation_context'][i * batch_size + j].lower()
-            # citation_text2 = re.sub(r'\[.*?\]', '', data['citation_context'][i * batch_size + j]).lower()
-            # citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)  # ACL数据集需要禁用这一行
-            citation_text2 = data['citation_context'][i * batch_size + j].lower()
+#             citation_text1 = data['citation_context'][i * batch_size + j].lower()
+            citation_text2 = None
+            if dataname == 'ACT':
+                citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i * batch_size + j]).lower()
+                citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)  # ACL数据集需要禁用这一行
+            else:
+                
+                citation_text2 = data['citation_context'][i * batch_size + j].lower()
+           
             citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
             citation_text = nltk.word_tokenize(citation_text3)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
@@ -122,9 +127,12 @@ def generate_batch_data(data, batch_size=16, datatp=None):
         for i in range(batch_count * batch_size, data.shape[0]):
             # citation_text = re.sub(r'[^a-zA-Z]', ' ', data['citation_context'][i]).lower()
             # citation_text1 = data['citation_context'][i].lower()
-            # citation_text2 = re.sub(r'\[.*?\]', '', data['citation_context'][i]).lower()
-            # citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1) # ACL数据集需要禁用这一行
-            citation_text2 = data['citation_context'][i].lower()
+            citation_text2 = None
+            if dataname == 'ACT':
+                citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i * batch_size + j]).lower()
+                citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)  # ACL数据集需要禁用这一行
+            else:
+                citation_text2 = data['citation_context'][i * batch_size + j].lower()
             citation_text3 = re.sub(r'[0-9]+', '', citation_text2)
             citation_text = nltk.word_tokenize(citation_text3)
             citation_text = [word for word in citation_text if (word not in stop_words and len(word) > 1)]
@@ -194,7 +202,7 @@ def load_data(dataname, batch_size=None, radio=None):
 
     if dataname == 'ACT':
         reverse_data = delete_aug(reverse_data)
-    data['reverse'] = generate_batch_data(reverse_data, batch_size)
+    data['reverse'] = generate_batch_data(reverse_data, batch_size, dataname=dataname)
 
     # mul_sec = pd.read_csv(path / 'dataset/section_name.csv')
     # mul_num = train.shape[0]
@@ -205,15 +213,15 @@ def load_data(dataname, batch_size=None, radio=None):
         train = delete_aug(train)
         val = delete_aug(val)
         test = delete_aug(test)
-    data['train'] = generate_batch_data(train, batch_size)
-    data['val'] = generate_batch_data(val, batch_size)
-    data['test'] = generate_batch_data(test, batch_size)
+    data['train'] = generate_batch_data(train, batch_size, dataname=datanamef)
+    data['val'] = generate_batch_data(val, batch_size, dataname=dataname)
+    data['test'] = generate_batch_data(test, batch_size, dataname=dataname)
 
     mul_sec = pd.read_csv(path / 'dataset/new_section_name.csv')
     mul_num = train.shape[0]
     mul_section = mul_sec.head(mul_num)
     # mul_section_batch = generate_batch_data(mul_section, mul_section.shape[0] // (train.shape[0] // batch_size))
-    mul_section_batch = generate_batch_data(mul_section, batch_size)
+    mul_section_batch = generate_batch_data(mul_section, batch_size, dataname=dataname)
     data['section'] = mul_section_batch
 
     return data
