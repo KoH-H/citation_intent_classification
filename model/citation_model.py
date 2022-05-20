@@ -60,22 +60,22 @@ class Model(nn.Module):
         self.model = AutoModel.from_pretrained(name, config)
         self.temp = temp
         self.drop = nn.Dropout(0.3)
-        self.fc1 = nn.Linear(768 * 2, 768)
+        self.fc1 = nn.Linear(768 * 4, 768)
         self.fc2 = nn.Linear(768, 6)
 
         # self.mix_fc = nn.Linear(768, 6)
         # self.mix_fc1 = nn.Linear(768, 6)
         # self.des_fc = nn.Linear(768, 6)
 
-        self.au_task_fc1 = nn.Linear(768, 768)
+        self.au_task_fc1 = nn.Linear(768 * 2, 768)
         self.au_task_fc2 = nn.Linear(768, 5)
 
-        self.supmlp1 = nn.Sequential(nn.Linear(768, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
-        # self.supmlp2 = nn.Sequential(nn.Linear(768, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
+        self.supmlp1 = nn.Sequential(nn.Linear(768 * 2, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
+        self.supmlp2 = nn.Sequential(nn.Linear(768 * 2, 768), nn.ReLU(inplace=True), nn.Linear(768, 192))
         self.ori_att = nn.Sequential(nn.Linear(768, 384), nn.Tanh(), nn.Linear(384, 1, bias=False))
         self.re_att = nn.Sequential(nn.Linear(768, 384), nn.Tanh(), nn.Linear(384, 1, bias=False))
-        # self.cnnl = cnnl
-        # self.cnnr = cnnr
+        self.cnnl = cnnl
+        self.cnnr = cnnr
         # self.ori_word_atten = nn.Linear(768, 384)
         # self.ori_tanh = nn.Tanh()
         # self.ori_word_weight = nn.Linear(384, 1, bias=False)
@@ -110,7 +110,7 @@ class Model(nn.Module):
         attention_mask = x1['attention_mask']
         bert_output = self.model(input_ids, attention_mask=attention_mask, output_hidden_states=True)
         ori_sen_pre = self.get_sen_att(x1, bert_output, 'ori', attention_mask)
-        # ocnn_sen_pre = self.cnnl(bert_output[2])
+        ocnn_sen_pre = self.cnnl(bert_output[2])
         if self.training:
             # Obtain the representation vector for the classification learning branch
             # r_ids = kwargs['r_sen']['input_ids']
@@ -118,17 +118,17 @@ class Model(nn.Module):
             # r_bert_output = self.model(r_ids, attention_mask=r_attention_mask, output_hidden_states=True)
             # re_sen_pre = self.get_sen_att(kwargs['r_sen'], r_bert_output, 're', r_attention_mask)
             re_sen_pre, r_bert_out = self.generate_sen_pre(kwargs['r_sen'], 're')
-            # rcnn_sen_pre = self.cnnr(r_bert_out[2])
+            rcnn_sen_pre = self.cnnr(r_bert_out[2])
             # Get the representation vector for the auxiliary task
             # s_ids = kwargs['s_sen']['input_ids']
             # s_attention_mask = kwargs['s_sen']['attention_mask']
             # s_bert_output = self.model(s_ids, attention_mask=s_attention_mask, output_hidden_states=True)
             # ausec_sen_pre = self.get_sen_att(kwargs['s_sen'], s_bert_output, 'ori', s_attention_mask)
             ausec_sen_pre, a_bert_out = self.generate_sen_pre(kwargs['s_sen'], 'ori')
-            # acnn_sen_pre = self.cnnl(a_bert_out[2])
+            acnn_sen_pre = self.cnnl(a_bert_out[2])
 
-            # ori_sen_pre = torch.cat((ori_sen_pre, ocnn_sen_pre), dim=1)
-            # re_sen_pre = torch.cat((re_sen_pre, rcnn_sen_pre), dim=1)
+            ori_sen_pre = torch.cat((ori_sen_pre, ocnn_sen_pre), dim=1)
+            re_sen_pre = torch.cat((re_sen_pre, rcnn_sen_pre), dim=1)
 
             # ori_sen_pre = self.drop(ori_sen_pre)
             # re_sen_pre = self.drop(re_sen_pre)
@@ -140,7 +140,7 @@ class Model(nn.Module):
 
             # sup_out2 = self.supmlp2(re_sen_pre)
             # sup_out2 = F.normalize(sup_out2, dim=1)
-
+            #123
             main_output = self.fc1(mixed_feature)
             # main_output = nn.ReLU(inplace=True)(main_output)
             # sup_out1 = self.supmlp1(main_output)
@@ -151,7 +151,7 @@ class Model(nn.Module):
 
             # sup_out1 = F.normalize(sup_out1, dim=1)
 
-            # ausec_sen_pre = torch.cat((ausec_sen_pre, acnn_sen_pre), dim=1)
+            ausec_sen_pre = torch.cat((ausec_sen_pre, acnn_sen_pre), dim=1)
             au_output1 = self.au_task_fc1(ausec_sen_pre)
             au_output1 = nn.ReLU(inplace=True)(au_output1)
             au_output1 = self.drop(au_output1)
@@ -160,10 +160,10 @@ class Model(nn.Module):
             return main_output, au_output1, sup_out1
 
         re_sen_pre = self.get_sen_att(x1, bert_output, 're', attention_mask)
-        # rcnn_sen_pre = self.cnnr(bert_output[2])
+        rcnn_sen_pre = self.cnnr(bert_output[2])
         #
-        # ori_sen_pre = torch.cat((ori_sen_pre, ocnn_sen_pre), dim=1)
-        # re_sen_pre = torch.cat((re_sen_pre, rcnn_sen_pre), dim=1)
+        ori_sen_pre = torch.cat((ori_sen_pre, ocnn_sen_pre), dim=1)
+        re_sen_pre = torch.cat((re_sen_pre, rcnn_sen_pre), dim=1)
 
         mixed_feature = torch.cat((ori_sen_pre, re_sen_pre), dim=1)
         mixed_feature = self.fc1(mixed_feature)
