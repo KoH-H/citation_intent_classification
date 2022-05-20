@@ -167,7 +167,7 @@ if __name__ == "__main__":
     modelpath = "citation_mul_rev_model.pth"
     if args.dataname == 'ACT':
         modelpath = "supcnn for act.pth"
-    elif args.dataname == "ACT":
+    elif args.dataname == "ACL":
         modelpath = "supcnn for ACL.pth"
     if args.mode == 'optuna':
         run_optuna(args, 'citation_mul_rev_model.pth', device)
@@ -178,7 +178,7 @@ if __name__ == "__main__":
         args.auw = config[args.dataname][args.tp]['auw']
         args.bsz = config[args.dataname][args.tp]['bsz']
         args.epochs = config[args.dataname][args.tp]['epochs']
-        main_run(args, 'citation_mul_rev_model.pth', device)
+        main_run(args, modelpath, device)
     ten = time.time()
     print('Total time: {}'.format((ten - tst)))
 
