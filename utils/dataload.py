@@ -213,7 +213,7 @@ def load_data(dataname, batch_size=None, radio=None):
         train = delete_aug(train)
         val = delete_aug(val)
         test = delete_aug(test)
-    data['train'] = generate_batch_data(train, batch_size, dataname=datanamef)
+    data['train'] = generate_batch_data(train, batch_size, dataname=dataname)
     data['val'] = generate_batch_data(val, batch_size, dataname=dataname)
     data['test'] = generate_batch_data(test, batch_size, dataname=dataname)
 
