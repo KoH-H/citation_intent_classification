@@ -2,7 +2,7 @@
 import json
 from transformers import AutoTokenizer, AutoConfig
 import torch.optim as optim
-# from model.citation_model import *
+from model.citation_model import *
 # from model.citation_model_num import *
 from model.Model import *
 # from model.cnn_bert import *
@@ -37,10 +37,14 @@ def set_optimizer(lr, model):
     return optimizer, scheduler
 
 
-def set_model(tp, conf):
+def set_model(tp, conf, dataname):
     if tp == "supcnn":
-        cnnl, cnnr = CNN(768), CNN(768)
-        model = SupCNN('allenai/scibert_scivocab_uncased', config=conf, cnnl=cnnl, cnnr=cnnr)
+        if dataname == 'ACL':
+            cnnl, cnnr = CNN(768), CNN(768)
+            model = SupCNN('allenai/scibert_scivocab_uncased', config=conf, cnnl=cnnl, cnnr=cnnr)
+        else:
+            cnnl, cnnr = CNNBert(768), CNNBert(768)
+            model = Model('allenai/scibert_scivocab_uncased', config=conf, cnnl=cnnl, cnnr=cnnr)
     elif tp == "onlysup":
         model = OnlySupLoss('allenai/scibert_scivocab_uncased', config=conf)
     else:
@@ -104,7 +108,7 @@ def run_optuna(params, path, dev):
 def main_run(params, path, dev):
     setup_seed(0)
     token, criterion, conf = set_token()
-    model = set_model(params.tp, conf)
+    model = set_model(params.tp, conf, params.dataname)
     # n_epoch = 35
     # lr = 0.0001
     # au_weight = 0.007413
