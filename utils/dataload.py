@@ -129,7 +129,7 @@ def generate_batch_data(data, batch_size=16, datatp=None, dataname=None):
             # citation_text1 = data['citation_context'][i].lower()
             citation_text2 = None
             if dataname == 'ACT':
-                citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i * batch_size + j]).lower()
+                citation_text1 = re.sub(r'\[.*?\]', '', data['citation_context'][i]).lower()
                 citation_text2 = re.sub(r'\(.*?\)|\)|\.', '', citation_text1)  # ACL数据集需要禁用这一行
             else:
                 citation_text2 = data['citation_context'][i * batch_size + j].lower()
