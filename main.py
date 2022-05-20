@@ -116,6 +116,8 @@ def main_run(params, path, dev):
     optimizer, scheduler = set_optimizer(params.lr, model)
     # best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs, params.auw, dev,
     #                                     scheduler, model_path=path)
+    
+    # Train
 #     if params.tp == 'supcnn':
 
 #         best_model_f1, best_epoch = supcnn(model, token, dataset, criterion, optimizer, params.epochs,
@@ -126,9 +128,9 @@ def main_run(params, path, dev):
 #     else:
 #         best_model_f1, best_epoch = onlycnn(model, token, dataset, criterion, optimizer, params.epochs,
 #                                             params.auw, dev, scheduler, model_path=path)
-#     print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     best_model_f1 = 0.1111
     best_epoch = 20
+    print("best_model_f1:{} \t best_epoch:{}".format(best_model_f1, best_epoch))
     test_f1, test_micro_f1, test_true_label, test_pre_label = dataset_valid(model, token,
                                                                             dataset['test'], device,
                                                                             mode='test', path=path)
@@ -162,6 +164,11 @@ if __name__ == "__main__":
     # }
     args = parse_args()
     tst = time.time()
+    modelpath = "citation_mul_rev_model.pth"
+    if args.dataname == 'ACT':
+        modelpath = "supcnn for act.pth"
+    elif args.dataname == "ACT":
+        modelpath = "supcnn for ACL.pth"
     if args.mode == 'optuna':
         run_optuna(args, 'citation_mul_rev_model.pth', device)
     else:
